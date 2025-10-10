@@ -1,0 +1,193 @@
+/* ================================
+   🎨 Base general
+=================================== */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  background-color: #0d0d0d;
+  color: #f9eedb;
+  font-family: "Inter", sans-serif;
+  scroll-behavior: smooth;
+}
+
+/* ================================
+   🧩 Root / Layout
+=================================== */
+
+#root {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+  background: #0d0d0d;
+}
+
+/* ================================
+   🐾 Navbar
+=================================== */
+
+.navbar {
+  background-color: #0d0d0d !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.navbar-brand span {
+  color: #f9eedb;
+  letter-spacing: 1px;
+}
+
+a.nav-link {
+  color: #f9eedb !important;
+  transition: color 0.2s ease-in-out;
+}
+
+a.nav-link:hover {
+  color: #f29a41 !important;
+}
+
+/* ================================
+   🚀 Hero Section
+=================================== */
+
+.hero h1 {
+  font-family: "Akira Expanded", sans-serif;
+  color: #f9eedb;
+}
+
+.hero p {
+  color: #d8d0c2;
+}
+
+/* ================================
+   🧱 Cards / Buttons / Forms
+=================================== */
+
+.card {
+  padding: 2em;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: #f9eedb;
+}
+
+form input,
+form select,
+form textarea {
+  border-radius: 8px;
+  border: 1px solid #333;
+  font-size: 0.95rem;
+  background-color: #111;
+  color: #f9eedb;
+  padding: 10px;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+  border-color: #f29a41;
+  box-shadow: 0 0 6px rgba(242, 154, 65, 0.3);
+  outline: none;
+}
+
+.btn-dark {
+  background-color: #000;
+  border: none;
+  font-weight: 600;
+  color: #f9eedb;
+  border-radius: 6px;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+}
+
+.btn-dark:hover {
+  background-color: #333;
+  transform: scale(1.03);
+}
+
+/* ================================
+   💻 Tech Stack Section
+=================================== */
+
+.tech-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 20px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 0 transparent;
+}
+
+.tech-card:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
+}
+
+.tech-card img {
+  transition: all 0.3s ease;
+}
+
+.tech-card:hover img {
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
+}
+
+/* ================================
+   💬 WhatsApp Button
+=================================== */
+
+.whatsapp-float {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 1000;
+}
+
+.whatsapp-float img {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background-color: #25d366;
+  padding: 10px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease-in-out;
+}
+
+.whatsapp-float img:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 18px rgba(37, 211, 102, 0.6);
+}
+
+/* ================================
+   ⚙️ Utilities
+=================================== */
+
+.read-the-docs {
+  color: #888;
+}
+
+.text-accent {
+  color: #f29a41;
+}
+
+footer {
+  background-color: #000;
+  color: #f9eedb;
+  padding: 2rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.9rem;
+}
+.navbar-brand img {
+  border: none;
+  outline: none;
+  box-shadow: none;
+  user-select: none;
+}
+.navbar-brand img:focus,
+.navbar-brand img:active {
+  outline: none;
+  box-shadow: none;
+}
