@@ -1,100 +1,144 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { FaReact } from "react-icons/fa";
-import "../App.css";
+import {
+  FaHeart,
+  FaRocket,
+  FaLightbulb,
+  FaHandshake,
+  FaPaw,
+  FaCode,
+} from "react-icons/fa";
 
-function WhyUs() {
+export default function WhyUs() {
+  const [hovered, setHovered] = useState(null);
+  const color = "#f29a41";
+
   const reasons = [
-    "Ganás visibilidad llegando a nuevos mercados",
-    "Conectás con tu audiencia y generás confianza",
-    "Automatizás procesos y ahorrás tiempo",
-    "Obtenés una herramienta de ventas 24/7",
+    {
+      icon: <FaPaw size={36} />,
+      title: "Alma creativa",
+      desc: "Diseñamos cada proyecto con pasión, energía y un toque único, como si fuera nuestro propio sueño hecho código.",
+    },
+    {
+      icon: <FaRocket size={36} />,
+      title: "Innovación constante",
+      desc: "Adoptamos las últimas tecnologías y frameworks para llevar tus ideas al siguiente nivel.",
+    },
+    {
+      icon: <FaLightbulb size={36} />,
+      title: "Estrategia y visión",
+      desc: "No solo construimos sitios, construimos marcas digitales con propósito y dirección.",
+    },
+    {
+      icon: <FaCode size={36} />,
+      title: "Desarrollo a medida",
+      desc: "Creamos soluciones escalables, optimizadas y seguras, pensadas para el crecimiento real de tu negocio.",
+    },
+    {
+      icon: <FaHandshake size={36} />,
+      title: "Compromiso real",
+      desc: "Nos involucramos en cada detalle del proceso, desde la idea inicial hasta el lanzamiento.",
+    },
+    {
+      icon: <FaHeart size={36} />,
+      title: "Cercanía humana",
+      desc: "Trabajamos con empatía, transparencia y buena energía. Porque detrás del código hay personas que aman lo que hacen.",
+    },
   ];
 
   return (
     <section
       id="whyus"
-      className="py-5"
-      style={{ backgroundColor: "#f9eedb", color: "#0d0d0d" }}
+      className="py-5 text-center"
+      style={{
+        background: "#0d0d0d",
+        color: "#f9eedb",
+        boxShadow: "inset 0 0 30px rgba(0,0,0,0.5)",
+      }}
     >
-      <div className="container">
-        <h6 className="text-uppercase text-secondary mb-2 text-center">
-          ¿Por qué deberías trabajar con nosotros?
-        </h6>
-        <h2 className="fw-bold mb-4 text-center">
-          Sabemos entender tu empresa y a tus clientes
-        </h2>
-        <p
-          className="mb-5 text-center"
-          style={{ maxWidth: "700px", lineHeight: "1.6", margin: "0 auto" }}
+      <div className="container py-4">
+        <h6
+          className="text-uppercase mb-2"
+          style={{ color, letterSpacing: "2px" }}
         >
-          Tu negocio es único, y tu web también debería serlo. Investigamos a
-          fondo tu mercado para comprender sus necesidades, deseos y
-          motivaciones, creando un diseño que conecte con tu público a un nivel
-          emocional.
+          Por qué elegirnos
+        </h6>
+        <h2 className="fw-bold mb-4">Creamos soluciones con alma digital 🐾</h2>
+        <p
+          className="text-light mb-5"
+          style={{
+            maxWidth: "700px",
+            margin: "0 auto",
+            color: "#d8d0c2",
+          }}
+        >
+          En DTS&DOG Studio combinamos creatividad, tecnología y estrategia para
+          dar vida a experiencias digitales que inspiran, emocionan y generan
+          resultados reales.
         </p>
 
-        <div className="row align-items-center">
-          {/* 🟣 Lista de razones */}
-          <div className="col-md-6">
-            {reasons.map((text, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.4, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                className="d-flex align-items-center justify-content-between p-3 mb-3 bg-light rounded-4 shadow-sm"
+        <div className="row justify-content-center g-4">
+          {reasons.map((item, index) => (
+            <motion.div
+              key={index}
+              className="col-12 col-sm-6 col-md-4"
+              onMouseEnter={() => setHovered(index)}
+              onMouseLeave={() => setHovered(null)}
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 150 }}
+            >
+              <div
+                className="p-4 rounded-4 h-100"
+                style={{
+                  background:
+                    hovered === index
+                      ? `${color}15`
+                      : "rgba(255, 255, 255, 0.03)",
+                  border:
+                    hovered === index
+                      ? `1px solid ${color}`
+                      : "1px solid rgba(255,255,255,0.08)",
+                  boxShadow:
+                    hovered === index
+                      ? `0 0 25px ${color}55`
+                      : "0 0 10px rgba(255,255,255,0.05)",
+                  transition: "all 0.3s ease",
+                }}
               >
-                <p className="mb-0 fw-semibold">
-                  {index + 1}. {text}
-                </p>
-                <span
+                <div
+                  className="mb-3"
                   style={{
-                    fontSize: "1.3rem",
-                    backgroundColor: "#0d0d0d",
-                    color: "#f9eedb",
-                    borderRadius: "50%",
-                    width: "35px",
-                    height: "35px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
+                    color: hovered === index ? "#fff" : color,
+                    transition: "color 0.3s ease",
                   }}
                 >
-                  →
-                </span>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* 🔵 Ícono React animado */}
-          <div className="col-md-6 text-center">
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{
-                repeat: Infinity,
-                duration: 10,
-                ease: "linear",
-              }}
-              style={{
-                display: "inline-block",
-                marginTop: "20px",
-              }}
-            >
-              <FaReact
-                size={220}
-                color="#61DAFB"
-                style={{
-                  filter: "drop-shadow(0 0 20px rgba(97, 218, 251, 0.6))",
-                }}
-              />
+                  {item.icon}
+                </div>
+                <h5
+                  className="fw-bold mb-2"
+                  style={{
+                    color: hovered === index ? "#fff" : "#f9eedb",
+                  }}
+                >
+                  {item.title}
+                </h5>
+                <p
+                  style={{
+                    color:
+                      hovered === index
+                        ? "rgba(249,238,219,0.9)"
+                        : "rgba(249,238,219,0.7)",
+                    fontSize: "0.9rem",
+                    lineHeight: "1.5",
+                  }}
+                >
+                  {item.desc}
+                </p>
+              </div>
             </motion.div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
   );
 }
-
-export default WhyUs;
