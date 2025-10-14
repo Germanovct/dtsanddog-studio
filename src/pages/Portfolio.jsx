@@ -69,56 +69,65 @@ export default function Portfolio() {
               className="col-12 col-sm-6 col-lg-4"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.2, duration: 0.7 }}
+              transition={{ delay: i * 0.15, duration: 0.6 }}
             >
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 200 }}
                 style={{
-                  background: "rgba(255,255,255,0.03)",
-                  border: "1px solid rgba(255,255,255,0.1)",
+                  background: "#111",
+                  border: "1px solid rgba(255,255,255,0.08)",
                   borderRadius: "16px",
                   overflow: "hidden",
                   boxShadow: "0 0 20px rgba(0,0,0,0.3)",
-                  position: "relative",
                   transition: "all 0.3s ease",
                 }}
                 className="portfolio-card"
               >
-                <motion.img
-                  src={project.img}
-                  alt={project.title}
+                <div
                   style={{
-                    width: "100%",
-                    height: "250px",
-                    objectFit: "cover",
-                    transition: "all 0.4s ease",
+                    overflow: "hidden",
+                    borderRadius: "16px 16px 0 0",
                   }}
-                  whileHover={{ scale: 1.08 }}
-                />
-
-                {/* Overlay efecto hover */}
-                <motion.div
-                  className="overlay d-flex flex-column justify-content-center align-items-center text-center"
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    background:
-                      "linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.9) 100%)",
-                    opacity: 0,
-                    transition: "opacity 0.3s ease",
-                    color: "#fff",
-                    padding: "20px",
-                  }}
-                  whileHover={{ opacity: 1 }}
                 >
-                  <h5 className="fw-bold mb-2" style={{ color: "#f29a41" }}>
+                  <motion.img
+                    src={project.img}
+                    alt={project.title}
+                    style={{
+                      width: "100%",
+                      height: "250px",
+                      objectFit: "cover",
+                      transition: "all 0.4s ease",
+                    }}
+                    whileHover={{ scale: 1.1 }}
+                  />
+                </div>
+
+                <div
+                  style={{
+                    padding: "1.2rem",
+                    textAlign: "left",
+                  }}
+                >
+                  <h5
+                    style={{
+                      color: "#f29a41",
+                      fontWeight: "600",
+                      marginBottom: "0.5rem",
+                    }}
+                  >
                     {project.title}
                   </h5>
-                  <p style={{ fontSize: "0.9rem", color: "#f9eedb" }}>
+                  <p
+                    style={{
+                      fontSize: "0.95rem",
+                      color: "#d8d0c2",
+                      margin: 0,
+                    }}
+                  >
                     {project.desc}
                   </p>
-                </motion.div>
+                </div>
               </motion.div>
             </motion.div>
           ))}
