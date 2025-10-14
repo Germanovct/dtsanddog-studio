@@ -9,7 +9,14 @@ import {
   FaNodeJs,
   FaWordpress,
 } from "react-icons/fa";
-import { SiMysql, SiVite, SiNextdotjs } from "react-icons/si";
+import {
+  SiMysql,
+  SiVite,
+  SiNextdotjs,
+  SiExpress,
+  SiAmazonwebservices,
+  SiGooglecloud,
+} from "react-icons/si";
 import "../App.css";
 
 const technologies = [
@@ -19,8 +26,11 @@ const technologies = [
   { name: "HTML5", icon: <FaHtml5 color="#E44D26" size={60} />, color: "#E44D26" },
   { name: "JavaScript", icon: <FaJsSquare color="#F7DF1E" size={60} />, color: "#F7DF1E" },
   { name: "Node.js", icon: <FaNodeJs color="#3C873A" size={60} />, color: "#3C873A" },
+  { name: "Express.js", icon: <SiExpress color="#FFFFFF" size={60} />, color: "#FFFFFF" },
   { name: "WordPress", icon: <FaWordpress color="#21759B" size={60} />, color: "#21759B" },
   { name: "MySQL", icon: <SiMysql color="#F29111" size={60} />, color: "#F29111" },
+  { name: "AWS", icon: <SiAmazonwebservices color="#FF9900" size={60} />, color: "#FF9900" },
+  { name: "Google Cloud", icon: <SiGooglecloud color="#4285F4" size={60} />, color: "#4285F4" },
   { name: "Next.js", icon: <SiNextdotjs color="#FFFFFF" size={60} />, color: "#FFFFFF" },
   { name: "React", icon: <FaReact color="#61DAFB" size={60} />, color: "#61DAFB" },
 ];
@@ -28,7 +38,6 @@ const technologies = [
 export default function TechStack() {
   const [hovered, setHovered] = useState(null);
 
-  // Animación de entrada (fade + slide up)
   const fadeUp = {
     hidden: { opacity: 0, y: 40 },
     visible: { opacity: 1, y: 0 },

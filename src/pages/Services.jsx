@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { FaCheck, FaTimes, FaArrowRight } from "react-icons/fa";
+import { FaCheck, FaTimes, FaArrowRight, FaCode, FaServer } from "react-icons/fa";
 
 const services = [
   {
@@ -49,8 +49,8 @@ const services = [
   },
   {
     title: "Tienda Online Optimizada",
-    desc: "Ecommerce optimizado, profesional y veloz para no parar de vender.",
-    ideal: "Campañas, lanzamientos, automatizaciones y ventas 24/7.",
+    desc: "Ecommerce profesional y veloz para vender sin límites.",
+    ideal: "Negocios que buscan automatizar sus ventas y crecer online.",
     color: "#3C873A",
     features: [
       "Optimizada para conversión",
@@ -67,6 +67,40 @@ const services = [
       "Carrito de compras",
       "Pasarelas de pago",
       "Medios de envío",
+    ],
+  },
+  {
+    title: "Desarrollo Frontend Profesional",
+    desc: "Interfaces modernas, interactivas y de alto rendimiento.",
+    ideal: "Startups, empresas y proyectos que buscan impacto visual.",
+    color: "#61DAFB",
+    icon: <FaCode size={22} />,
+    features: [
+      "SPA con React, Next.js o Vite",
+      "Animaciones con Framer Motion",
+      "Diseño responsive y accesible",
+      "Integración con APIs externas",
+      "Optimización de rendimiento",
+      "SEO técnico y microdatos",
+      "Deploy en Netlify o Vercel",
+      { disabled: "Backend o base de datos" },
+    ],
+  },
+  {
+    title: "Desarrollo Backend & APIs",
+    desc: "Potencia tu sistema con lógica sólida, rápida y segura.",
+    ideal: "Aplicaciones que requieren bases de datos, lógica y escalabilidad.",
+    color: "#FF9900",
+    icon: <FaServer size={22} />,
+    features: [
+      "Node.js + Express.js",
+      "Base de datos con MongoDB o MySQL",
+      "APIs REST y GraphQL",
+      "Autenticación JWT/OAuth",
+      "Integraciones con AWS / Google Cloud",
+      "Hosting en Render o Railway",
+      "Documentación Swagger",
+      { disabled: "Interfaz de usuario" },
     ],
   },
 ];
@@ -109,8 +143,8 @@ export default function Services() {
           className="text-light mb-5"
           style={{ maxWidth: "700px", margin: "0 auto", color: "#d8d0c2" }}
         >
-          Diseñamos y desarrollamos sitios web enfocados en resultados:
-          estética, rendimiento y estrategia digital al servicio de tu negocio.
+          Diseñamos y desarrollamos experiencias digitales únicas: 
+          desde interfaces impactantes hasta servidores escalables y seguros.
         </p>
 
         <div className="row justify-content-center g-4">
@@ -120,6 +154,7 @@ export default function Services() {
               className="col-12 col-md-6 col-lg-4"
               variants={fadeUp}
               transition={{ duration: 0.5, delay: index * 0.1 }}
+              whileHover={{ scale: 1.02 }}
             >
               <div
                 style={{
@@ -128,12 +163,17 @@ export default function Services() {
                   border: `1px solid rgba(255,255,255,0.1)`,
                   boxShadow: `0 0 20px ${s.color}33`,
                   transition: "all 0.3s ease",
+                  padding: "24px",
+                  height: "100%",
                 }}
-                className="p-4 h-100 text-start"
               >
-                <h5 className="fw-bold mb-3" style={{ color: s.color }}>
-                  {s.title}
-                </h5>
+                <div className="d-flex align-items-center mb-3">
+                  {s.icon && <div style={{ color: s.color }}>{s.icon}</div>}
+                  <h5 className="fw-bold mb-0 ms-2" style={{ color: s.color }}>
+                    {s.title}
+                  </h5>
+                </div>
+
                 <p className="text-light mb-2">{s.desc}</p>
                 <p
                   className="fw-semibold mb-3"
