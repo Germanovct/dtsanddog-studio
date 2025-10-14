@@ -1,6 +1,16 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { FaCheck, FaTimes, FaArrowRight, FaCode, FaServer } from "react-icons/fa";
+import {
+  FaCheck,
+  FaTimes,
+  FaArrowRight,
+  FaCode,
+  FaServer,
+  FaGamepad,
+  FaHeadphones,
+  FaCubes,
+  FaVrCardboard,
+} from "react-icons/fa";
 
 const services = [
   {
@@ -96,11 +106,28 @@ const services = [
       "Node.js + Express.js",
       "Base de datos con MongoDB o MySQL",
       "APIs REST y GraphQL",
-      "Autenticación JWT/OAuth",
+      "Autenticación JWT / OAuth",
       "Integraciones con AWS / Google Cloud",
       "Hosting en Render o Railway",
       "Documentación Swagger",
       { disabled: "Interfaz de usuario" },
+    ],
+  },
+  {
+    title: "Desarrollo de Videojuegos & Multimedia",
+    desc: "Experiencias interactivas y visuales con tecnología de vanguardia.",
+    ideal: "Estudios, marcas o artistas que buscan proyectos 3D, VR o inmersivos.",
+    color: "#9B4F96",
+    icon: <FaGamepad size={22} />,
+    features: [
+      "Motor Unity y Unreal Engine",
+      "Programación en C#, C++, GLSL, HLSL",
+      "Sound Design y efectos VFX",
+      "Arte 3D y animación avanzada",
+      "Diseño de niveles y experiencia de usuario",
+      "Realidad virtual / aumentada (VR/XR)",
+      "Optimización para desktop y mobile",
+      { disabled: "Integración e-commerce" },
     ],
   },
 ];
@@ -137,14 +164,15 @@ export default function Services() {
           Nuestros servicios
         </h6>
 
-        <h2 className="fw-bold mb-4">Soluciones web que impulsan tu marca</h2>
+        <h2 className="fw-bold mb-4">Soluciones digitales para cada necesidad</h2>
 
         <p
           className="text-light mb-5"
           style={{ maxWidth: "700px", margin: "0 auto", color: "#d8d0c2" }}
         >
-          Diseñamos y desarrollamos experiencias digitales únicas: 
-          desde interfaces impactantes hasta servidores escalables y seguros.
+          Desde sitios web corporativos hasta videojuegos inmersivos, 
+          combinamos creatividad, tecnología y estrategia para ofrecer 
+          resultados reales.
         </p>
 
         <div className="row justify-content-center g-4">
