@@ -11,7 +11,7 @@ import {
   FaUnity,
   FaVrCardboard,
   FaAws, // ✅ Logo oficial de AWS
-  FaRobot, // 🤖 Nuevo ícono de IA futurista
+  FaRobot, // 🤖 IA futurista
 } from "react-icons/fa";
 import {
   SiMysql,
@@ -24,12 +24,11 @@ import {
   SiUnrealengine,
   SiCplusplus,
   SiDotnet,
-  SiNodedotjs, // ✅ Placeholder temporal para N8N
+  SiNodedotjs, // ✅ placeholder N8N
+  SiFigma,
+  SiAdobexd,
 } from "react-icons/si";
-import {
-  GiSoundWaves,
-  GiWireframeGlobe,
-} from "react-icons/gi";
+import { GiSoundWaves, GiWireframeGlobe } from "react-icons/gi";
 import { MdAnimation } from "react-icons/md";
 import { RiPaintBrushFill } from "react-icons/ri";
 
@@ -47,7 +46,7 @@ export default function TechStack() {
     { name: "Express.js", icon: <SiExpress color="#FFFFFF" size={60} />, color: "#FFFFFF" },
     { name: "WordPress", icon: <FaWordpress color="#21759B" size={60} />, color: "#21759B" },
     { name: "MySQL", icon: <SiMysql color="#F29111" size={60} />, color: "#F29111" },
-    { name: "AWS", icon: <FaAws color="#FF9900" size={60} />, color: "#FF9900" }, // ✅ Logo oficial y estable
+    { name: "AWS", icon: <FaAws color="#FF9900" size={60} />, color: "#FF9900" },
     { name: "Google Cloud", icon: <SiGooglecloud color="#4285F4" size={60} />, color: "#4285F4" },
     { name: "Firebase", icon: <SiFirebase color="#FFCA28" size={60} />, color: "#FFCA28" },
     { name: "Next.js", icon: <SiNextdotjs color="#FFFFFF" size={60} />, color: "#FFFFFF" },
@@ -57,14 +56,13 @@ export default function TechStack() {
     { name: "C++", icon: <SiCplusplus color="#00599C" size={60} />, color: "#00599C" },
     { name: "C#", icon: <SiDotnet color="#68217A" size={60} />, color: "#68217A" },
 
-    // 🔴 N8N (placeholder temporal hasta actualizar react-icons)
+    // 🔴 N8N
     { name: "N8N", icon: <SiNodedotjs color="#E74C3C" size={60} />, color: "#E74C3C" },
-    // Cuando actualices react-icons podés cambiar por:
-    // { name: "N8N", icon: <SiN8n color="#E74C3C" size={60} />, color: "#E74C3C" },
 
-    // 🤖 Inteligencia Artificial futurista
+    // 🤖 Inteligencia Artificial
     { name: "IA", icon: <FaRobot color="#00A67E" size={60} />, color: "#00A67E" },
 
+    // 🎨 Multimedia / Creativo
     { name: "GLSL", icon: <GiWireframeGlobe color="#A020F0" size={60} />, color: "#A020F0" },
     { name: "HLSL", icon: <GiWireframeGlobe color="#00BFFF" size={60} />, color: "#00BFFF" },
     { name: "VR / XR", icon: <FaVrCardboard color="#f29a41" size={60} />, color: "#f29a41" },
@@ -72,6 +70,10 @@ export default function TechStack() {
     { name: "VFX", icon: <MdAnimation color="#FF4F4F" size={60} />, color: "#FF4F4F" },
     { name: "Sound Design", icon: <GiSoundWaves color="#00FFAA" size={60} />, color: "#00FFAA" },
     { name: "Animation", icon: <MdAnimation color="#f29a41" size={60} />, color: "#f29a41" },
+
+    // 🧠 Diseño UX/UI
+    { name: "Figma", icon: <SiFigma color="#F24E1E" size={60} />, color: "#F24E1E" },
+    { name: "Adobe XD", icon: <SiAdobexd color="#FF61F6" size={60} />, color: "#FF61F6" },
   ];
 
   const fadeUp = {
@@ -111,8 +113,8 @@ export default function TechStack() {
           className="text-light mb-5"
           style={{ maxWidth: "700px", margin: "0 auto", color: "#d8d0c2" }}
         >
-          Desde el desarrollo web hasta la creación de experiencias inmersivas, utilizamos
-          las tecnologías más potentes para materializar tus ideas.
+          Desde el desarrollo web hasta la creación de experiencias inmersivas y diseño UX/UI,
+          utilizamos las tecnologías más potentes para materializar tus ideas.
         </p>
       </motion.div>
 

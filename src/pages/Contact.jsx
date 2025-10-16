@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import emailjs from "@emailjs/browser";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -12,6 +13,9 @@ export default function Contact() {
     mensaje: "",
   });
 
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -19,9 +23,35 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const text = `Hola! 👋 Soy ${formData.nombre} (${formData.empresa}).%0A%0A📞 Teléfono: ${formData.telefono}%0A📧 Email: ${formData.email}%0A🛠 Servicio: ${formData.servicio}%0A💰 Presupuesto: ${formData.presupuesto}%0A💬 Mensaje: ${formData.mensaje}`;
-    const url = `https://wa.me/541133888802?text=${text}`;
-    window.open(url, "_blank");
+    setSending(true);
+
+    const serviceId = "service_pfjo63k";
+    const templateId = "template_jvb72h8"; // ✅ Tu template real
+    const publicKey = "jygZ5xWwPQjmcYwLG";
+
+    // 🔹 Los nombres deben coincidir con los {{campos}} del template de EmailJS
+    const templateParams = {
+      nombre: formData.nombre,
+      telefono: formData.telefono,
+      empresa: formData.empresa,
+      email: formData.email,
+      servicio: formData.servicio,
+      presupuesto: formData.presupuesto,
+      mensaje: formData.mensaje,
+    };
+
+    emailjs
+      .send(serviceId, templateId, templateParams, publicKey)
+      .then(() => {
+        setSent(true);
+      })
+      .catch((err) => {
+        console.error("❌ Error enviando el correo:", err);
+        alert("Hubo un problema al enviar el email 😔");
+      })
+      .finally(() => {
+        setSending(false);
+      });
   };
 
   return (
@@ -36,7 +66,7 @@ export default function Contact() {
         </p>
 
         <div className="row g-4 align-items-start">
-          {/* Columna izquierda - pasos */}
+          {/* 🧭 Columna izquierda */}
           <div className="col-md-5">
             <motion.div
               initial={{ opacity: 0, x: -40 }}
@@ -46,8 +76,8 @@ export default function Contact() {
               <div className="mb-4">
                 <h5 className="fw-bold">1️⃣ Envíanos un mensaje</h5>
                 <p className="text-muted">
-                  Completá el formulario y te responderemos lo antes posible
-                  con una propuesta personalizada.
+                  Completá el formulario y te responderemos lo antes posible con
+                  una propuesta personalizada.
                 </p>
               </div>
 
@@ -69,7 +99,7 @@ export default function Contact() {
             </motion.div>
           </div>
 
-          {/* Columna derecha - formulario */}
+          {/* 📬 Columna derecha - Formulario */}
           <div className="col-md-7">
             <motion.form
               onSubmit={handleSubmit}
@@ -171,8 +201,16 @@ export default function Contact() {
                 </div>
 
                 <div className="col-12 text-center">
-                  <button type="submit" className="btn btn-dark w-100 py-2">
-                    Enviar mensaje ✉️
+                  <button
+                    type="submit"
+                    disabled={sending}
+                    className="btn btn-dark w-100 py-2"
+                  >
+                    {sending
+                      ? "Enviando..."
+                      : sent
+                      ? "✅ Enviado con éxito"
+                      : "Enviar mensaje ✉️"}
                   </button>
                 </div>
               </div>

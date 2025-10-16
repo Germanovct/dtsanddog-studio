@@ -7,9 +7,7 @@ import {
   FaCode,
   FaServer,
   FaGamepad,
-  FaHeadphones,
-  FaCubes,
-  FaVrCardboard,
+  FaPencilRuler,
 } from "react-icons/fa";
 
 const services = [
@@ -130,6 +128,24 @@ const services = [
       { disabled: "Integración e-commerce" },
     ],
   },
+  // 👇 NUEVO SERVICIO AGREGADO (SIN BORRAR NADA)
+  {
+    title: "UX/UI Design & Prototyping",
+    desc: "Diseño centrado en el usuario con interfaces limpias, usables y memorables.",
+    ideal: "Empresas y startups que buscan mejorar la experiencia digital de sus productos.",
+    color: "#E91E63",
+    icon: <FaPencilRuler size={22} />,
+    features: [
+      "Research de usuario y journey mapping",
+      "Wireframes y mockups interactivos",
+      "Prototipado en Figma o Adobe XD",
+      "Test de usabilidad y accesibilidad",
+      "Diseño de sistemas y componentes UI",
+      "Identidad visual y branding digital",
+      "Guías de estilo y manual de marca",
+      { disabled: "Desarrollo backend" },
+    ],
+  },
 ];
 
 export default function Services() {
@@ -170,8 +186,8 @@ export default function Services() {
           className="text-light mb-5"
           style={{ maxWidth: "700px", margin: "0 auto", color: "#d8d0c2" }}
         >
-          Desde sitios web corporativos hasta videojuegos inmersivos, 
-          combinamos creatividad, tecnología y estrategia para ofrecer 
+          Desde sitios web corporativos hasta videojuegos inmersivos,
+          combinamos creatividad, tecnología y estrategia para ofrecer
           resultados reales.
         </p>
 
