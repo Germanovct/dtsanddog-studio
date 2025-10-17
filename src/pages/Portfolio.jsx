@@ -3,12 +3,6 @@ import { motion } from "framer-motion";
 
 const projects = [
   {
-    title: "Fractal Bar",
-    desc: "Sitio web para club techno con estética inmersiva, inspirada en la cultura electrónica.",
-    img: "/projects/fractal.jpg",
-    url: "https://fractalbar.com.ar",
-  },
-  {
     title: "TCQ Cultura Techno",
     desc: "Plataforma de eventos con venta de tickets online y diseño responsive.",
     img: "/projects/tcq.jpg",
@@ -16,7 +10,7 @@ const projects = [
   },
   {
     title: "Estudio Jurídico",
-    desc: "Landing Page institucional creada con React y animaciones fluidas.",
+    desc: "Landing Page .",
     img: "/projects/venti.jpg",
   },
 ];
