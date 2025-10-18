@@ -1,70 +1,89 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
 import emailjs from "@emailjs/browser";
+import { motion } from "framer-motion";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
     nombre: "",
-    telefono: "",
     empresa: "",
+    telefono: "",
     email: "",
     servicio: "",
     presupuesto: "",
     mensaje: "",
   });
 
-  const [sending, setSending] = useState(false);
-  const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+  const [recaptchaReady, setRecaptchaReady] = useState(false);
+
+  // 🧠 Esperar a que el script de reCAPTCHA cargue
+  useEffect(() => {
+    const checkRecaptcha = setInterval(() => {
+      if (window.grecaptcha) {
+        clearInterval(checkRecaptcha);
+        window.grecaptcha.ready(() => {
+          setRecaptchaReady(true);
+        });
+      }
+    }, 500);
+  }, []);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    setSending(true);
+    setSuccess(false);
 
-    // 🛡️ reCAPTCHA
-    const token = grecaptcha.getResponse();
-    if (!token) {
-      setError("Por favor, verifica el reCAPTCHA antes de enviar.");
-      setSending(false);
+    if (!recaptchaReady) {
+      setError("reCAPTCHA aún no está listo. Espera un momento ⏳");
       return;
     }
 
-    const serviceId = "service_pfjo63k";
-    const templateId = "template_jvb72h8";
-    const publicKey = "hpvZoNUAR-YfgsLEe";
+    const token = window.grecaptcha.getResponse();
+    if (!token) {
+      setError("Por favor, completa el reCAPTCHA antes de enviar.");
+      return;
+    }
 
-    emailjs
-      .send(serviceId, templateId, formData, publicKey)
-      .then(() => {
-        setSent(true);
-        setFormData({
-          nombre: "",
-          telefono: "",
-          empresa: "",
-          email: "",
-          servicio: "",
-          presupuesto: "",
-          mensaje: "",
-        });
-        grecaptcha.reset(); // limpia el captcha
-      })
-      .catch((err) => {
-        console.error("❌ Error enviando el correo:", err);
-        setError("Hubo un problema al enviar el mensaje.");
-      })
-      .finally(() => {
-        setSending(false);
+    setLoading(true);
+    try {
+      await emailjs.send(
+        "service_pfjo63k", // 🔹 Service ID
+        "template_jvb72h8", // 🔹 Template ID
+        formData,
+        "hpvZoNUAR-YfgsLEe" // 🔹 Public key
+      );
+
+      setSuccess(true);
+      setFormData({
+        nombre: "",
+        empresa: "",
+        telefono: "",
+        email: "",
+        servicio: "",
+        presupuesto: "",
+        mensaje: "",
       });
+      window.grecaptcha.reset();
+    } catch (err) {
+      console.error("❌ Error enviando el correo:", err);
+      setError("Hubo un problema al enviar el mensaje. Intenta nuevamente.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <section id="contact" className="py-5" style={{ background: "#f9eedb" }}>
+    <motion.section
+      id="contact"
+      className="py-5"
+      style={{ background: "#f9eedb" }}
+    >
       <div className="container py-4">
         <h2 className="text-center fw-bold mb-4">
           🚀 Contanos más sobre tu proyecto
@@ -75,6 +94,7 @@ export default function Contact() {
         </p>
 
         <div className="row g-4 align-items-start">
+          {/* Columna izquierda */}
           <div className="col-md-5">
             <motion.div
               initial={{ opacity: 0, x: -40 }}
@@ -88,7 +108,6 @@ export default function Contact() {
                   una propuesta personalizada.
                 </p>
               </div>
-
               <div className="mb-4">
                 <h5 className="fw-bold">2️⃣ Nos ponemos en contacto</h5>
                 <p className="text-muted">
@@ -96,7 +115,6 @@ export default function Contact() {
                   mejor opción para tu empresa.
                 </p>
               </div>
-
               <div className="mb-4">
                 <h5 className="fw-bold">3️⃣ Empezamos a trabajar</h5>
                 <p className="text-muted">
@@ -107,6 +125,7 @@ export default function Contact() {
             </motion.div>
           </div>
 
+          {/* Columna derecha */}
           <div className="col-md-7">
             <motion.form
               onSubmit={handleSubmit}
@@ -208,15 +227,17 @@ export default function Contact() {
                   ></textarea>
                 </div>
 
-                {/* 🛡️ reCAPTCHA */}
+                {/* 🧩 reCAPTCHA */}
                 <div
-                  className="g-recaptcha mt-3"
+                  className="g-recaptcha mb-3"
                   data-sitekey="6LcI5-4rAAAAACqxhv2ePvuSrCh7lED2uUI8JdFW"
                 ></div>
 
-                {error && <p className="text-danger mt-2">{error}</p>}
-                {sent && (
-                  <p className="text-success mt-2">
+                {error && (
+                  <p className="text-danger small mt-2 text-center">{error}</p>
+                )}
+                {success && (
+                  <p className="text-success small mt-2 text-center">
                     ✅ ¡Mensaje enviado correctamente!
                   </p>
                 )}
@@ -224,13 +245,11 @@ export default function Contact() {
                 <div className="col-12 text-center">
                   <button
                     type="submit"
-                    disabled={sending}
+                    disabled={loading}
                     className="btn btn-dark w-100 py-2"
                   >
-                    {sending
+                    {loading
                       ? "Enviando..."
-                      : sent
-                      ? "✅ Enviado con éxito"
                       : "Enviar mensaje ✉️"}
                   </button>
                 </div>
@@ -239,6 +258,6 @@ export default function Contact() {
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
