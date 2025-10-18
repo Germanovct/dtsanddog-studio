@@ -1,22 +1,48 @@
 {
-  "name": "DTS&DOG Studio",
+  "name": "DTS&DOG Studio — Diseño, Desarrollo y Branding Digital",
   "short_name": "DTS&DOG",
-  "description": "Diseño, desarrollo y branding digital con alma creativa. Desde Buenos Aires al mundo.",
-  "start_url": "/",
+  "description": "DTS&DOG Studio combina diseño, desarrollo y branding digital con alma creativa. Creamos experiencias web, UX/UI y estrategias visuales desde Buenos Aires al mundo.",
+  "lang": "es-AR",
+  "dir": "ltr",
+  "start_url": "/?utm_source=web_app_manifest",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "background_color": "#0d0d0d",
   "theme_color": "#0d0d0d",
-  "orientation": "portrait",
+  "categories": [
+    "technology",
+    "design",
+    "branding",
+    "development",
+    "ux-ui",
+    "creative-agency"
+  ],
+  "prefer_related_applications": false,
   "icons": [
     {
-      "src": "/favicon.png",
+      "src": "/icons/android/android-launchericon-192-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "/favicon.png",
+      "src": "/icons/android/android-launchericon-512-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/ios/180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/favicon-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }

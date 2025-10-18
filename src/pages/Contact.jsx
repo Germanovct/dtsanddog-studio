@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 import { motion } from "framer-motion";
 
@@ -17,6 +17,18 @@ export default function Contact() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
 
+  // ✅ Cargar el script de reCAPTCHA automáticamente si no está
+  useEffect(() => {
+    if (!document.querySelector("#recaptcha-script")) {
+      const script = document.createElement("script");
+      script.id = "recaptcha-script";
+      script.src = "https://www.google.com/recaptcha/api.js";
+      script.async = true;
+      script.defer = true;
+      document.body.appendChild(script);
+    }
+  }, []);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -27,9 +39,10 @@ export default function Contact() {
     setError("");
     setSuccess(false);
 
-    const token = grecaptcha.getResponse();
+    // ✅ Validar reCAPTCHA
+    const token = window.grecaptcha?.getResponse();
     if (!token) {
-      setError("Por favor, verifica el reCAPTCHA antes de enviar.");
+      setError("⚠️ Por favor, completa el reCAPTCHA antes de enviar.");
       setLoading(false);
       return;
     }
@@ -39,7 +52,7 @@ export default function Contact() {
         "service_pfjo63k", // tu Service ID
         "template_jvb72h8", // tu Template ID
         formData,
-        "hpvZoNUAR-YfgsLEe" // tu Public Key
+        "hpvZoNUAR-YfgsLEe" // tu Public Key de EmailJS
       );
 
       console.log("✅ Correo enviado:", result.status, result.text);
@@ -53,7 +66,7 @@ export default function Contact() {
         presupuesto: "",
         mensaje: "",
       });
-      grecaptcha.reset();
+      window.grecaptcha.reset(); // resetear el captcha
     } catch (err) {
       console.error("❌ Error enviando el correo:", err);
       setError("Hubo un problema al enviar el mensaje. Intenta nuevamente.");
@@ -134,10 +147,10 @@ export default function Contact() {
             />
           </div>
 
-          {/* 🧩 Google reCAPTCHA */}
+          {/* ✅ Google reCAPTCHA */}
           <div
             className="g-recaptcha mb-3"
-            data-sitekey="6LfbV2gpAAAAAG-KEhVbyE0EZUZny6TWuWv4n1Uz"
+            data-sitekey="6LcI5-4rAAAAACqxhv2ePvuSrCh7lED2uUI8JdFW"
           ></div>
 
           {error && <p style={{ color: "red" }}>{error}</p>}

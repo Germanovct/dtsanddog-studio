@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>Estás sin conexión — DTS&DOG Studio</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#0d0d0d" />
+    <style>
+      :root { color-scheme: dark light; }
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+        background: #0d0d0d; color: #f9eedb; display: grid; place-items: center;
+        min-height: 100vh; padding: 24px;
+      }
+      .card {
+        max-width: 540px; width: 100%;
+        background: #141414; border: 1px solid rgba(255,255,255,.08);
+        border-radius: 16px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      }
+      h1 { margin: 0 0 8px; font-size: 1.6rem; }
+      p { margin: 0 0 16px; opacity: .85; }
+      .hint { font-size: .9rem; opacity: .7; }
+      .btn {
+        display: inline-block; margin-top: 12px; padding: 10px 14px; border-radius: 10px;
+        background: #f29a41; color: #0d0d0d; font-weight: 700; text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <h1>Estás sin conexión</h1>
+      <p>No pudimos cargar la página. Cuando recuperes Internet, intentaremos de nuevo.</p>
+      <p class="hint">Tip: igual podés navegar partes del sitio que ya visitaste (gracias a la PWA 😉).</p>
+      <a class="btn" href="/">Volver al inicio</a>
+    </main>
+  </body>
+</html>
