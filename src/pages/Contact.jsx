@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import emailjs from "@emailjs/browser";
 import { motion } from "framer-motion";
 
 export default function Contact() {
+  const captchaRef = useRef(null);
   const [formData, setFormData] = useState({
     nombre: "",
     empresa: "",
@@ -12,27 +13,31 @@ export default function Contact() {
     presupuesto: "",
     mensaje: "",
   });
-
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
   const [recaptchaReady, setRecaptchaReady] = useState(false);
 
-  // 🧠 Esperar a que el script de reCAPTCHA cargue
+  // 🧠 Cargar captcha solo una vez
   useEffect(() => {
     const checkRecaptcha = setInterval(() => {
-      if (window.grecaptcha) {
+      if (window.grecaptcha && captchaRef.current && !recaptchaReady) {
         clearInterval(checkRecaptcha);
         window.grecaptcha.ready(() => {
+          window.grecaptcha.render(captchaRef.current, {
+            sitekey:
+              window.location.hostname === "localhost"
+                ? "6LfNxxxxLOCALxxxxxx" // 🔹 tu clave local
+                : "6LcI5-4rAAAAACqxhv2ePvuSrCh7lED2uUI8JdFW", // 🔹 tu clave producción
+          });
           setRecaptchaReady(true);
         });
       }
     }, 500);
-  }, []);
+  }, [recaptchaReady]);
 
-  const handleChange = (e) => {
+  const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,23 +45,23 @@ export default function Contact() {
     setSuccess(false);
 
     if (!recaptchaReady) {
-      setError("reCAPTCHA aún no está listo. Espera un momento ⏳");
+      setError("El reCAPTCHA aún no está listo. Esperá unos segundos ⏳");
       return;
     }
 
     const token = window.grecaptcha.getResponse();
     if (!token) {
-      setError("Por favor, completa el reCAPTCHA antes de enviar.");
+      setError("Por favor, completá el reCAPTCHA antes de enviar.");
       return;
     }
 
     setLoading(true);
     try {
       await emailjs.send(
-        "service_pfjo63k", // 🔹 Service ID
-        "template_jvb72h8", // 🔹 Template ID
+        "service_pfjo63k",
+        "template_jvb72h8",
         formData,
-        "hpvZoNUAR-YfgsLEe" // 🔹 Public key
+        "hpvZoNUAR-YfgsLEe"
       );
 
       setSuccess(true);
@@ -79,53 +84,23 @@ export default function Contact() {
   };
 
   return (
-    <motion.section
-      id="contact"
-      className="py-5"
-      style={{ background: "#f9eedb" }}
-    >
+    <motion.section id="contact" className="py-5" style={{ background: "#f9eedb" }}>
       <div className="container py-4">
-        <h2 className="text-center fw-bold mb-4">
-          🚀 Contanos más sobre tu proyecto
-        </h2>
+        <h2 className="text-center fw-bold mb-4">🚀 Contanos más sobre tu proyecto</h2>
         <p className="text-center mb-5 text-muted">
-          Completá el formulario y te responderemos a la brevedad con una
-          propuesta personalizada.
+          Completá el formulario y te responderemos a la brevedad con una propuesta personalizada.
         </p>
 
         <div className="row g-4 align-items-start">
-          {/* Columna izquierda */}
           <div className="col-md-5">
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="mb-4">
-                <h5 className="fw-bold">1️⃣ Envíanos un mensaje</h5>
-                <p className="text-muted">
-                  Completá el formulario y te responderemos lo antes posible con
-                  una propuesta personalizada.
-                </p>
-              </div>
-              <div className="mb-4">
-                <h5 className="fw-bold">2️⃣ Nos ponemos en contacto</h5>
-                <p className="text-muted">
-                  Escuchamos atentamente tus necesidades y te proponemos la
-                  mejor opción para tu empresa.
-                </p>
-              </div>
-              <div className="mb-4">
-                <h5 className="fw-bold">3️⃣ Empezamos a trabajar</h5>
-                <p className="text-muted">
-                  Nos ponemos manos a la obra creando la nueva web que tu marca
-                  necesita.
-                </p>
-              </div>
-            </motion.div>
+            <h5 className="fw-bold">1️⃣ Envíanos un mensaje</h5>
+            <p className="text-muted">Completá el formulario con tus datos y mensaje.</p>
+            <h5 className="fw-bold mt-4">2️⃣ Nos ponemos en contacto</h5>
+            <p className="text-muted">Te contactamos para ajustar detalles y objetivos.</p>
+            <h5 className="fw-bold mt-4">3️⃣ Empezamos a trabajar</h5>
+            <p className="text-muted">Creamos la web que tu marca necesita 🚀</p>
           </div>
 
-          {/* Columna derecha */}
           <div className="col-md-7">
             <motion.form
               onSubmit={handleSubmit}
@@ -135,85 +110,27 @@ export default function Contact() {
               transition={{ duration: 0.7 }}
             >
               <div className="row g-3">
-                <div className="col-md-6">
-                  <input
-                    type="text"
-                    name="nombre"
-                    placeholder="Nombre y Apellido *"
-                    className="form-control"
-                    value={formData.nombre}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-
-                <div className="col-md-6">
-                  <input
-                    type="text"
-                    name="telefono"
-                    placeholder="Teléfono"
-                    className="form-control"
-                    value={formData.telefono}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <div className="col-md-6">
-                  <input
-                    type="text"
-                    name="empresa"
-                    placeholder="Empresa"
-                    className="form-control"
-                    value={formData.empresa}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <div className="col-md-6">
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Email *"
-                    className="form-control"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-
-                <div className="col-md-6">
-                  <select
-                    name="servicio"
-                    className="form-select"
-                    value={formData.servicio}
-                    onChange={handleChange}
-                  >
-                    <option value="">¿Qué sitio necesitás?</option>
-                    <option value="Landing Page">Landing Page</option>
-                    <option value="Tienda Online">Tienda Online</option>
-                    <option value="Web Corporativa">Web Corporativa</option>
-                    <option value="Desarrollo a medida">
-                      Desarrollo a medida
-                    </option>
-                    <option value="Branding & Diseño">Branding & Diseño</option>
-                  </select>
-                </div>
-
-                <div className="col-md-6">
-                  <select
-                    name="presupuesto"
-                    className="form-select"
-                    value={formData.presupuesto}
-                    onChange={handleChange}
-                  >
-                    <option value="">¿Cuál es tu presupuesto (ARS)?</option>
-                    <option value="300K a 500K">$300K a $500K</option>
-                    <option value="500K a 800K">$500K a $800K</option>
-                    <option value="800K a 1M">$800K a $1M</option>
-                    <option value="1M a 2M">$1M a $2M</option>
-                    <option value="+2M">Más de $2M</option>
-                  </select>
-                </div>
+                {["nombre", "empresa", "telefono", "email", "servicio", "presupuesto"].map(
+                  (field, i) => (
+                    <div className="col-md-6" key={i}>
+                      <input
+                        type={field === "email" ? "email" : "text"}
+                        name={field}
+                        placeholder={
+                          field === "nombre"
+                            ? "Nombre y Apellido *"
+                            : field === "email"
+                            ? "Email *"
+                            : field.charAt(0).toUpperCase() + field.slice(1)
+                        }
+                        className="form-control"
+                        value={formData[field]}
+                        onChange={handleChange}
+                        required={["nombre", "email"].includes(field)}
+                      />
+                    </div>
+                  )
+                )}
 
                 <div className="col-12">
                   <textarea
@@ -227,30 +144,19 @@ export default function Contact() {
                   ></textarea>
                 </div>
 
-                {/* 🧩 reCAPTCHA */}
-                <div
-                  className="g-recaptcha mb-3"
-                  data-sitekey="6LcI5-4rAAAAACqxhv2ePvuSrCh7lED2uUI8JdFW"
-                ></div>
+                {/* ✅ reCAPTCHA renderizado manual */}
+                <div ref={captchaRef} className="mb-3 d-flex justify-content-center"></div>
 
-                {error && (
-                  <p className="text-danger small mt-2 text-center">{error}</p>
-                )}
-                {success && (
-                  <p className="text-success small mt-2 text-center">
-                    ✅ ¡Mensaje enviado correctamente!
-                  </p>
-                )}
+                {error && <p className="text-danger text-center small">{error}</p>}
+                {success && <p className="text-success text-center small">✅ ¡Mensaje enviado correctamente!</p>}
 
-                <div className="col-12 text-center">
+                <div className="col-12">
                   <button
                     type="submit"
                     disabled={loading}
                     className="btn btn-dark w-100 py-2"
                   >
-                    {loading
-                      ? "Enviando..."
-                      : "Enviar mensaje ✉️"}
+                    {loading ? "Enviando..." : "Enviar mensaje ✉️"}
                   </button>
                 </div>
               </div>
