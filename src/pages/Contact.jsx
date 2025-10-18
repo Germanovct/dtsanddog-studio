@@ -1,230 +1,166 @@
-// ✅ src/components/Contact.jsx
 import React, { useState } from "react";
-import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
-import ReCAPTCHA from "react-google-recaptcha";
+import { motion } from "framer-motion";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
     nombre: "",
-    telefono: "",
     empresa: "",
+    telefono: "",
     email: "",
     servicio: "",
     presupuesto: "",
     mensaje: "",
   });
 
-  const [sending, setSending] = useState(false);
-  const [sent, setSent] = useState(false);
-  const [captchaValid, setCaptchaValid] = useState(false);
-
-  const handleCaptchaChange = (value) => {
-    setCaptchaValid(!!value);
-  };
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError("");
+    setSuccess(false);
 
-    if (!captchaValid) {
-      alert("⚠️ Por favor, confirma que no sos un robot antes de enviar.");
+    const token = grecaptcha.getResponse();
+    if (!token) {
+      setError("Por favor, verifica el reCAPTCHA antes de enviar.");
+      setLoading(false);
       return;
     }
 
-    setSending(true);
+    try {
+      const result = await emailjs.send(
+        "service_pfjo63k", // tu Service ID
+        "template_jvb72h8", // tu Template ID
+        formData,
+        "hpvZoNUAR-YfgsLEe" // tu Public Key
+      );
 
-    const serviceId = "service_pfjo63k";
-    const templateId = "template_jvb72h8";
-    const publicKey = "jygZ5xWwPQjmcYwLG";
-
-    emailjs
-      .send(serviceId, templateId, formData, publicKey)
-      .then(() => {
-        setSent(true);
-      })
-      .catch((err) => {
-        console.error("❌ Error enviando el correo:", err);
-        alert("Hubo un problema al enviar el email 😔");
-      })
-      .finally(() => setSending(false));
+      console.log("✅ Correo enviado:", result.status, result.text);
+      setSuccess(true);
+      setFormData({
+        nombre: "",
+        empresa: "",
+        telefono: "",
+        email: "",
+        servicio: "",
+        presupuesto: "",
+        mensaje: "",
+      });
+      grecaptcha.reset();
+    } catch (err) {
+      console.error("❌ Error enviando el correo:", err);
+      setError("Hubo un problema al enviar el mensaje. Intenta nuevamente.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <section id="contact" className="py-5" style={{ background: "#f9eedb" }}>
-      <div className="container py-4">
-        <h2 className="text-center fw-bold mb-4">
-          🚀 Contanos más sobre tu proyecto
-        </h2>
-        <p className="text-center mb-5 text-muted">
-          Completá el formulario y te responderemos a la brevedad con una
-          propuesta personalizada.
-        </p>
+    <motion.section
+      id="contacto"
+      className="py-5 text-center"
+      style={{
+        background: "#0d0d0d",
+        color: "#f9eedb",
+        boxShadow: "inset 0 0 30px rgba(0,0,0,0.5)",
+      }}
+    >
+      <motion.div
+        className="container"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
+        <h6
+          className="text-uppercase mb-2"
+          style={{ color: "#f29a41", letterSpacing: "2px" }}
+        >
+          Contacto
+        </h6>
+        <h2 className="fw-bold mb-4">Contanos sobre tu proyecto</h2>
 
-        <div className="row g-4 align-items-start">
-          {/* Columna izquierda */}
-          <div className="col-md-5">
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="mb-4">
-                <h5 className="fw-bold">1️⃣ Envíanos un mensaje</h5>
-                <p className="text-muted">
-                  Completá el formulario y te responderemos lo antes posible
-                  con una propuesta personalizada.
-                </p>
+        <form
+          onSubmit={handleSubmit}
+          className="mx-auto"
+          style={{ maxWidth: "600px", textAlign: "left" }}
+        >
+          {["nombre", "empresa", "telefono", "email", "servicio", "presupuesto"].map(
+            (field) => (
+              <div className="mb-3" key={field}>
+                <label htmlFor={field} className="form-label text-light">
+                  {field.charAt(0).toUpperCase() + field.slice(1)}
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name={field}
+                  value={formData[field]}
+                  onChange={handleChange}
+                  required={field === "nombre" || field === "email"}
+                  style={{
+                    background: "#1a1a1a",
+                    color: "#f9eedb",
+                    border: "1px solid rgba(255,255,255,0.2)",
+                  }}
+                />
               </div>
-              <div className="mb-4">
-                <h5 className="fw-bold">2️⃣ Nos ponemos en contacto</h5>
-                <p className="text-muted">
-                  Escuchamos atentamente tus necesidades y te proponemos la
-                  mejor opción para tu empresa.
-                </p>
-              </div>
-              <div className="mb-4">
-                <h5 className="fw-bold">3️⃣ Empezamos a trabajar</h5>
-                <p className="text-muted">
-                  Nos ponemos manos a la obra creando la nueva web que tu marca
-                  necesita.
-                </p>
-              </div>
-            </motion.div>
+            )
+          )}
+
+          <div className="mb-3">
+            <label htmlFor="mensaje" className="form-label text-light">
+              Mensaje
+            </label>
+            <textarea
+              className="form-control"
+              name="mensaje"
+              rows="4"
+              value={formData.mensaje}
+              onChange={handleChange}
+              required
+              style={{
+                background: "#1a1a1a",
+                color: "#f9eedb",
+                border: "1px solid rgba(255,255,255,0.2)",
+              }}
+            />
           </div>
 
-          {/* Columna derecha */}
-          <div className="col-md-7">
-            <motion.form
-              onSubmit={handleSubmit}
-              className="bg-white rounded-4 shadow p-4"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7 }}
-            >
-              <div className="row g-3">
-                {/* Campos */}
-                <div className="col-md-6">
-                  <input
-                    type="text"
-                    name="nombre"
-                    placeholder="Nombre y Apellido *"
-                    className="form-control"
-                    value={formData.nombre}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className="col-md-6">
-                  <input
-                    type="text"
-                    name="telefono"
-                    placeholder="Teléfono"
-                    className="form-control"
-                    value={formData.telefono}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="col-md-6">
-                  <input
-                    type="text"
-                    name="empresa"
-                    placeholder="Empresa"
-                    className="form-control"
-                    value={formData.empresa}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="col-md-6">
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Email *"
-                    className="form-control"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
+          {/* 🧩 Google reCAPTCHA */}
+          <div
+            className="g-recaptcha mb-3"
+            data-sitekey="6LfbV2gpAAAAAG-KEhVbyE0EZUZny6TWuWv4n1Uz"
+          ></div>
 
-                {/* Selects */}
-                <div className="col-md-6">
-                  <select
-                    name="servicio"
-                    className="form-select"
-                    value={formData.servicio}
-                    onChange={handleChange}
-                  >
-                    <option value="">¿Qué sitio necesitás?</option>
-                    <option value="Landing Page">Landing Page</option>
-                    <option value="Tienda Online">Tienda Online</option>
-                    <option value="Web Corporativa">Web Corporativa</option>
-                    <option value="Desarrollo a medida">
-                      Desarrollo a medida
-                    </option>
-                    <option value="Branding & Diseño">Branding & Diseño</option>
-                    <option value="UX/UI Design">UX/UI Design</option>
-                  </select>
-                </div>
-                <div className="col-md-6">
-                  <select
-                    name="presupuesto"
-                    className="form-select"
-                    value={formData.presupuesto}
-                    onChange={handleChange}
-                  >
-                    <option value="">¿Cuál es tu presupuesto (ARS)?</option>
-                    <option value="300K a 500K">$300K a $500K</option>
-                    <option value="500K a 800K">$500K a $800K</option>
-                    <option value="800K a 1M">$800K a $1M</option>
-                    <option value="1M a 2M">$1M a $2M</option>
-                    <option value="+2M">Más de $2M</option>
-                  </select>
-                </div>
+          {error && <p style={{ color: "red" }}>{error}</p>}
+          {success && (
+            <p style={{ color: "#00FFAA" }}>✅ ¡Mensaje enviado correctamente!</p>
+          )}
 
-                {/* Mensaje */}
-                <div className="col-12">
-                  <textarea
-                    name="mensaje"
-                    placeholder="Escribí tu mensaje..."
-                    className="form-control"
-                    rows="4"
-                    value={formData.mensaje}
-                    onChange={handleChange}
-                  ></textarea>
-                </div>
-
-                {/* reCAPTCHA */}
-                <div className="col-12 text-center mb-3">
-                  <ReCAPTCHA
-                    sitekey="TU_SITE_KEY_AQUI" // 👉 reemplazá por tu clave del sitio reCAPTCHA
-                    onChange={handleCaptchaChange}
-                  />
-                </div>
-
-                {/* Botón */}
-                <div className="col-12 text-center">
-                  <button
-                    type="submit"
-                    disabled={sending}
-                    className="btn btn-dark w-100 py-2"
-                  >
-                    {sending
-                      ? "Enviando..."
-                      : sent
-                      ? "✅ Enviado con éxito"
-                      : "Enviar mensaje ✉️"}
-                  </button>
-                </div>
-              </div>
-            </motion.form>
-          </div>
-        </div>
-      </div>
-    </section>
+          <button
+            type="submit"
+            disabled={loading}
+            className="btn btn-dark w-100 fw-bold mt-3"
+            style={{
+              background: "#f29a41",
+              border: "none",
+              color: "#0d0d0d",
+              fontWeight: "bold",
+              borderRadius: "8px",
+            }}
+          >
+            {loading ? "Enviando..." : "Enviar mensaje"}
+          </button>
+        </form>
+      </motion.div>
+    </motion.section>
   );
 }
