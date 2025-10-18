@@ -1,0 +1,22 @@
+{
+  "name": "DTS&DOG Studio",
+  "short_name": "DTS&DOG",
+  "description": "Diseño, desarrollo y branding digital con alma creativa. Desde Buenos Aires al mundo.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d0d0d",
+  "theme_color": "#0d0d0d",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

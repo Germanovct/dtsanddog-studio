@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dtsanddog-studio.com.ar/sitemap.xml
+Host: https://dtsanddog-studio.com.ar
