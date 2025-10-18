@@ -1,6 +1,8 @@
+// ✅ src/components/Contact.jsx
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -15,6 +17,11 @@ export default function Contact() {
 
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+  const [captchaValid, setCaptchaValid] = useState(false);
+
+  const handleCaptchaChange = (value) => {
+    setCaptchaValid(!!value);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,25 +30,20 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!captchaValid) {
+      alert("⚠️ Por favor, confirma que no sos un robot antes de enviar.");
+      return;
+    }
+
     setSending(true);
 
     const serviceId = "service_pfjo63k";
-    const templateId = "template_jvb72h8"; // ✅ Tu template real
+    const templateId = "template_jvb72h8";
     const publicKey = "jygZ5xWwPQjmcYwLG";
 
-    // 🔹 Los nombres deben coincidir con los {{campos}} del template de EmailJS
-    const templateParams = {
-      nombre: formData.nombre,
-      telefono: formData.telefono,
-      empresa: formData.empresa,
-      email: formData.email,
-      servicio: formData.servicio,
-      presupuesto: formData.presupuesto,
-      mensaje: formData.mensaje,
-    };
-
     emailjs
-      .send(serviceId, templateId, templateParams, publicKey)
+      .send(serviceId, templateId, formData, publicKey)
       .then(() => {
         setSent(true);
       })
@@ -49,9 +51,7 @@ export default function Contact() {
         console.error("❌ Error enviando el correo:", err);
         alert("Hubo un problema al enviar el email 😔");
       })
-      .finally(() => {
-        setSending(false);
-      });
+      .finally(() => setSending(false));
   };
 
   return (
@@ -66,7 +66,7 @@ export default function Contact() {
         </p>
 
         <div className="row g-4 align-items-start">
-          {/* 🧭 Columna izquierda */}
+          {/* Columna izquierda */}
           <div className="col-md-5">
             <motion.div
               initial={{ opacity: 0, x: -40 }}
@@ -76,11 +76,10 @@ export default function Contact() {
               <div className="mb-4">
                 <h5 className="fw-bold">1️⃣ Envíanos un mensaje</h5>
                 <p className="text-muted">
-                  Completá el formulario y te responderemos lo antes posible con
-                  una propuesta personalizada.
+                  Completá el formulario y te responderemos lo antes posible
+                  con una propuesta personalizada.
                 </p>
               </div>
-
               <div className="mb-4">
                 <h5 className="fw-bold">2️⃣ Nos ponemos en contacto</h5>
                 <p className="text-muted">
@@ -88,7 +87,6 @@ export default function Contact() {
                   mejor opción para tu empresa.
                 </p>
               </div>
-
               <div className="mb-4">
                 <h5 className="fw-bold">3️⃣ Empezamos a trabajar</h5>
                 <p className="text-muted">
@@ -99,7 +97,7 @@ export default function Contact() {
             </motion.div>
           </div>
 
-          {/* 📬 Columna derecha - Formulario */}
+          {/* Columna derecha */}
           <div className="col-md-7">
             <motion.form
               onSubmit={handleSubmit}
@@ -109,6 +107,7 @@ export default function Contact() {
               transition={{ duration: 0.7 }}
             >
               <div className="row g-3">
+                {/* Campos */}
                 <div className="col-md-6">
                   <input
                     type="text"
@@ -120,7 +119,6 @@ export default function Contact() {
                     required
                   />
                 </div>
-
                 <div className="col-md-6">
                   <input
                     type="text"
@@ -131,7 +129,6 @@ export default function Contact() {
                     onChange={handleChange}
                   />
                 </div>
-
                 <div className="col-md-6">
                   <input
                     type="text"
@@ -142,7 +139,6 @@ export default function Contact() {
                     onChange={handleChange}
                   />
                 </div>
-
                 <div className="col-md-6">
                   <input
                     type="email"
@@ -155,6 +151,7 @@ export default function Contact() {
                   />
                 </div>
 
+                {/* Selects */}
                 <div className="col-md-6">
                   <select
                     name="servicio"
@@ -170,9 +167,9 @@ export default function Contact() {
                       Desarrollo a medida
                     </option>
                     <option value="Branding & Diseño">Branding & Diseño</option>
+                    <option value="UX/UI Design">UX/UI Design</option>
                   </select>
                 </div>
-
                 <div className="col-md-6">
                   <select
                     name="presupuesto"
@@ -189,6 +186,7 @@ export default function Contact() {
                   </select>
                 </div>
 
+                {/* Mensaje */}
                 <div className="col-12">
                   <textarea
                     name="mensaje"
@@ -200,6 +198,15 @@ export default function Contact() {
                   ></textarea>
                 </div>
 
+                {/* reCAPTCHA */}
+                <div className="col-12 text-center mb-3">
+                  <ReCAPTCHA
+                    sitekey="TU_SITE_KEY_AQUI" // 👉 reemplazá por tu clave del sitio reCAPTCHA
+                    onChange={handleCaptchaChange}
+                  />
+                </div>
+
+                {/* Botón */}
                 <div className="col-12 text-center">
                   <button
                     type="submit"
