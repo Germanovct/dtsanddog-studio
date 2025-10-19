@@ -5,13 +5,12 @@ const projects = [
   {
     title: "TCQ Cultura Techno",
     desc: "Plataforma de eventos con venta de tickets online y diseño responsive.",
-    img: "/projects/tcq.jpg",
     url: "https://tcqclub.com",
   },
   {
     title: "Estudio Jurídico",
     desc: "Landing Page .",
-    img: "/projects/venti.jpg",
+    url: "https://estudio-juridicosna.netlify.app/"
   },
 ];
 
