@@ -33,6 +33,15 @@
       content="iUIslv39JIQ-k34S3GICjbQ_tNBgdW7na9Y4HFkTUpw"
     />
 
+    <!-- 📊 Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-B07YZDKNPF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-B07YZDKNPF');
+    </script>
+
     <!-- 🐾 Open Graph / Meta para redes sociales -->
     <meta property="og:locale" content="es_AR" />
     <meta property="og:type" content="website" />
@@ -108,6 +117,14 @@
     <link rel="apple-touch-icon" href="/favicon.png" />
     <link rel="manifest" href="/manifest.json" />
 
+    <!-- 📱 Compatibilidad PWA -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+
     <!-- 🔠 Tipografía -->
     <link
       href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;800&display=swap"
@@ -118,39 +135,18 @@
     <meta name="theme-color" content="#0d0d0d" />
     <meta name="background-color" content="#0d0d0d" />
 
-    <!-- ⚙️ PWA / Offline Support -->
-    <link rel="apple-touch-startup-image" href="/icons/ios/512.png" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta
-      name="apple-mobile-web-app-status-bar-style"
-      content="black-translucent"
-    />
-
     <!-- 🛡️ Google reCAPTCHA -->
     <script
       src="https://www.google.com/recaptcha/api.js"
       async
       defer
     ></script>
-
-    <!-- 📈 Google Analytics (opcional, listo para activar)
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-XXXXXXX');
-    </script>
-    -->
   </head>
 
   <body>
     <div id="root"></div>
-
-    <!-- 🚀 React bundle -->
     <script type="module" src="/src/main.jsx"></script>
 
-    <!-- ⚡ Fallback offline (si el service worker no carga) -->
     <noscript>
       <p style="text-align:center;color:#555;margin-top:2rem;">
         Esta aplicación necesita JavaScript habilitado para funcionar correctamente.
