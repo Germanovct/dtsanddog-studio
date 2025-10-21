@@ -1,36 +1,135 @@
-import React from "react";
-import logo from "../assets/logo/DTSandDOG-Studio-logo-dark.png";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 export default function Navbar() {
-  return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark py-3 shadow-sm">
-      <div className="container">
-        <a className="navbar-brand d-flex align-items-center" href="/">
+  const location = useLocation();
+  const [scrolled, setScrolled] = useState(false);
 
-          <span className="fw-bold">DTS&DOG Studio</span>
-        </a>
+  // 🔹 Detecta scroll para activar fondo suave
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // 🔹 Scroll suave o redirección entre rutas
+  const handleScroll = (id) => {
+    if (location.pathname !== "/") {
+      window.location.href = `/#${id}`;
+      return;
+    }
+    const section = document.getElementById(id);
+    if (section) section.scrollIntoView({ behavior: "smooth" });
+
+    const navbarCollapse = document.querySelector(".navbar-collapse");
+    if (navbarCollapse?.classList.contains("show")) {
+      new window.bootstrap.Collapse(navbarCollapse).toggle();
+    }
+  };
+
+  return (
+    <nav
+      className={`navbar navbar-expand-lg fixed-top py-3 ${
+        scrolled ? "navbar-scrolled" : "navbar-transparent"
+      }`}
+      style={{
+        transition: "all 0.4s ease-in-out",
+      }}
+    >
+      <div className="container">
+        {/* 🔸 Marca */}
+        <Link
+          className="navbar-brand fw-bold text-light"
+          to="/"
+          style={{
+            textTransform: "uppercase",
+            letterSpacing: "1px",
+            fontFamily: "Inter, sans-serif",
+            textShadow: "0 2px 4px rgba(0,0,0,0.4)",
+          }}
+        >
+          DTS&DOG Studio
+        </Link>
+
+        {/* 🔹 Botón mobile */}
         <button
-          className="navbar-toggler"
+          className="navbar-toggler border-0"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon"></span>
         </button>
+
+        {/* 🔹 Menú */}
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ms-auto">
+          <ul className="navbar-nav ms-auto text-center">
             <li className="nav-item">
-              <a className="nav-link" href="#about">Nosotros</a>
+              <button
+                className="btn btn-link nav-link text-light"
+                onClick={() => handleScroll("about")}
+              >
+                Nosotros
+              </button>
             </li>
+
             <li className="nav-item">
-              <a className="nav-link" href="#services">Servicios</a>
+              <button
+                className="btn btn-link nav-link text-light"
+                onClick={() => handleScroll("services")}
+              >
+                Servicios
+              </button>
             </li>
+
             <li className="nav-item">
-              <a className="nav-link" href="#contact">Contacto</a>
+              <Link
+                className={`nav-link text-light ${
+                  location.pathname.startsWith("/insights") ? "active" : ""
+                }`}
+                to="/insights"
+              >
+                Insights
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <button
+                className="btn btn-link nav-link text-light"
+                onClick={() => handleScroll("contacto")}
+              >
+                Contacto
+              </button>
             </li>
           </ul>
         </div>
       </div>
+
+      {/* 🔧 Inline CSS para efecto transparente */}
+      <style>{`
+        .navbar-transparent {
+          background-color: transparent !important;
+          box-shadow: none !important;
+        }
+        .navbar-scrolled {
+          background-color: rgba(13, 13, 13, 0.75) !important;
+          backdrop-filter: blur(6px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+        .nav-link {
+          transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .nav-link:hover {
+          color: #f29a41 !important;
+          transform: translateY(-1px);
+        }
+        .nav-link.active {
+          color: #f29a41 !important;
+        }
+      `}</style>
     </nav>
   );
 }
