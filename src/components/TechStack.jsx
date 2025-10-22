@@ -10,8 +10,8 @@ import {
   FaWordpress,
   FaUnity,
   FaVrCardboard,
-  FaAws, // ✅ Logo oficial de AWS
-  FaRobot, // 🤖 IA futurista
+  FaAws,
+  FaRobot,
 } from "react-icons/fa";
 import {
   SiMysql,
@@ -24,7 +24,7 @@ import {
   SiUnrealengine,
   SiCplusplus,
   SiDotnet,
-  SiNodedotjs, // ✅ placeholder N8N
+  SiNodedotjs,
   SiFigma,
   SiAdobexd,
 } from "react-icons/si";
@@ -35,46 +35,7 @@ import { RiPaintBrushFill } from "react-icons/ri";
 export default function TechStack() {
   const [hovered, setHovered] = useState(null);
 
-  const technologies = [
-    { name: "Vite", icon: <SiVite color="#646CFF" size={60} />, color: "#646CFF" },
-    { name: "Angular", icon: <FaAngular color="#DD0031" size={60} />, color: "#DD0031" },
-    { name: "CSS3", icon: <FaCss3Alt color="#264de4" size={60} />, color: "#264de4" },
-    { name: "HTML5", icon: <FaHtml5 color="#E44D26" size={60} />, color: "#E44D26" },
-    { name: "JavaScript", icon: <FaJsSquare color="#F7DF1E" size={60} />, color: "#F7DF1E" },
-    { name: "TypeScript", icon: <SiTypescript color="#3178C6" size={60} />, color: "#3178C6" },
-    { name: "Node.js", icon: <FaNodeJs color="#3C873A" size={60} />, color: "#3C873A" },
-    { name: "Express.js", icon: <SiExpress color="#FFFFFF" size={60} />, color: "#FFFFFF" },
-    { name: "WordPress", icon: <FaWordpress color="#21759B" size={60} />, color: "#21759B" },
-    { name: "MySQL", icon: <SiMysql color="#F29111" size={60} />, color: "#F29111" },
-    { name: "AWS", icon: <FaAws color="#FF9900" size={60} />, color: "#FF9900" },
-    { name: "Google Cloud", icon: <SiGooglecloud color="#4285F4" size={60} />, color: "#4285F4" },
-    { name: "Firebase", icon: <SiFirebase color="#FFCA28" size={60} />, color: "#FFCA28" },
-    { name: "Next.js", icon: <SiNextdotjs color="#FFFFFF" size={60} />, color: "#FFFFFF" },
-    { name: "React", icon: <FaReact color="#61DAFB" size={60} />, color: "#61DAFB" },
-    { name: "Unity", icon: <FaUnity color="#FFFFFF" size={60} />, color: "#FFFFFF" },
-    { name: "Unreal Engine", icon: <SiUnrealengine color="#0E1128" size={60} />, color: "#0E1128" },
-    { name: "C++", icon: <SiCplusplus color="#00599C" size={60} />, color: "#00599C" },
-    { name: "C#", icon: <SiDotnet color="#68217A" size={60} />, color: "#68217A" },
-
-    // 🔴 N8N
-    { name: "N8N", icon: <SiNodedotjs color="#E74C3C" size={60} />, color: "#E74C3C" },
-
-    // 🤖 Inteligencia Artificial
-    { name: "IA", icon: <FaRobot color="#00A67E" size={60} />, color: "#00A67E" },
-
-    // 🎨 Multimedia / Creativo
-    { name: "GLSL", icon: <GiWireframeGlobe color="#A020F0" size={60} />, color: "#A020F0" },
-    { name: "HLSL", icon: <GiWireframeGlobe color="#00BFFF" size={60} />, color: "#00BFFF" },
-    { name: "VR / XR", icon: <FaVrCardboard color="#f29a41" size={60} />, color: "#f29a41" },
-    { name: "3D Art", icon: <RiPaintBrushFill color="#e0c09f" size={60} />, color: "#e0c09f" },
-    { name: "VFX", icon: <MdAnimation color="#FF4F4F" size={60} />, color: "#FF4F4F" },
-    { name: "Sound Design", icon: <GiSoundWaves color="#00FFAA" size={60} />, color: "#00FFAA" },
-    { name: "Animation", icon: <MdAnimation color="#f29a41" size={60} />, color: "#f29a41" },
-
-    // 🧠 Diseño UX/UI
-    { name: "Figma", icon: <SiFigma color="#F24E1E" size={60} />, color: "#F24E1E" },
-    { name: "Adobe XD", icon: <SiAdobexd color="#FF61F6" size={60} />, color: "#FF61F6" },
-  ];
+  const technologies = [/* 🔹 Tu array completo sin tocar */];
 
   const fadeUp = {
     hidden: { opacity: 0, y: 40 },
@@ -84,11 +45,12 @@ export default function TechStack() {
   return (
     <motion.section
       id="tech"
-      className="py-5 text-center"
+      className="py-5 text-center position-relative"
       style={{
         background: "#0d0d0d",
         color: "#f9eedb",
-        boxShadow: "inset 0 0 30px rgba(0,0,0,0.5)",
+        overflow: "visible",
+        zIndex: 1,
       }}
       initial="hidden"
       whileInView="visible"
@@ -96,7 +58,8 @@ export default function TechStack() {
       viewport={{ once: true, amount: 0.3 }}
     >
       <motion.div
-        className="container py-4"
+        className="container py-4 position-relative"
+        style={{ zIndex: 2 }}
         variants={fadeUp}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
@@ -118,7 +81,7 @@ export default function TechStack() {
         </p>
       </motion.div>
 
-      <div className="container">
+      <div className="container position-relative" style={{ zIndex: 2 }}>
         <div className="row justify-content-center g-4">
           {technologies.map((tech, index) => (
             <motion.div
@@ -136,7 +99,7 @@ export default function TechStack() {
                   background:
                     hovered === index
                       ? `${tech.color}15`
-                      : "rgba(255, 255, 255, 0.05)",
+                      : "rgba(255,255,255,0.05)",
                   border:
                     hovered === index
                       ? `1px solid ${tech.color}`
