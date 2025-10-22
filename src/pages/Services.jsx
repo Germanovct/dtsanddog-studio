@@ -10,7 +10,143 @@ import {
   FaPencilRuler,
 } from "react-icons/fa";
 
-const services = [/* 🔹 Tu array original completo sin cambios */];
+const services = [
+  {
+    title: "Landing Page de Alta Conversión",
+    desc: "Página ultrafocalizada en un solo objetivo: vender.",
+    ideal: "Campañas, lanzamientos y ventas de servicios o productos efectivos.",
+    color: "#f29a41",
+    features: [
+      "Optimizada para conversión",
+      "Hasta 7 secciones",
+      "Correos corporativos",
+      "Formulario de contacto",
+      "Diseño responsive",
+      "Botón de WhatsApp",
+      "Investigación de competencia",
+      "Indexación en Google y Bing",
+      "SSL gratis",
+      "SEO On Page básico",
+      "3 meses de soporte bonificado",
+      { disabled: "Carrito de compras" },
+      { disabled: "Pasarelas de pago" },
+      { disabled: "Medios de envío" },
+    ],
+  },
+  {
+    title: "Web Corporativa Profesional",
+    desc: "Hasta 10 páginas estratégicas e innovadoras para superar a tu competencia.",
+    ideal: "Mejorar presencia, autoridad y confianza de tu marca al mundo.",
+    color: "#646CFF",
+    features: [
+      "Optimizada para conversión",
+      "Hasta 10 páginas",
+      "Correos corporativos",
+      "Formulario de contacto",
+      "Diseño responsive",
+      "Botón de WhatsApp",
+      "Investigación de competencia",
+      "Indexación en Google y Bing",
+      "SSL gratis",
+      "SEO On Page básico",
+      "3 meses de soporte bonificado",
+      { disabled: "Carrito de compras" },
+      { disabled: "Pasarelas de pago" },
+      { disabled: "Medios de envío" },
+    ],
+  },
+  {
+    title: "Tienda Online Optimizada",
+    desc: "Ecommerce profesional y veloz para vender sin límites.",
+    ideal: "Negocios que buscan automatizar sus ventas y crecer online.",
+    color: "#3C873A",
+    features: [
+      "Optimizada para conversión",
+      "Hasta 10 páginas",
+      "Correos corporativos",
+      "Formulario de contacto",
+      "Diseño responsive",
+      "Botón de WhatsApp",
+      "Investigación de competencia",
+      "Indexación en Google y Bing",
+      "SSL gratis",
+      "SEO On Page básico",
+      "3 meses de soporte bonificado",
+      "Carrito de compras",
+      "Pasarelas de pago",
+      "Medios de envío",
+    ],
+  },
+  {
+    title: "Desarrollo Frontend Profesional",
+    desc: "Interfaces modernas, interactivas y de alto rendimiento.",
+    ideal: "Startups, empresas y proyectos que buscan impacto visual.",
+    color: "#61DAFB",
+    icon: <FaCode size={22} />,
+    features: [
+      "SPA con React, Next.js o Vite",
+      "Animaciones con Framer Motion",
+      "Diseño responsive y accesible",
+      "Integración con APIs externas",
+      "Optimización de rendimiento",
+      "SEO técnico y microdatos",
+      "Deploy en Netlify o Vercel",
+      { disabled: "Backend o base de datos" },
+    ],
+  },
+  {
+    title: "Desarrollo Backend & APIs",
+    desc: "Potencia tu sistema con lógica sólida, rápida y segura.",
+    ideal: "Aplicaciones que requieren bases de datos, lógica y escalabilidad.",
+    color: "#FF9900",
+    icon: <FaServer size={22} />,
+    features: [
+      "Node.js + Express.js",
+      "Base de datos con MongoDB o MySQL",
+      "APIs REST y GraphQL",
+      "Autenticación JWT / OAuth",
+      "Integraciones con AWS / Google Cloud",
+      "Hosting en Render o Railway",
+      "Documentación Swagger",
+      { disabled: "Interfaz de usuario" },
+    ],
+  },
+  {
+    title: "Desarrollo de Videojuegos & Multimedia",
+    desc: "Experiencias interactivas y visuales con tecnología de vanguardia.",
+    ideal: "Estudios, marcas o artistas que buscan proyectos 3D, VR o inmersivos.",
+    color: "#9B4F96",
+    icon: <FaGamepad size={22} />,
+    features: [
+      "Motor Unity y Unreal Engine",
+      "Programación en C#, C++, GLSL, HLSL",
+      "Sound Design y efectos VFX",
+      "Arte 3D y animación avanzada",
+      "Diseño de niveles y experiencia de usuario",
+      "Realidad virtual / aumentada (VR/XR)",
+      "Optimización para desktop y mobile",
+      { disabled: "Integración e-commerce" },
+    ],
+  },
+  // 👇 NUEVO SERVICIO AGREGADO (SIN BORRAR NADA)
+  {
+    title: "UX/UI Design & Prototyping",
+    desc: "Diseño centrado en el usuario con interfaces limpias, usables y memorables.",
+    ideal: "Empresas y startups que buscan mejorar la experiencia digital de sus productos.",
+    color: "#E91E63",
+    icon: <FaPencilRuler size={22} />,
+    features: [
+      "Research de usuario y journey mapping",
+      "Wireframes y mockups interactivos",
+      "Prototipado en Figma o Adobe XD",
+      "Test de usabilidad y accesibilidad",
+      "Diseño de sistemas y componentes UI",
+      "Identidad visual y branding digital",
+      "Guías de estilo y manual de marca",
+      { disabled: "Desarrollo backend" },
+    ],
+  },
+];
 
 export default function Services() {
   const fadeUp = {
@@ -21,12 +157,11 @@ export default function Services() {
   return (
     <motion.section
       id="services"
-      className="py-5 text-center position-relative"
+      className="py-5 text-center"
       style={{
         background: "#0d0d0d",
         color: "#f9eedb",
         boxShadow: "inset 0 0 30px rgba(0,0,0,0.5)",
-        zIndex: 1,
       }}
       initial="hidden"
       whileInView="visible"
@@ -34,8 +169,7 @@ export default function Services() {
       transition={{ staggerChildren: 0.1 }}
     >
       <motion.div
-        className="container py-4 position-relative"
-        style={{ zIndex: 2 }}
+        className="container py-4"
         variants={fadeUp}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
@@ -46,9 +180,7 @@ export default function Services() {
           Nuestros servicios
         </h6>
 
-        <h2 className="fw-bold mb-4">
-          Soluciones digitales para cada necesidad
-        </h2>
+        <h2 className="fw-bold mb-4">Soluciones digitales para cada necesidad</h2>
 
         <p
           className="text-light mb-5"
@@ -63,7 +195,7 @@ export default function Services() {
           {services.map((s, index) => (
             <motion.div
               key={index}
-              className="col-12 col-sm-6 col-lg-4"
+              className="col-12 col-md-6 col-lg-4"
               variants={fadeUp}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               whileHover={{ scale: 1.02 }}
@@ -72,7 +204,7 @@ export default function Services() {
                 style={{
                   background: "rgba(255,255,255,0.05)",
                   borderRadius: "16px",
-                  border: "1px solid rgba(255,255,255,0.1)",
+                  border: `1px solid rgba(255,255,255,0.1)`,
                   boxShadow: `0 0 20px ${s.color}33`,
                   transition: "all 0.3s ease",
                   padding: "24px",
