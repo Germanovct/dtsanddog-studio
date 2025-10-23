@@ -128,7 +128,6 @@ const services = [
       { disabled: "Integración e-commerce" },
     ],
   },
-  // 👇 NUEVO SERVICIO AGREGADO (SIN BORRAR NADA)
   {
     title: "UX/UI Design & Prototyping",
     desc: "Diseño centrado en el usuario con interfaces limpias, usables y memorables.",
@@ -269,6 +268,18 @@ export default function Services() {
           ))}
         </div>
       </motion.div>
+
+      {/* ✅ FIX para que se vea en todas las resoluciones */}
+      <style jsx="true">{`
+        #services {
+          position: relative;
+          z-index: 1;
+        }
+        #services .container {
+          position: relative;
+          z-index: 2;
+        }
+      `}</style>
     </motion.section>
   );
 }

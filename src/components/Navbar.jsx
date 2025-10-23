@@ -18,8 +18,14 @@ export default function Navbar() {
       window.location.href = `/#${id}`;
       return;
     }
+
     const section = document.getElementById(id);
-    if (section) section.scrollIntoView({ behavior: "smooth" });
+    if (section) {
+      const yOffset = -80; // compensar la altura de la navbar fija
+      const y =
+        section.getBoundingClientRect().top + window.scrollY + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
 
     const navbarCollapse = document.querySelector(".navbar-collapse");
     if (navbarCollapse?.classList.contains("show")) {
@@ -85,6 +91,16 @@ export default function Navbar() {
               </button>
             </li>
 
+            {/* 🔸 NUEVA SECCIÓN: TECNOLOGÍAS */}
+            <li className="nav-item">
+              <button
+                className="btn btn-link nav-link text-light"
+                onClick={() => handleScroll("tech")}
+              >
+                Tecnologías
+              </button>
+            </li>
+
             <li className="nav-item">
               <Link
                 className={`nav-link text-light ${
@@ -115,8 +131,8 @@ export default function Navbar() {
           box-shadow: none !important;
         }
         .navbar-scrolled {
-          background-color: rgba(13, 13, 13, 0.75) !important;
-          backdrop-filter: blur(6px);
+          background-color: rgba(13, 13, 13, 0.85) !important;
+          backdrop-filter: blur(8px);
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
         }
         .nav-link {
