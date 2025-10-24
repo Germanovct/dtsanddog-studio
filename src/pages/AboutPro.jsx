@@ -1,12 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
-import {
-  FaUsers,
-  FaCogs,
-  FaAward,
-  FaLightbulb,
-} from "react-icons/fa";
-import germanocampo from "../assets/germanocampo.jpg"; // 🟡 Tu foto
+import { FaUsers, FaCogs, FaAward, FaLightbulb } from "react-icons/fa";
+import germanocampo from "../assets/germanocampo.JPG"; // 🟡 corregido (extensión en mayúscula)
 import franklin from "../assets/franklin.webp"; // 🟠 Franklin real
 
 export default function AboutPro() {
@@ -165,7 +160,7 @@ export default function AboutPro() {
         <div className="row g-4 justify-content-center">
           {[
             {
-              name: "German Ocampo",
+              name: "Germán Ocampo",
               role: "Founder & CEO / Lead Developer",
               quote:
                 "Dirigiendo cada proyecto con la misma pasión con la que nació este estudio.",
@@ -177,7 +172,7 @@ export default function AboutPro() {
               role: "Chief Happiness Officer",
               quote:
                 "Recordándonos que toda gran idea necesita un poco de juego y cariño.",
-              img: franklin, // 🟠 tu imagen local
+              img: franklin,
             },
             {
               name: "Equipo Global",
