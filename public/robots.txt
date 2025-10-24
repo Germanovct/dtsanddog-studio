@@ -1,5 +1,53 @@
+# ===============================
+# 🤖 DTS&DOG Studio - Robots Rules
+# Última actualización: 2025-10-24
+# ===============================
+
 User-agent: *
+# ✅ Permitir indexar todas las páginas públicas
 Allow: /
 
+# 🚫 Bloquear rutas internas o irrelevantes para SEO
+Disallow: /node_modules/
+Disallow: /vite/
+Disallow: /dist/
+Disallow: /assets/temp/
+Disallow: /404
+Disallow: /admin
+Disallow: /private/
+Disallow: /*.json$
+Disallow: /*.map$
+Disallow: /*?*utm=*        # Evita indexar URLs con parámetros de seguimiento
+Disallow: /*?*fbclid=*     # Evita duplicados por Facebook
+
+# ⏳ Limitar frecuencia de rastreo (bots agresivos)
+Crawl-delay: 5
+
+# 🧭 Sitemap oficial
 Sitemap: https://dtsanddog-studio.com.ar/sitemap.xml
+
+# 🌎 Dominio principal
 Host: https://dtsanddog-studio.com.ar
+
+# 🧠 Permitir indexación por rastreadores de IA
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# 🔒 (Opcional) Bloquear entornos de pruebas
+# Disallow: /staging/
+# Disallow: /beta/
