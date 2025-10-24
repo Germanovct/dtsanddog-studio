@@ -5,6 +5,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/pages/About";
+import AboutPro from "@/pages/AboutPro"; // ✅ Nuevo import
 import Services from "@/pages/Services";
 import Portfolio from "@/pages/Portfolio";
 import Contact from "@/pages/Contact";
@@ -19,7 +20,7 @@ import ArticleReact from "@/pages/articles/ArticleReact";
 import ArticleUX from "@/pages/articles/ArticleUX";
 import ArticleBranding from "@/pages/articles/ArticleBranding";
 
-// 💡 Nuevo: PWA install banner
+// 💡 PWA install banner
 import PwaInstallPrompt from "@/components/PwaInstallPrompt";
 
 export default function App() {
@@ -89,6 +90,11 @@ export default function App() {
             </>
           }
         />
+
+        {/* ✅ Nueva página AboutPro */}
+        <Route path="/aboutpro" element={<AboutPro />} />
+
+        {/* 📖 Blog e Insights */}
         <Route path="/insights" element={<Insights />} />
         <Route path="/insights/react" element={<ArticleReact />} />
         <Route path="/insights/ux" element={<ArticleUX />} />

@@ -21,9 +21,8 @@ export default function Navbar() {
 
     const section = document.getElementById(id);
     if (section) {
-      const yOffset = -80; // compensar la altura de la navbar fija
-      const y =
-        section.getBoundingClientRect().top + window.scrollY + yOffset;
+      const yOffset = -80;
+      const y = section.getBoundingClientRect().top + window.scrollY + yOffset;
       window.scrollTo({ top: y, behavior: "smooth" });
     }
 
@@ -73,13 +72,25 @@ export default function Navbar() {
         {/* 🔹 Menú */}
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto text-center">
+            {/* ✅ BOTÓN INTELIGENTE: en Home hace scroll, en otras páginas navega */}
             <li className="nav-item">
-              <button
-                className="btn btn-link nav-link text-light"
-                onClick={() => handleScroll("about")}
-              >
-                Nosotros
-              </button>
+              {location.pathname === "/" ? (
+                <button
+                  className="btn btn-link nav-link text-light"
+                  onClick={() => handleScroll("about")}
+                >
+                  Nosotros
+                </button>
+              ) : (
+                <Link
+                  to="/aboutpro"
+                  className={`nav-link text-light ${
+                    location.pathname === "/aboutpro" ? "active" : ""
+                  }`}
+                >
+                  Nosotros
+                </Link>
+              )}
             </li>
 
             <li className="nav-item">
@@ -91,7 +102,6 @@ export default function Navbar() {
               </button>
             </li>
 
-            {/* 🔸 NUEVA SECCIÓN: TECNOLOGÍAS */}
             <li className="nav-item">
               <button
                 className="btn btn-link nav-link text-light"
@@ -124,7 +134,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* 🔧 Inline CSS para efecto transparente */}
+      {/* 🔧 Inline CSS */}
       <style>{`
         .navbar-transparent {
           background-color: transparent !important;
