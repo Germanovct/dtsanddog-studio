@@ -3,71 +3,71 @@
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
 >
-  
+
   <url>
     <loc>https://dtsanddog-studio.com.ar/</loc>
-    <lastmod>2025-10-24</lastmod>
+    <lastmod>2025-10-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://dtsanddog-studio.com.ar/#about</loc>
-    <lastmod>2025-10-24</lastmod>
+    <loc>https://dtsanddog-studio.com.ar/about</loc>
+    <lastmod>2025-10-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://dtsanddog-studio.com.ar/#services</loc>
-    <lastmod>2025-10-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://dtsanddog-studio.com.ar/#tech</loc>
-    <lastmod>2025-10-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dtsanddog-studio.com.ar/#portfolio</loc>
-    <lastmod>2025-10-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dtsanddog-studio.com.ar/#contacto</loc>
-    <lastmod>2025-10-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://dtsanddog-studio.com.ar/aboutpro</loc>
-    <lastmod>2025-10-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dtsanddog-studio.com.ar/insights</loc>
-    <lastmod>2025-10-24</lastmod>
+    <lastmod>2025-10-29</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dtsanddog-studio.com.ar/insights/react</loc>
-    <lastmod>2025-10-24</lastmod>
+    <lastmod>2025-10-29</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://dtsanddog-studio.com.ar/insights/ux</loc>
-    <lastmod>2025-10-24</lastmod>
+    <lastmod>2025-10-29</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://dtsanddog-studio.com.ar/insights/branding</loc>
-    <lastmod>2025-10-24</lastmod>
+    <lastmod>2025-10-29</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://dtsanddog-studio.com.ar/#about</loc>
+    <lastmod>2025-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dtsanddog-studio.com.ar/#services</loc>
+    <lastmod>2025-10-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dtsanddog-studio.com.ar/#tech</loc>
+    <lastmod>2025-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://dtsanddog-studio.com.ar/#portfolio</loc>
+    <lastmod>2025-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://dtsanddog-studio.com.ar/#contacto</loc>
+    <lastmod>2025-10-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>

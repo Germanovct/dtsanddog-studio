@@ -5,7 +5,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/pages/About";
-import AboutPro from "@/pages/AboutPro";
+import AboutPro from "@/pages/AboutPro"; // ✅ Página extendida
 import Services from "@/pages/Services";
 import Portfolio from "@/pages/Portfolio";
 import Contact from "@/pages/Contact";
@@ -19,9 +19,7 @@ import Insights from "@/pages/Insights";
 import ArticleReact from "@/pages/articles/ArticleReact";
 import ArticleUX from "@/pages/articles/ArticleUX";
 import ArticleBranding from "@/pages/articles/ArticleBranding";
-import PwaInstallPrompt from "@/components/PwaInstallPrompt";
-
-// (Opcional) import NotFound from "@/pages/NotFound";
+import PwaInstallPrompt from "@/components/PwaInstallPrompt"; // 💡 Banner instalación PWA
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -92,16 +90,17 @@ export default function App() {
           }
         />
 
-        {/* 🧭 Página extendida “Sobre Nosotros” */}
-        <Route path="/about" element={<AboutPro />} />
+        {/* 🧭 Página extendida “AboutPro” */}
+        <Route path="/aboutpro" element={<AboutPro />} /> 
+        {/* ✅ corregido: antes /about, ahora /aboutpro */}
 
-        {/* 📰 Blog / Insights */}
+        {/* 📰 Sección de artículos / blog */}
         <Route path="/insights" element={<Insights />} />
         <Route path="/insights/react" element={<ArticleReact />} />
         <Route path="/insights/ux" element={<ArticleUX />} />
         <Route path="/insights/branding" element={<ArticleBranding />} />
 
-        {/* 🚨 Página 404 (opcional) */}
+        {/* 🚨 Ruta 404 opcional */}
         {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>
 
