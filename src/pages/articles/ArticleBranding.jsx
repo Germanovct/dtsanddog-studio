@@ -1,12 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
+import SEO from "@/components/SEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 export default function ArticleBranding() {
-  useEffect(() => {
-    document.title =
-      "El futuro del branding digital | DTS&DOG Studio";
-  }, []);
+
 
   const Section = ({ children }) => (
     <motion.section
@@ -44,6 +42,12 @@ export default function ArticleBranding() {
         paddingBottom: "80px",
       }}
     >
+      <SEO
+        title="El futuro del branding digital"
+        description="Descubre cómo el branding digital evoluciona hacia experiencias inmersivas y personalizadas. Identidad visual, motion branding y más."
+        keywords="branding digital, identidad visual, motion branding, experiencia de marca, dtsanddog"
+        type="article"
+      />
       <div className="container" style={{ maxWidth: 920 }}>
         <header className="mb-4">
           <Pill>Branding Digital</Pill>
@@ -51,7 +55,7 @@ export default function ArticleBranding() {
             El futuro del branding digital
           </h1>
           <p style={{ color: "#cfcfcf" }}>
-            Las marcas del futuro no solo comunican, sino que construyen experiencias.  
+            Las marcas del futuro no solo comunican, sino que construyen experiencias.
             La coherencia visual y emocional es la nueva moneda de confianza.
           </p>
           <div
@@ -68,8 +72,8 @@ export default function ArticleBranding() {
         <Section>
           <h2 className="fw-semibold">Identidad como experiencia</h2>
           <p>
-            El branding digital ya no se trata solo de logotipos o colores. Se trata de cómo el usuario 
-            percibe cada interacción con tu marca: en redes, en tu web, en los emails o incluso en 
+            El branding digital ya no se trata solo de logotipos o colores. Se trata de cómo el usuario
+            percibe cada interacción con tu marca: en redes, en tu web, en los emails o incluso en
             el tono de tus respuestas automáticas.
           </p>
         </Section>
@@ -87,8 +91,8 @@ export default function ArticleBranding() {
         <Section>
           <h2 className="fw-semibold">Cómo lo abordamos en DTS&DOG</h2>
           <p>
-            Diseñamos sistemas de marca escalables. Desde moodboards interactivos en Figma hasta 
-            guidelines digitales que permiten a cada equipo mantener coherencia y adaptabilidad.  
+            Diseñamos sistemas de marca escalables. Desde moodboards interactivos en Figma hasta
+            guidelines digitales que permiten a cada equipo mantener coherencia y adaptabilidad.
             Cada elección tiene propósito y métricas.
           </p>
         </Section>

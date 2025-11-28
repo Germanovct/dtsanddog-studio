@@ -1,12 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
+import SEO from "@/components/SEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 export default function ArticleReact() {
-  useEffect(() => {
-    document.title =
-      "Por qué tu empresa necesita una web con React | DTS&DOG Studio";
-  }, []);
+
 
   const Section = ({ children }) => (
     <motion.section
@@ -44,6 +42,12 @@ export default function ArticleReact() {
         paddingBottom: "80px",
       }}
     >
+      <SEO
+        title="Por qué tu empresa necesita una web con React"
+        description="Descubre cómo React mejora el rendimiento, la escalabilidad y la experiencia de usuario de tu sitio web. Desarrollo web moderno con DTS&DOG Studio."
+        keywords="react, desarrollo web, rendimiento web, escalabilidad, spa, seo"
+        type="article"
+      />
       <div className="container" style={{ maxWidth: 920 }}>
         {/* encabezado */}
         <header className="mb-4">

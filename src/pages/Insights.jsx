@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import SEO from "@/components/SEO";
 
 export default function Insights() {
   const articles = [
@@ -71,6 +72,11 @@ export default function Insights() {
         paddingBottom: "100px",
       }}
     >
+      <SEO
+        title="Insights y Blog"
+        description="Artículos y reflexiones sobre diseño web, desarrollo React, UX/UI y branding digital. Mantente al día con las últimas tendencias."
+        keywords="blog diseño web, articulos react, tendencias ux ui, branding digital, insights"
+      />
       <div className="container">
         {/* 🔹 Encabezado principal */}
         <motion.div

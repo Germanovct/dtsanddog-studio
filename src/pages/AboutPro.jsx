@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { FaUsers, FaCogs, FaAward, FaLightbulb } from "react-icons/fa";
 import germanocampo from "../assets/germanocampo.JPG"; // 🟡 corregido (extensión en mayúscula)
 import franklin from "../assets/franklin.webp"; // 🟠 Franklin real
+import SEO from "@/components/SEO";
 
 export default function AboutPro() {
   const fadeUp = {
@@ -23,6 +24,11 @@ export default function AboutPro() {
       viewport={{ once: true, amount: 0.2 }}
       transition={{ staggerChildren: 0.15 }}
     >
+      <SEO
+        title="Sobre Nosotros"
+        description="Conoce a DTS&DOG Studio. Somos un equipo apasionado por el diseño y la tecnología, creando experiencias digitales únicas desde Buenos Aires."
+        keywords="sobre nosotros, equipo, agencia digital, dtsanddog, historia"
+      />
       {/* ================= HERO ================= */}
       <div
         className="position-relative"
@@ -189,9 +195,8 @@ export default function AboutPro() {
               transition={{ delay: i * 0.1 }}
             >
               <div
-                className={`p-3 rounded-4 h-100 ${
-                  p.highlight ? "founder-card" : ""
-                }`}
+                className={`p-3 rounded-4 h-100 ${p.highlight ? "founder-card" : ""
+                  }`}
                 style={{
                   background: "rgba(255,255,255,0.05)",
                   border: "1px solid rgba(255,255,255,0.08)",

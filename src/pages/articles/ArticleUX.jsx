@@ -1,12 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
+import SEO from "@/components/SEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 export default function ArticleUX() {
-  useEffect(() => {
-    document.title =
-      "Tendencias de diseño UX/UI en 2025 | DTS&DOG Studio";
-  }, []);
+
 
   const Section = ({ children }) => (
     <motion.section
@@ -50,6 +48,12 @@ export default function ArticleUX() {
         paddingBottom: "80px",
       }}
     >
+      <SEO
+        title="Tendencias de diseño UX/UI en 2025"
+        description="Descubre las tendencias de diseño UX/UI que definirán el 2025: minimalismo, dark mode, micro-interacciones y accesibilidad."
+        keywords="diseño ux ui, tendencias 2025, diseño web, accesibilidad, figma"
+        type="article"
+      />
       <div className="container" style={{ maxWidth: 920 }}>
         {/* encabezado */}
         <header className="mb-4">

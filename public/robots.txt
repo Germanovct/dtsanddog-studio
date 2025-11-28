@@ -20,8 +20,7 @@ Disallow: /*.map$
 Disallow: /*?*utm=*        # Evita indexar URLs con parámetros de seguimiento
 Disallow: /*?*fbclid=*     # Evita duplicados por Facebook
 
-# ⏳ Limitar frecuencia de rastreo (bots agresivos)
-Crawl-delay: 5
+
 
 # 🧭 Sitemap oficial
 Sitemap: https://dtsanddog-studio.com.ar/sitemap.xml

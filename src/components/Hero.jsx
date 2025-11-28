@@ -1,4 +1,3 @@
-// src/components/Hero.jsx
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import logoLight from "../assets/logo/DTSandDOG-Studio-logo.png";
@@ -54,7 +53,7 @@ export default function Hero() {
         }}
       />
 
-      {/* 🌟 Glow detrás del logo */}
+      
       <div
         style={{
           position: "absolute",
