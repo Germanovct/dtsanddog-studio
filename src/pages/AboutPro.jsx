@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaUsers, FaCogs, FaAward, FaLightbulb } from "react-icons/fa";
-import germanocampo from "../assets/germanocampo.JPG"; // 🟡 corregido (extensión en mayúscula)
+import germanocampo from "../assets/germanocampo_optimized.JPG"; // ✅ Comprimida de 3.3MB → 55KB
 import franklin from "../assets/franklin.webp"; // 🟠 Franklin real
 import SEO from "@/components/SEO";
 

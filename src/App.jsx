@@ -1,11 +1,10 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 
-// 🧩 Componentes principales
+// 🧩 Componentes críticos (carga inmediata - se ven en el 1er scroll)
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/pages/About";
-import AboutPro from "@/pages/AboutPro";
 import Services from "@/pages/Services";
 import Portfolio from "@/pages/Portfolio";
 import Contact from "@/pages/Contact";
@@ -14,13 +13,26 @@ import WhatsAppButton from "@/components/WhatssappButton";
 import Footer from "@/components/Footer";
 import TechStack from "@/components/TechStack";
 import Testimonials from "@/components/Testimonials";
+import Pricing from "@/components/Pricing";
 import WhyUs from "@/pages/WhyUs";
-import Insights from "@/pages/Insights";
-import ArticleReact from "@/pages/articles/ArticleReact";
-import ArticleUX from "@/pages/articles/ArticleUX";
-import ArticleBranding from "@/pages/articles/ArticleBranding";
-import PwaInstallPrompt from "@/components/PwaInstallPrompt"; // 💡 Banner instalación PWA
 import SEO from "@/components/SEO";
+
+// 🚀 Lazy Loading: Páginas secundarias (se cargan solo cuando el usuario las visita)
+const AboutPro       = lazy(() => import("@/pages/AboutPro"));
+const Insights       = lazy(() => import("@/pages/Insights"));
+const ArticleReact   = lazy(() => import("@/pages/articles/ArticleReact"));
+const ArticleUX      = lazy(() => import("@/pages/articles/ArticleUX"));
+const ArticleBranding = lazy(() => import("@/pages/articles/ArticleBranding"));
+const NotFound       = lazy(() => import("@/pages/NotFound"));
+
+// ⏳ Fallback minimal mientras carga la página secundaria
+const PageLoader = () => (
+  <div style={{ height: "100vh", background: "#0a0a0a", display: "flex", alignItems: "center", justifyContent: "center" }}>
+    <div style={{ width: "40px", height: "40px", border: "3px solid rgba(242,154,65,0.3)", borderTopColor: "#f29a41", borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
+    <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+  </div>
+);
+
 
 export default function App() {
   return (
@@ -28,8 +40,8 @@ export default function App() {
       {/* 🔝 Navbar fijo */}
       <Navbar />
 
-      {/* 💡 Prompt de instalación PWA */}
-      <PwaInstallPrompt />
+      {/* 💡 Prompt de instalación PWA (Oculto a petición) */}
+      {/* <PwaInstallPrompt /> */}
 
       {/* 🌍 Rutas principales */}
       <Routes>
@@ -47,6 +59,7 @@ export default function App() {
               <About />
               <WhyUs />
               <Services />
+              <Pricing />
               <TechStack />
               <Process />
               <Testimonials />
@@ -57,17 +70,17 @@ export default function App() {
         />
 
         {/* 🧭 Página extendida “AboutPro” */}
-        <Route path="/aboutpro" element={<AboutPro />} />
+        <Route path="/aboutpro" element={<Suspense fallback={<PageLoader />}><AboutPro /></Suspense>} />
         {/* ✅ corregido: antes /about, ahora /aboutpro */}
 
         {/* 📰 Sección de artículos / blog */}
-        <Route path="/insights" element={<Insights />} />
-        <Route path="/insights/react" element={<ArticleReact />} />
-        <Route path="/insights/ux" element={<ArticleUX />} />
-        <Route path="/insights/branding" element={<ArticleBranding />} />
+        <Route path="/insights" element={<Suspense fallback={<PageLoader />}><Insights /></Suspense>} />
+        <Route path="/insights/react" element={<Suspense fallback={<PageLoader />}><ArticleReact /></Suspense>} />
+        <Route path="/insights/ux" element={<Suspense fallback={<PageLoader />}><ArticleUX /></Suspense>} />
+        <Route path="/insights/branding" element={<Suspense fallback={<PageLoader />}><ArticleBranding /></Suspense>} />
 
-        {/* 🚨 Ruta 404 opcional */}
-        {/* <Route path="*" element={<NotFound />} /> */}
+        {/* 🚨 Ruta 404 */}
+        <Route path="*" element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />
       </Routes>
 
       {/* 🔸 Componentes globales persistentes */}

@@ -53,7 +53,7 @@ export default function Hero() {
         }}
       />
 
-      
+
       <div
         style={{
           position: "absolute",
@@ -76,6 +76,30 @@ export default function Hero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.2, ease: "easeOut" }}
       >
+        {/* Badge de Prueba Social */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.6 }}
+          className="mb-3"
+        >
+          <div
+            className="d-inline-flex align-items-center gap-2 px-3 py-2"
+            style={{
+              background: "rgba(255,255,255,0.08)",
+              backdropFilter: "blur(10px)",
+              borderRadius: "50px",
+              border: "1px solid rgba(255,255,255,0.15)",
+              fontSize: "0.85rem",
+            }}
+          >
+            <span style={{ color: "#f29a41" }}>⭐⭐⭐⭐⭐</span>
+            <span style={{ color: "#d8d0c2" }}>
+              "Nos ayudaron a escalar de forma exponencial" – TCQ Club
+            </span>
+          </div>
+        </motion.div>
+
         {/* Logo */}
         <motion.img
           src={isDark ? logoDark : logoLight}
@@ -177,7 +201,7 @@ export default function Hero() {
               fontSize: "clamp(0.9rem, 2vw, 1rem)",
             }}
           >
-            Ver servicios
+            Ver Planes y Precios
           </motion.a>
 
           <motion.a
@@ -195,8 +219,32 @@ export default function Hero() {
               fontSize: "clamp(0.9rem, 2vw, 1rem)",
             }}
           >
-            Contanos tu idea 🚀
+            Agendar Consultoría Gratuita 🚀
           </motion.a>
+        </motion.div>
+
+        {/* Badge de Urgencia */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.8, duration: 0.8 }}
+          className="mt-4"
+        >
+          <div
+            className="d-inline-flex align-items-center gap-2 px-3 py-2"
+            style={{
+              background: "linear-gradient(135deg, rgba(242,154,65,0.15), rgba(231,76,60,0.15))",
+              backdropFilter: "blur(10px)",
+              borderRadius: "50px",
+              border: "1px solid rgba(242,154,65,0.3)",
+              fontSize: "0.8rem",
+            }}
+          >
+            <span style={{ fontSize: "1rem" }}>🔥</span>
+            <span style={{ color: "#f29a41", fontWeight: 600 }}>
+              Consultas abiertas este mes · Agendá la tuya
+            </span>
+          </div>
         </motion.div>
       </motion.div>
 
