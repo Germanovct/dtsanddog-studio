@@ -44,9 +44,12 @@ export default function App() {
   useEffect(() => {
     // 📊 Registrar visita en el backend interno
     const trackVisit = async () => {
+      // 🚫 No trackear si estamos en localhost (para no ensuciar las métricas de negocio)
+      if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+        return;
+      }
       try {
         const fullPath = location.pathname + location.search + location.hash;
-        // Solo trackear si es una ruta distinta o sección distinta
         await fetch("http://localhost:8000/api/track", {
           method: "POST",
           headers: { "Content-Type": "application/json" },

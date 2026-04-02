@@ -153,6 +153,14 @@ with tab4:
     if os.path.exists(VISIT_LOG_PATH):
         df_v = pd.read_csv(VISIT_LOG_PATH)
         if not df_v.empty:
+            # Filtro de tráfico local
+            exclude_local = st.checkbox("🚫 Excluir tráfico de prueba (Localhost)", value=True)
+            if exclude_local:
+                df_v = df_v[df_v['ip'] != '127.0.0.1']
+                if df_v.empty:
+                    st.warning("⚠️ Actualmente todos los registros son de localhost. No hay visitas externas aún.")
+                    st.stop()
+
             df_v['timestamp'] = pd.to_datetime(df_v['timestamp'])
             
             c1, c2 = st.columns(2)
