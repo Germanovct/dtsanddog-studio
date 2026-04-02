@@ -36,8 +36,30 @@ const PageLoader = () => (
   </div>
 );
 
+import { useEffect } from "react";
 
 export default function App() {
+  const location = useLocation();
+
+  useEffect(() => {
+    // 📊 Registrar visita en el backend interno
+    const trackVisit = async () => {
+      try {
+        await fetch("http://localhost:8000/api/track", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            path: location.pathname + location.search,
+            referrer: document.referrer || "Directo"
+          }),
+        });
+      } catch (e) {
+        // Silencioso para no afectar experiencia de usuario
+      }
+    };
+    trackVisit();
+  }, [location]);
+
   return (
     <>
       {/* 🔝 Navbar fijo */}

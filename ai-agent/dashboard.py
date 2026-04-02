@@ -11,13 +11,14 @@ st.set_page_config(page_title="DTS&DOG Studio - CRM", page_icon="🤖", layout="
 
 INDUSTRIES_PATH = "ai-agent/target_industries.json"
 CSV_PATH = "prospectos_calificados.csv"
+VISIT_LOG_PATH = "visit_logs.csv"
 
 # Cabecera
 st.title("🤖 DTS&DOG Studio: Motor de Ventas B2B")
 st.markdown("Dashboard de Control del Estudio Digital. Prospección, Auditoría e IA.")
 
 # Pestañas
-tab1, tab2, tab3 = st.tabs(["🎯 Búsqueda Manual", "📊 CRM / Historial", "🚀 Piloto Automático"])
+tab1, tab2, tab3, tab4 = st.tabs(["🎯 Búsqueda Manual", "📊 CRM / Historial", "🚀 Piloto Automático", "📈 Estadísticas Web"])
 
 with tab1:
     st.subheader("1. Iniciar Rastreo")
@@ -96,7 +97,6 @@ with tab1:
                                 try:
                                     enviar_email(lead['email'], edited_asunto, edited_cuerpo)
                                     # Guardar en CSV
-                                    import datetime
                                     ahora = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
                                     linea = f"\n{lead['nombre']},{lead['url']},{lead['email']},45,5.2,90,Contactado,{ahora},"
                                     with open(CSV_PATH, 'a', encoding='utf-8') as f:
@@ -115,7 +115,9 @@ with tab2:
             st.dataframe(df, width="stretch", hide_index=True)
             stats_col1, stats_col2 = st.columns(2)
             stats_col1.metric("Leads Totales", len(df))
-            stats_col2.metric("Enviados Hoy", len(df[df['ultimo_contacto'].astype(str).str.contains(datetime.datetime.now().strftime("%Y-%m-%d"))]) if 'ultimo_contacto' in df.columns else 0)
+            hoy_str = datetime.datetime.now().strftime("%Y-%m-%d")
+            enviados_hoy = len(df[df['ultimo_contacto'].astype(str).str.contains(hoy_str)]) if 'ultimo_contacto' in df.columns else 0
+            stats_col2.metric("Enviados Hoy", enviados_hoy)
         else:
             st.info("No hay datos en el CRM.")
 
@@ -134,7 +136,7 @@ with tab3:
             new_queries = [q.strip() for q in edited_queries.split("\n") if q.strip()]
             with open(INDUSTRIES_PATH, "w") as f:
                 json.dump(new_queries, f, indent=4)
-            st.success("✅ Configuración actualizada. El Agente Cazador usará estos nichos en su próxima ronda.")
+            st.success("✅ Configuración actualizada.")
     
     st.divider()
     st.subheader("📈 Actividad del Cazador")
@@ -142,7 +144,37 @@ with tab3:
         df = pd.read_csv(CSV_PATH)
         autonomos = df[df['status'] == "Nuevo"]
         if not autonomos.empty:
-            st.markdown(f"**Leads Recién Descubiertos (En espera de proceso):**")
             st.dataframe(autonomos[["nombre", "url", "lead_score"]], width="stretch")
         else:
-            st.success("🎯 Todos los leads descubiertos han sido contactados o procesados.")
+            st.success("🎯 Todos los leads descubiertos han sido contactados.")
+
+with tab4:
+    st.subheader("📈 Estadísticas de Visitas")
+    if os.path.exists(VISIT_LOG_PATH):
+        df_v = pd.read_csv(VISIT_LOG_PATH)
+        if not df_v.empty:
+            df_v['timestamp'] = pd.to_datetime(df_v['timestamp'])
+            
+            c1, c2 = st.columns(2)
+            # Métricas rápidas
+            c1.metric("Visitas Totales", len(df_v))
+            c2.metric("Páginas Únicas", df_v['path'].nunique())
+            
+            # Gráfico de visitas por día
+            st.markdown("**Visitas por Día**")
+            df_v['fecha'] = df_v['timestamp'].dt.date
+            visitas_fecha = df_v.groupby('fecha').size().reset_index(name='visitas')
+            st.bar_chart(visitas_fecha.set_index('fecha'))
+            
+            # Páginas más vistas
+            st.markdown("**Páginas más Populares**")
+            paginas_populares = df_v.groupby('path').size().reset_index(name='visitas').sort_values(by='visitas', ascending=False)
+            st.bar_chart(paginas_populares.set_index('path'))
+            
+            # Tabla de logs
+            with st.expander("Ver Logs de Visita en detalle"):
+                st.dataframe(df_v.sort_values(by='timestamp', ascending=False), width="stretch")
+        else:
+            st.info("Todavía no hay registros de visitas.")
+    else:
+        st.info("El sistema de analíticas se activará cuando recibas la primera visita.")

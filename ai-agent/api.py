@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import pandas as pd
@@ -9,16 +9,17 @@ from main import generar_email
 
 app = FastAPI()
 
-# Configurar CORS para permitir peticiones desde el frontend (Vite)
+# Configurar CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # En producción poner el dominio real
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 CSV_PATH = "prospectos_calificados.csv"
+VISIT_LOG_PATH = "visit_logs.csv"
 
 class Lead(BaseModel):
     nombre: str
@@ -28,6 +29,34 @@ class Lead(BaseModel):
     servicio: str = ""
     presupuesto: str = ""
     mensaje: str = ""
+
+class VisitLog(BaseModel):
+    path: str
+    referrer: str = ""
+
+@app.post("/api/track")
+async def track_visit(visit: VisitLog, request: Request):
+    try:
+        ahora = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+        ip = request.client.host
+        
+        new_visit = {
+            "timestamp": ahora,
+            "path": visit.path,
+            "referrer": visit.referrer,
+            "ip": ip
+        }
+        
+        df_visit = pd.DataFrame([new_visit])
+        if os.path.exists(VISIT_LOG_PATH):
+            df_visit.to_csv(VISIT_LOG_PATH, mode='a', header=False, index=False)
+        else:
+            df_visit.to_csv(VISIT_LOG_PATH, index=False)
+        
+        return {"status": "success"}
+    except Exception as e:
+        print(f"Error tracking visit: {e}")
+        return {"status": "error"}
 
 @app.post("/api/leads")
 async def create_lead(lead: Lead):
