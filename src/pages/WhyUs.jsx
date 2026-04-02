@@ -1,135 +1,88 @@
-import React, { useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
-import {
-  FaHeart,
-  FaRocket,
-  FaLightbulb,
-  FaHandshake,
-  FaPaw,
-  FaCode,
-} from "react-icons/fa";
+import { FaRocket, FaLightbulb, FaCode } from "react-icons/fa";
 
 export default function WhyUs() {
-  const [hovered, setHovered] = useState(null);
-  const color = "#f29a41";
+  const color = "var(--accent-orange)";
 
   const reasons = [
     {
-      icon: <FaPaw size={36} />,
-      title: "Alma creativa",
-      desc: "Diseñamos cada proyecto con pasión, energía y un toque único, como si fuera nuestro propio sueño hecho código.",
+      icon: <FaRocket />,
+      title: "Rendimiento Extremo",
+      desc: "Optimizamos cada byte para que su web cargue en menos de un segundo, reduciendo la tasa de rebote al mínimo.",
     },
     {
-      icon: <FaRocket size={36} />,
-      title: "Innovación constante",
-      desc: "Adoptamos las últimas tecnologías y frameworks para llevar tus ideas al siguiente nivel.",
+      icon: <FaLightbulb />,
+      title: "Prospección Inteligente",
+      desc: "Nuestros sistemas de adquisición trabajan 24/7 buscando y filtrando los mejores leads para su modelo de negocio.",
     },
     {
-      icon: <FaLightbulb size={36} />,
-      title: "Estrategia y visión",
-      desc: "No solo construimos sitios, construimos marcas digitales con propósito y dirección.",
-    },
-    {
-      icon: <FaCode size={36} />,
-      title: "Desarrollo a medida",
-      desc: "Creamos soluciones escalables, optimizadas y seguras, pensadas para el crecimiento real de tu negocio.",
-    },
-    {
-      icon: <FaHandshake size={36} />,
-      title: "Compromiso real",
-      desc: "Nos involucramos en cada detalle del proceso, desde la idea inicial hasta el lanzamiento.",
-    },
-    {
-      icon: <FaHeart size={36} />,
-      title: "Cercanía humana",
-      desc: "Trabajamos con empatía, transparencia y buena energía. Porque detrás del código hay personas que aman lo que hacen.",
+      icon: <FaCode />,
+      title: "Ingeniería de Venta",
+      desc: "No solo escribimos código; diseñamos arquitecturas digitales orientadas 100% a la conversión de clientes.",
     },
   ];
 
   return (
     <section
       id="whyus"
-      className="py-5 text-center"
+      className="py-5"
       style={{
-        background: "#0d0d0d",
-        color: "#f9eedb",
-        boxShadow: "inset 0 0 30px rgba(0,0,0,0.5)",
+        background: "#000",
+        color: "#fff",
+        borderTop: "1px solid rgba(255,255,255,0.05)"
       }}
     >
-      <div className="container py-4">
-        <h6
-          className="text-uppercase mb-2"
-          style={{ color, letterSpacing: "2px" }}
-        >
-          Por qué elegirnos
-        </h6>
-        <h2 className="fw-bold mb-4">Creamos soluciones con alma digital 🐾</h2>
-        <p
-          className="text-light mb-5"
-          style={{
-            maxWidth: "700px",
-            margin: "0 auto",
-            color: "#d8d0c2",
-          }}
-        >
-          En DTS&DOG Studio combinamos creatividad, tecnología y estrategia para
-          dar vida a experiencias digitales que inspiran, emocionan y generan
-          resultados reales.
-        </p>
+      <div className="container py-5">
+        <div className="text-center mb-5">
+          <h6
+            className="text-uppercase mb-4"
+            style={{ color, letterSpacing: "5px", fontSize: "0.75rem", fontWeight: "800" }}
+          >
+            Diferencial
+          </h6>
+          <h2 className="display-4 fw-black mb-0" style={{ letterSpacing: "-0.05em", color: "#fff" }}>
+            Por qué trabajar con <span className="text-gradient">DTS&DOG</span>
+          </h2>
+        </div>
 
-        <div className="row justify-content-center g-4">
+        <div className="row justify-content-center g-4 mt-2">
           {reasons.map((item, index) => (
             <motion.div
               key={index}
-              className="col-12 col-sm-6 col-md-4"
-              onMouseEnter={() => setHovered(index)}
-              onMouseLeave={() => setHovered(null)}
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 150 }}
+              className="col-lg-4"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              viewport={{ once: true }}
             >
               <div
-                className="p-4 rounded-4 h-100"
+                className="p-5 h-100"
                 style={{
-                  background:
-                    hovered === index
-                      ? `${color}15`
-                      : "rgba(255, 255, 255, 0.03)",
-                  border:
-                    hovered === index
-                      ? `1px solid ${color}`
-                      : "1px solid rgba(255,255,255,0.08)",
-                  boxShadow:
-                    hovered === index
-                      ? `0 0 25px ${color}55`
-                      : "0 0 10px rgba(255,255,255,0.05)",
-                  transition: "all 0.3s ease",
+                  background: "rgba(255,255,255,0.015)",
+                  backdropFilter: "blur(10px)",
+                  border: "0.5px solid rgba(255,255,255,0.12)",
+                  borderRadius: "4px",
+                  textAlign: "left",
+                  transition: "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)"
                 }}
               >
                 <div
                   className="mb-3"
-                  style={{
-                    color: hovered === index ? "#fff" : color,
-                    transition: "color 0.3s ease",
-                  }}
+                  style={{ color, fontSize: "1.2rem" }}
                 >
                   {item.icon}
                 </div>
-                <h5
-                  className="fw-bold mb-2"
-                  style={{
-                    color: hovered === index ? "#fff" : "#f9eedb",
-                  }}
-                >
+                <h5 className="fw-bold mb-3" style={{ fontSize: "1.2rem" }}>
                   {item.title}
                 </h5>
                 <p
                   style={{
-                    color:
-                      hovered === index
-                        ? "rgba(249,238,219,0.9)"
-                        : "rgba(249,238,219,0.7)",
-                    fontSize: "0.9rem",
-                    lineHeight: "1.5",
+                    color: "rgba(255,255,255,0.5)",
+                    fontSize: "1rem",
+                    lineHeight: "1.7",
+                    margin: 0,
+                    fontWeight: "400"
                   }}
                 >
                   {item.desc}

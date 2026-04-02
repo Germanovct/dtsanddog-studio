@@ -1,0 +1,18 @@
+Fecha,Empresa,URL,Puntuación Velocidad,Tiempo Carga (s),¿Es Lenta?,Borrador de Email IA
+2026-03-25 14:50,Empresa Dental Local,https://www.clinicadentalinventada.com,38,6.8,Sí,"**Asunto:** Oportunidad de Optimización para clinicadentalinventada.com
+
+Estimados,
+
+Soy Germán Ocampo, CEO y Tech Lead de DTS&DOG Studio. He visitado su sitio web, clinicadentalinventada.com, y me parece que ofrecen un excelente servicio.
+
+Como experto consultor, he notado que la carga interactiva en móviles de su web es de 6.8 segundos, impactando la experiencia del usuario y, potencialmente, sus conversiones.
+
+Utilizando un stack moderno como React/Vite, podríamos reducir ese tiempo a menos de 1 segundo. Esta mejora significativa no solo deleita a sus pacientes, sino que impulsa directamente la visibilidad y, en última instancia, las reservas.
+
+¿Les interesaría conocer qué impacto tendría esta optimización en sus reservas actuales?
+
+Atentamente,
+
+Germán Ocampo
+CEO & Tech Lead
+DTS&DOG Studio"

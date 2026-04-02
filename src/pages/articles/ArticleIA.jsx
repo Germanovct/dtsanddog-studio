@@ -22,8 +22,8 @@ export default function ArticleIA() {
   return (
     <div
       style={{
-        background: "#0d0d0d",
-        color: "#f9eedb",
+        background: "#000",
+        color: "#fff",
         minHeight: "100vh",
         paddingTop: "120px",
         paddingBottom: "80px",
@@ -45,17 +45,17 @@ export default function ArticleIA() {
           <h1 className="fw-bold mt-3">
             Cómo la inteligencia artificial redefine el diseño digital
           </h1>
-          <p style={{ color: "#cfcfcf" }}>
-            La IA no reemplaza la creatividad, la amplifica. Descubrí cómo aplicarla 
-            de forma ética y estratégica en tus proyectos.
+          <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "1.1rem", lineHeight: "1.6" }}>
+            El panorama de la Inteligencia Artificial está cambiando. Ya no se trata de
+            curiosidad, sino de integración profunda en el ROI del negocio.
           </p>
           <div
-            className="rounded-4 mb-4"
             style={{
               height: 240,
               background:
-                "radial-gradient(1200px 240px at 50% 0%, rgba(242,154,65,.18), rgba(255,255,255,0) 60%)",
-              border: "1px solid rgba(255,255,255,.06)",
+                "radial-gradient(1200px 240px at 50% 0%, rgba(242,154,65,.15), rgba(255,255,255,0) 60%)",
+              border: "0.5px solid rgba(255,255,255,.12)",
+              borderRadius: "4px",
             }}
           />
         </header>
@@ -87,22 +87,31 @@ export default function ArticleIA() {
         <div className="d-flex gap-2 mt-4">
           <a
             href="#contact"
-            className="btn fw-bold"
+            className="btn fw-black"
             style={{
               background: "#f29a41",
-              color: "#0d0d0d",
-              borderRadius: 10,
+              color: "#000",
+              border: "none",
+              borderRadius: "4px",
+              padding: "15px 30px",
+              fontSize: "0.9rem",
+              textTransform: "uppercase",
+              letterSpacing: "0.1em"
             }}
           >
-            Integrá IA en tu proyecto
+            Implementemos IA en tu empresa
           </a>
           <Link
             to="/insights"
             className="btn"
             style={{
-              border: "1px solid rgba(255,255,255,.18)",
-              color: "#f9eedb",
-              borderRadius: 10,
+              border: "0.5px solid rgba(255,255,255,.2)",
+              color: "#fff",
+              borderRadius: "4px",
+              padding: "15px 30px",
+              fontSize: "0.9rem",
+              textTransform: "uppercase",
+              letterSpacing: "0.1em"
             }}
           >
             ← Volver a Insights

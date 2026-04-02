@@ -31,9 +31,9 @@ export default function Process() {
       id="process"
       className="py-5 text-center"
       style={{
-        background: "#0d0d0d",
-        color: "#f9eedb",
-        boxShadow: "inset 0 0 40px rgba(0,0,0,0.6)",
+        background: "#000",
+        color: "#fff",
+        borderTop: "1px solid rgba(255,255,255,0.05)"
       }}
       initial="hidden"
       whileInView="visible"
@@ -46,73 +46,72 @@ export default function Process() {
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <h6
-          className="text-uppercase mb-2"
+          className="text-uppercase mb-4"
           style={{
             color: "#f29a41",
-            letterSpacing: "2px",
-            fontWeight: "600",
+            letterSpacing: "5px",
+            fontWeight: "800",
+            fontSize: "0.75rem"
           }}
         >
           Nuestro proceso
         </h6>
 
-        <h2 className="fw-bold mb-4" style={{ fontSize: "2rem" }}>
-          Creamos soluciones digitales con propósito
+        <h2 className="display-4 fw-black mb-5" style={{ letterSpacing: "-0.05em", color: "#fff" }}>
+          Ingeniería de <span className="text-gradient">Crecimiento.</span>
         </h2>
 
         <p
-          className="text-light mb-5"
+          className="mb-5"
           style={{
-            maxWidth: "720px",
+            maxWidth: "750px",
             margin: "0 auto",
-            color: "#d8d0c2",
-            fontSize: "1.05rem",
-            lineHeight: "1.7",
+            color: "rgba(255,255,255,0.4)",
+            fontSize: "1.1rem",
+            lineHeight: "1.8",
+            fontWeight: "400"
           }}
         >
-          En <strong>DTS&DOG Studio</strong> aplicamos un enfoque estratégico
-          que combina investigación, diseño, desarrollo y crecimiento continuo.
-          Cada paso está diseñado para garantizar resultados medibles y una
-          experiencia digital memorable.
+          En <strong>DTS&DOG Studio</strong> aplicamos un enfoque estratégico que combina investigación profunda, diseño de conversión y desarrollo de alto rendimiento. Cada paso está diseñado para garantizar resultados medibles.
         </p>
 
-        <div className="row justify-content-center g-4">
+        <div className="row justify-content-center g-5">
           {steps.map((step, index) => (
             <motion.div
               key={index}
               className="col-12 col-md-6 col-lg-4"
               variants={fadeUp}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ scale: 1.04 }}
+              whileHover={{ y: -10 }}
             >
               <div
-                className="p-4 h-100"
+                className="p-5 h-100"
                 style={{
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  borderRadius: "18px",
-                  transition: "all 0.3s ease",
-                  boxShadow:
-                    "0 0 25px rgba(0,0,0,0.25), inset 0 0 10px rgba(255,255,255,0.02)",
+                  background: "rgba(255,255,255,0.015)",
+                  border: "0.5px solid rgba(255,255,255,0.12)",
+                  borderRadius: "4px",
+                  transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+                  textAlign: "left"
                 }}
               >
-                <div className="mb-3">{step.icon}</div>
+                <div className="mb-4" style={{ filter: "drop-shadow(0 0 10px rgba(242, 154, 65, 0.2))" }}>{step.icon}</div>
                 <h5
-                  className="fw-bold mb-3"
+                  className="fw-black mb-3"
                   style={{
-                    fontSize: "1.1rem",
-                    color: "#f9eedb",
+                    fontSize: "1.2rem",
+                    color: "#fff",
                     textTransform: "uppercase",
+                    letterSpacing: "0.1em"
                   }}
                 >
                   {step.title}
                 </h5>
                 <p
-                  className="text-light"
                   style={{
-                    fontSize: "0.95rem",
-                    color: "#dcd3c1",
-                    lineHeight: "1.6",
+                    fontSize: "1rem",
+                    color: "rgba(255,255,255,0.5)",
+                    lineHeight: "1.7",
+                    margin: 0
                   }}
                 >
                   {step.desc}

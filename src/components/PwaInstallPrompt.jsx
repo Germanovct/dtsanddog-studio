@@ -44,7 +44,7 @@ export default function PwaInstallPrompt() {
             width: "90%",
             maxWidth: "430px",
             background: "rgba(13,13,13,0.95)",
-            color: "#f9eedb",
+            color: "#fff",
             border: "1px solid rgba(242,154,65,0.4)",
             backdropFilter: "blur(8px)",
           }}

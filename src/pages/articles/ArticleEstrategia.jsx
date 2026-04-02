@@ -36,8 +36,8 @@ export default function ArticleEstrategia() {
   return (
     <div
       style={{
-        background: "#0d0d0d",
-        color: "#f9eedb",
+        background: "#000",
+        color: "#fff",
         minHeight: "100vh",
         paddingTop: "120px",
         paddingBottom: "80px",
@@ -47,16 +47,17 @@ export default function ArticleEstrategia() {
         <header className="mb-4">
           <Pill>Estrategia Digital</Pill>
           <h1 className="fw-bold mt-3">Cómo construir una estrategia digital efectiva en 2025</h1>
-          <p style={{ color: "#cfcfcf" }}>
-            El éxito digital no es cuestión de suerte. Es planificación, ejecución y medición continua.
+          <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "1.1rem", lineHeight: "1.6" }}>
+            Sin estrategia, el diseño es solo decoración. Descubrí cómo alineamos
+            cada decisión visual con los objetivos de negocio de nuestros clientes.
           </p>
           <div
-            className="rounded-4 mb-4"
             style={{
               height: 240,
               background:
-                "radial-gradient(1200px 240px at 50% 0%, rgba(242,154,65,.18), rgba(255,255,255,0) 60%)",
-              border: "1px solid rgba(255,255,255,.06)",
+                "radial-gradient(1200px 240px at 50% 0%, rgba(242,154,65,.15), rgba(255,255,255,0) 60%)",
+              border: "0.5px solid rgba(255,255,255,.12)",
+              borderRadius: "4px",
             }}
           />
         </header>
@@ -90,22 +91,31 @@ export default function ArticleEstrategia() {
         <div className="d-flex gap-2 mt-4">
           <a
             href="#contact"
-            className="btn fw-bold"
+            className="btn fw-black"
             style={{
               background: "#f29a41",
-              color: "#0d0d0d",
-              borderRadius: 10,
+              color: "#000",
+              border: "none",
+              borderRadius: "4px",
+              padding: "15px 30px",
+              fontSize: "0.9rem",
+              textTransform: "uppercase",
+              letterSpacing: "0.1em"
             }}
           >
-            Creá tu estrategia con nosotros
+            Definamos tu estrategia
           </a>
           <Link
             to="/insights"
             className="btn"
             style={{
-              border: "1px solid rgba(255,255,255,.18)",
-              color: "#f9eedb",
-              borderRadius: 10,
+              border: "0.5px solid rgba(255,255,255,.2)",
+              color: "#fff",
+              borderRadius: "4px",
+              padding: "15px 30px",
+              fontSize: "0.9rem",
+              textTransform: "uppercase",
+              letterSpacing: "0.1em"
             }}
           >
             ← Volver a Insights

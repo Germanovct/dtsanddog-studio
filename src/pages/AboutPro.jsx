@@ -1,8 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaUsers, FaCogs, FaAward, FaLightbulb } from "react-icons/fa";
-import germanocampo from "../assets/germanocampo_optimized.JPG"; // ✅ Comprimida de 3.3MB → 55KB
-import franklin from "../assets/franklin.webp"; // 🟠 Franklin real
+import germanocampo from "../assets/germanocampo_optimized.JPG";
+import franklin from "../assets/franklin.webp";
 import SEO from "@/components/SEO";
 
 export default function AboutPro() {
@@ -15,7 +15,7 @@ export default function AboutPro() {
     <motion.section
       className="text-light"
       style={{
-        backgroundColor: "#0a0a0a",
+        backgroundColor: "#000",
         fontFamily: "Inter, sans-serif",
         overflow: "hidden",
       }}
@@ -35,8 +35,8 @@ export default function AboutPro() {
         style={{
           height: "80vh",
           backgroundImage: `linear-gradient(
-            rgba(0,0,0,0.7),
-            rgba(0,0,0,0.85)
+            rgba(0,0,0,0.8),
+            rgba(0,0,0,0.9)
           ), url("https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1920&q=80")`,
           backgroundSize: "cover",
           backgroundPosition: "center",
@@ -53,11 +53,11 @@ export default function AboutPro() {
             width: "200%",
             height: "200%",
             background: `
-              radial-gradient(circle at 30% 50%, rgba(242,154,65,0.25) 0%, transparent 50%),
-              radial-gradient(circle at 70% 40%, rgba(255,255,255,0.08) 0%, transparent 40%)
+              radial-gradient(circle at 30% 50%, rgba(242,154,65,0.15) 0%, transparent 50%),
+              radial-gradient(circle at 70% 40%, rgba(255,255,255,0.05) 0%, transparent 40%)
             `,
-            animation: "moveGlow 12s ease-in-out infinite alternate",
-            filter: "blur(100px)",
+            animation: "moveGlow 15s ease-in-out infinite alternate",
+            filter: "blur(120px)",
             zIndex: 0,
           }}
         />
@@ -65,30 +65,31 @@ export default function AboutPro() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          style={{ maxWidth: "800px", padding: "0 20px", zIndex: 1 }}
+          style={{ maxWidth: "850px", padding: "0 20px", zIndex: 1 }}
         >
           <h1
-            className="fw-bold mb-3"
+            className="display-2 fw-black mb-4"
             style={{
-              color: "#f29a41",
-              fontSize: "3rem",
-              textShadow: "0 0 25px rgba(242,154,65,0.5)",
+              color: "#fff",
+              letterSpacing: "-0.06em",
+              textShadow: "0 0 30px rgba(242,154,65,0.2)",
             }}
           >
-            Innovamos con propósito
+            Innovamos con <span className="text-gradient">Propósito.</span>
           </h1>
           <p
+            className="mb-0"
             style={{
-              color: "#d8d0c2",
-              fontSize: "1.2rem",
-              lineHeight: 1.6,
-              maxWidth: "650px",
+              color: "rgba(255,255,255,0.4)",
+              fontSize: "1.25rem",
+              lineHeight: 1.8,
+              maxWidth: "700px",
               margin: "0 auto",
+              fontWeight: "400"
             }}
           >
             En <strong style={{ color: "#f29a41" }}>DTS&DOG Studio</strong>{" "}
-            combinamos arte, desarrollo y tecnología para impulsar el crecimiento
-            de empresas, startups y marcas que buscan destacar en la era digital.
+            combinamos ingeniería de alto rendimiento, diseño estratégico y visión de negocio para escalar marcas en la era digital.
           </p>
         </motion.div>
       </div>
@@ -98,58 +99,32 @@ export default function AboutPro() {
         className="container text-center text-md-start py-5"
         style={{
           maxWidth: "900px",
-          color: "#d8d0c2",
-          lineHeight: 1.8,
+          color: "rgba(255,255,255,0.5)",
+          lineHeight: 2,
         }}
       >
         <motion.p
           variants={fadeUp}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8 }}
           style={{
             fontSize: "1.1rem",
-            marginBottom: "1rem",
+            marginBottom: "1.5rem",
             textAlign: "justify",
           }}
         >
-          <strong style={{ color: "#f29a41" }}>DTS&DOG Studio</strong> nació en
-          Buenos Aires como un sueño: unir el arte, la tecnología y la emoción
-          humana en un solo espacio creativo. Todo comenzó con una notebook, un
-          perro curioso llamado Franklin 🐾 y una visión clara:{" "}
-          <em>
-            “Diseñar experiencias digitales que hagan sentir, que conecten con
-            las personas y que trasciendan la pantalla.”
-          </em>
+          <strong style={{ color: "#f29a41" }}>DTS&DOG Studio</strong> nació en Buenos Aires con una visión clara: elevar el estándar del desarrollo digital uniendo precisión técnica y diseño de vanguardia. Lo que comenzó con una notebook, mucha ambición y un perro curioso llamado Franklin 🐾, hoy es un estudio que diseña infraestructuras de crecimiento para empresas globales.
         </motion.p>
 
         <motion.p
           variants={fadeUp}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
           style={{
-            fontSize: "1rem",
-            marginBottom: "1rem",
+            fontSize: "1.1rem",
+            marginBottom: "1.5rem",
             textAlign: "justify",
           }}
         >
-          Lo que empezó como una idea personal se transformó en una empresa con
-          propósito. Un espacio donde el diseño, el código y la creatividad se
-          encuentran para construir marcas, productos y experiencias que respiran
-          autenticidad. Creemos que cada proyecto tiene un alma, y nuestro trabajo
-          es darle forma con precisión, emoción y coherencia.
-        </motion.p>
-
-        <motion.p
-          variants={fadeUp}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          style={{
-            fontSize: "1rem",
-            color: "#b8b1a4",
-            textAlign: "justify",
-          }}
-        >
-          Hoy, <strong>DTS&DOG</strong> es mucho más que un estudio. Es una forma
-          de entender el mundo digital: con humanidad, pasión y visión. Desde
-          Buenos Aires al mundo 🌎, seguimos creando, soñando y transformando
-          ideas en realidades digitales.
+          Creemos que el software no debe ser solo funcional, sino una ventaja competitiva. Cada línea de código y cada píxel que entregamos está orientado a maximizar la conversión, la velocidad y la escalabilidad. No solo construimos sitios; construimos motores de venta.
         </motion.p>
       </div>
 
@@ -157,19 +132,19 @@ export default function AboutPro() {
       <div className="container text-center py-5">
         <motion.h3
           variants={fadeUp}
-          className="fw-bold mb-5"
-          style={{ color: "#f29a41" }}
+          className="display-4 fw-black mb-5 pb-4"
+          style={{ color: "#fff", letterSpacing: "-0.04em" }}
         >
-          Nuestro Equipo
+          Nuestro <span className="text-gradient">Core.</span>
         </motion.h3>
 
-        <div className="row g-4 justify-content-center">
+        <div className="row g-5 justify-content-center">
           {[
             {
               name: "Germán Ocampo",
-              role: "Founder & CEO / Lead Developer",
+              role: "Founder & Lead Engineer",
               quote:
-                "Dirigiendo cada proyecto con la misma pasión con la que nació este estudio.",
+                "Construyendo el futuro digital con la misma pasión con la que nació este estudio.",
               img: germanocampo,
               highlight: true,
             },
@@ -177,62 +152,67 @@ export default function AboutPro() {
               name: "Franklin 🐾",
               role: "Chief Happiness Officer",
               quote:
-                "Recordándonos que toda gran idea necesita un poco de juego y cariño.",
+                "Recordándonos que toda gran estrategia necesita equilibrio y carácter.",
               img: franklin,
             },
             {
               name: "Equipo Global",
-              role: "Design & Dev Partners",
+              role: "Partners & Experts",
               quote:
-                "Una red internacional de talentos que comparten nuestra visión: crear con alma y precisión.",
+                "Una red de especialistas alineados con nuestra visión de excelencia y resultados.",
               img: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80",
             },
           ].map((p, i) => (
             <motion.div
               key={i}
-              className="col-6 col-md-4"
+              className="col-12 col-md-4"
               variants={fadeUp}
               transition={{ delay: i * 0.1 }}
             >
               <div
-                className={`p-3 rounded-4 h-100 ${p.highlight ? "founder-card" : ""
-                  }`}
+                className="p-4 h-100"
                 style={{
-                  background: "rgba(255,255,255,0.05)",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  boxShadow: "0 0 15px rgba(242,154,65,0.05)",
+                  background: "rgba(255,255,255,0.015)",
+                  border: "0.5px solid rgba(255,255,255,0.12)",
+                  borderRadius: "4px",
+                  boxShadow: p.highlight ? "0 10px 30px rgba(242,154,65,0.05)" : "none",
+                  transition: "all 0.4s ease"
                 }}
               >
                 <img
                   src={p.img}
                   alt={p.name}
-                  className={`team-photo ${p.highlight ? "founder-photo" : ""}`}
+                  className="team-photo"
                   style={{
                     width: "100%",
-                    height: "240px",
+                    height: "320px",
                     objectFit: "cover",
-                    borderRadius: "15px",
-                    marginBottom: "15px",
+                    borderRadius: "4px",
+                    marginBottom: "20px",
                     transition: "all 0.5s ease",
                   }}
                 />
-                <h6 className="fw-bold mb-1" style={{ color: "#f29a41" }}>
+                <h5 className="fw-black mb-1" style={{ color: "#f29a41", letterSpacing: "-0.02em" }}>
                   {p.name}
-                </h6>
+                </h5>
                 <p
                   style={{
-                    color: "#c6bfb1",
+                    color: "rgba(255,255,255,0.4)",
                     fontSize: "0.9rem",
-                    marginBottom: "10px",
+                    marginBottom: "12px",
+                    fontWeight: "700",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.1em"
                   }}
                 >
                   {p.role}
                 </p>
                 <p
                   style={{
-                    color: "#a39c8c",
-                    fontSize: "0.85rem",
+                    color: "rgba(255,255,255,0.3)",
+                    fontSize: "0.9rem",
                     fontStyle: "italic",
+                    lineHeight: "1.6"
                   }}
                 >
                   “{p.quote}”
@@ -243,7 +223,6 @@ export default function AboutPro() {
         </div>
       </div>
 
-      {/* 🔧 Animaciones CSS */}
       <style>{`
         @keyframes moveGlow {
           0% { transform: translate(-10%, -10%) scale(1); opacity: 0.8; }

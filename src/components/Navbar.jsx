@@ -48,12 +48,12 @@ export default function Navbar() {
           to="/"
           style={{
             textTransform: "uppercase",
-            letterSpacing: "1px",
-            fontFamily: "Inter, sans-serif",
-            textShadow: "0 2px 4px rgba(0,0,0,0.4)",
+            letterSpacing: "2px",
+            fontFamily: "var(--font-heading)",
+            fontSize: "1.1rem"
           }}
         >
-          DTS&DOG Studio
+          DTS&DOG
         </Link>
 
         {/* 🔹 Botón mobile */}
@@ -71,32 +71,12 @@ export default function Navbar() {
 
         {/* 🔹 Menú */}
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ms-auto text-center">
-            {/* ✅ BOTÓN INTELIGENTE: en Home hace scroll, en otras páginas navega */}
-            <li className="nav-item">
-              {location.pathname === "/" ? (
-                <button
-                  className="btn btn-link nav-link text-light"
-                  onClick={() => handleScroll("about")}
-                >
-                  Nosotros
-                </button>
-              ) : (
-                <Link
-                  to="/aboutpro"
-                  className={`nav-link text-light ${
-                    location.pathname === "/aboutpro" ? "active" : ""
-                  }`}
-                >
-                  Nosotros
-                </Link>
-              )}
-            </li>
-
+          <ul className="navbar-nav ms-auto text-center" style={{ gap: "10px" }}>
             <li className="nav-item">
               <button
-                className="btn btn-link nav-link text-light"
+                className="btn btn-link nav-link text-light px-3"
                 onClick={() => handleScroll("services")}
+                style={{ fontSize: "0.9rem", fontWeight: "400", opacity: 0.8 }}
               >
                 Servicios
               </button>
@@ -104,30 +84,35 @@ export default function Navbar() {
 
             <li className="nav-item">
               <button
-                className="btn btn-link nav-link text-light"
+                className="btn btn-link nav-link text-light px-3"
                 onClick={() => handleScroll("tech")}
+                style={{ fontSize: "0.9rem", fontWeight: "400", opacity: 0.8 }}
               >
-                Tecnologías
+                Tecnología
               </button>
             </li>
 
-            <li className="nav-item">
-              <Link
-                className={`nav-link text-light ${
-                  location.pathname.startsWith("/insights") ? "active" : ""
-                }`}
-                to="/insights"
-              >
-                Insights
-              </Link>
-            </li>
 
             <li className="nav-item">
               <button
-                className="btn btn-link nav-link text-light"
-                onClick={() => handleScroll("contacto")}
+                className="btn btn-link nav-link text-light px-3"
+                onClick={() => handleScroll("contact")}
+                style={{ fontSize: "0.9rem", fontWeight: "400", opacity: 0.8 }}
               >
                 Contacto
+              </button>
+            </li>
+
+            <li className="nav-item ms-lg-3">
+              <button
+                className="btn-premium btn-primary btn-shine py-2 px-4"
+                onClick={() => handleScroll("contact")}
+                style={{ 
+                  fontSize: "0.85rem", 
+                  fontWeight: "600"
+                }}
+              >
+                Auditoría Gratis
               </button>
             </li>
           </ul>
@@ -138,22 +123,20 @@ export default function Navbar() {
       <style>{`
         .navbar-transparent {
           background-color: transparent !important;
-          box-shadow: none !important;
         }
         .navbar-scrolled {
-          background-color: rgba(13, 13, 13, 0.85) !important;
-          backdrop-filter: blur(8px);
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+          background-color: rgba(0, 0, 0, 0.9) !important;
+          backdrop-filter: blur(10px);
+          border-bottom: 1px solid rgba(255,255,255,0.05);
         }
         .nav-link {
-          transition: color 0.3s ease, transform 0.3s ease;
+          transition: all 0.3s ease;
+          border: none !important;
+          text-decoration: none !important;
         }
         .nav-link:hover {
-          color: #f29a41 !important;
-          transform: translateY(-1px);
-        }
-        .nav-link.active {
-          color: #f29a41 !important;
+          color: #fff !important;
+          opacity: 1 !important;
         }
       `}</style>
     </nav>

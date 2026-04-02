@@ -24,4 +24,8 @@ dist-ssr
 *.sw?
 
 # AI Agent
-ai-agent/
+ai-agent/venv/
+ai-agent/__pycache__/
+ai-agent/token.json
+ai-agent/credentials.json
+ai-agent/*.csv

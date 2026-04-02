@@ -14,7 +14,7 @@ export default function NotFound() {
       style={{
         height: "100vh",
         background: "radial-gradient(circle at 30% 30%, #151515, #000)",
-        color: "#f9eedb",
+        color: "#fff",
         fontFamily: "Inter, sans-serif",
         overflow: "hidden",
       }}

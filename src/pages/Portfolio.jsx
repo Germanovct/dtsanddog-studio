@@ -1,51 +1,40 @@
 import React, { useRef } from "react";
 import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react"; // íconos elegantes
+import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
 
 const projects = [
   {
     title: "TCQ Cultura Techno",
-    desc: "Plataforma de eventos con venta de tickets online y diseño inmersivo.",
+    desc: "Plataforma enterprise de gestión de eventos y venta de tickets.",
     img: "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2?auto=format&fit=crop&w=1600&q=80",
     url: "https://tcqclub.com",
-    tag: "Desarrollo Web / Full Stack",
+    tag: "Full Stack Development",
+    impact: "+2,500 Tickets Vendidos"
   },
   {
     title: "Estudio Jurídico SNA",
-    desc: "Landing page profesional con estructura optimizada y carga veloz.",
+    desc: "Arquitectura digital de alto rendimiento para servicios legales.",
     img: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2940",
     url: "https://estudio-juridicosna.netlify.app/",
-    tag: "Desarrollo Web",
+    tag: "Web Architecture",
+    impact: "+180% Leads Orgánicos"
   },
   {
     title: "Calen Design",
-    desc: "Diseño de tienda digital experiencia fluida , upgrade de Tienda Nube a web Propia.",
+    desc: "E-commerce boutique con experiencia de usuario optimizada.",
     img: "https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2940",
     url: "https://calendesign.mitiendanube.com/",
-    tag: "E-commerce",
+    tag: "E-commerce Strategy",
+    impact: "Migración Exitosa"
   },
   {
-    title: "Landing Pag MP ",
-    desc: "Landing page profesional con estructura optimizada y carga veloz.",
-    img: "https://plus.unsplash.com/premium_photo-1682106686018-80ac772927d2?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1932",
-    url: "https://www.behance.net/gallery/171719855/Landing-Promocional",
-    tag: "Diseño UX/UI",
-  },
-  {
-    title: "Vincor App & Web ",
-    desc: "Landing page profesional con estructura optimizada y carga veloz.",
+    title: "Vincor Online",
+    desc: "Dashboard de gestión y presencia digital de alto nivel.",
     img: "https://images.unsplash.com/photo-1732142007807-c49145899f45?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=870",
     url: "https://www.behance.net/gallery/133650053/Web-Desing-Vincor-Online",
-    tag: "Diseño web & UX/UI",
+    tag: "Product Design",
+    impact: "UX Score 95/100"
   },
-  {
-    title: "App Mobile , Ir",
-    desc: "App Mobile profesional con estructura optimizada y carga veloz.",
-    img: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1740",
-    url: "https://www.behance.net/gallery/133581149/IR-%28con-vos-a-todos-lados%29",
-    tag: "Diseño UX/UI",
-  },
-  
 ];
 
 export default function Portfolio() {
@@ -54,7 +43,7 @@ export default function Portfolio() {
   const scroll = (direction) => {
     const container = scrollRef.current;
     if (container) {
-      const scrollAmount = 350;
+      const scrollAmount = 400;
       container.scrollBy({
         left: direction === "left" ? -scrollAmount : scrollAmount,
         behavior: "smooth",
@@ -66,166 +55,198 @@ export default function Portfolio() {
     <section
       id="portfolio"
       style={{
-        background: "linear-gradient(180deg, #0d0d0d 0%, #000 100%)",
-        color: "#f9eedb",
-        padding: "100px 0",
+        background: "#000",
+        color: "#fff",
+        padding: "120px 0",
         position: "relative",
-        overflow: "hidden",
+        borderTop: "1px solid rgba(255,255,255,0.05)"
       }}
     >
       <div className="container">
-        {/* Encabezado */}
-        <motion.div
-          className="text-center mb-5"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-        >
-          <h6 style={{ color: "#f29a41", letterSpacing: "2px" }}>
-            PORTFOLIO
-          </h6>
-          <h2 className="fw-bold mb-3" style={{ fontSize: "2.2rem" }}>
-            Proyectos que hablan por nosotros
-          </h2>
-          <p
-            style={{
-              color: "#d8d0c2",
-              maxWidth: "700px",
-              margin: "0 auto",
-              fontSize: "1rem",
-            }}
-          >
-            Cada proyecto combina estrategia, estética y tecnología. Deslizá o usá las
-            flechas para explorar.
-          </p>
-        </motion.div>
-
-        {/* Contenedor del carrusel */}
-        <div style={{ position: "relative" }}>
-          {/* Flecha izquierda */}
-          <button
-            onClick={() => scroll("left")}
-            style={arrowStyle("left")}
-            aria-label="Anterior"
-          >
-            <ChevronLeft size={26} />
-          </button>
-
-          {/* Flecha derecha */}
-          <button
-            onClick={() => scroll("right")}
-            style={arrowStyle("right")}
-            aria-label="Siguiente"
-          >
-            <ChevronRight size={26} />
-          </button>
-
-          {/* Carrusel */}
-          <motion.div
-            ref={scrollRef}
-            className="d-flex gap-4"
-            style={{
-              overflowX: "auto",
-              scrollSnapType: "x mandatory",
-              WebkitOverflowScrolling: "touch",
-              scrollbarWidth: "none",
-              msOverflowStyle: "none",
-              paddingBottom: "1rem",
-            }}
-            whileTap={{ cursor: "grabbing" }}
-          >
-            {projects.map((project, index) => (
-              <motion.a
-                key={index}
-                href={project.url || "#"}
-                target={project.url ? "_blank" : "_self"}
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.98 }}
-                style={{
-                  flex: "0 0 300px",
-                  scrollSnapAlign: "start",
-                  background: "#111",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  borderRadius: "16px",
-                  overflow: "hidden",
-                  textDecoration: "none",
-                  color: "inherit",
-                  boxShadow: "0 6px 20px rgba(0,0,0,0.3)",
-                }}
+        {/* Header */}
+        <div className="row align-items-end mb-5">
+          <div className="col-lg-8">
+            <motion.h6
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              style={{ color: "var(--accent-orange)", letterSpacing: "3px", textTransform: "uppercase", fontSize: "0.75rem" }}
+            >
+              Portfolio Seleccionado
+            </motion.h6>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="display-4 fw-bold"
+              style={{ letterSpacing: "-0.03em" }}
+            >
+              Casos de Impacto.
+            </motion.h2>
+          </div>
+          <div className="col-lg-4 text-lg-end d-none d-lg-block">
+            <div className="d-flex justify-content-end gap-2">
+              <button 
+                onClick={() => scroll("left")}
+                className="btn-premium btn-secondary" 
+                style={{ width: "50px", height: "50px", padding: 0 }}
               >
-                <motion.img
-                  src={project.img}
-                  alt={project.title}
-                  style={{
-                    width: "100%",
-                    height: "200px",
-                    objectFit: "cover",
-                    filter: "brightness(0.9)",
-                    transition: "filter 0.4s ease",
-                  }}
-                  whileHover={{ filter: "brightness(1)" }}
-                />
-                <div style={{ padding: "1rem" }}>
-                  <span
-                    style={{
-                      background: "rgba(242,154,65,0.15)",
-                      color: "#f29a41",
-                      border: "1px solid rgba(242,154,65,0.3)",
-                      padding: "4px 8px",
-                      borderRadius: "6px",
-                      fontSize: "0.8rem",
-                      fontWeight: "600",
-                    }}
-                  >
-                    {project.tag}
-                  </span>
-                  <h5
-                    style={{
-                      color: "#fff",
-                      fontWeight: "600",
-                      marginTop: "0.8rem",
-                      marginBottom: "0.3rem",
-                    }}
-                  >
-                    {project.title}
-                  </h5>
-                  <p
-                    style={{
-                      color: "#cfcfcf",
-                      fontSize: "0.9rem",
-                      margin: 0,
-                    }}
-                  >
-                    {project.desc}
-                  </p>
-                </div>
-              </motion.a>
-            ))}
-          </motion.div>
+                <ChevronLeft size={20} />
+              </button>
+              <button 
+                onClick={() => scroll("right")}
+                className="btn-premium btn-secondary" 
+                style={{ width: "50px", height: "50px", padding: 0 }}
+              >
+                <ChevronRight size={20} />
+              </button>
+            </div>
+          </div>
         </div>
+
+        {/* Carousel */}
+        <motion.div
+          ref={scrollRef}
+          className="d-flex gap-4"
+          style={{
+            overflowX: "auto",
+            scrollSnapType: "x mandatory",
+            WebkitOverflowScrolling: "touch",
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+            paddingBottom: "2rem",
+          }}
+        >
+          {projects.map((project, index) => (
+            <motion.div
+              key={index}
+              style={{
+                flex: "0 0 380px",
+                scrollSnapAlign: "start",
+                position: "relative",
+                cursor: "pointer"
+              }}
+              whileHover="hover"
+            >
+              <a 
+                href={project.url} 
+                target="_blank" 
+                rel="noreferrer" 
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                {/* Image Container */}
+                <div 
+                  style={{
+                    height: "450px",
+                    overflow: "hidden",
+                    borderRadius: "4px",
+                    position: "relative",
+                    background: "#0a0a0a"
+                  }}
+                >
+                  <motion.img
+                    variants={{
+                      hover: { scale: 1.05 }
+                    }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                    src={project.img}
+                    alt={project.title}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      opacity: 0.7
+                    }}
+                  />
+                  
+                  {/* Overlay Meta */}
+                  <div 
+                    style={{
+                      position: "absolute",
+                      top: "20px",
+                      left: "20px",
+                      right: "20px",
+                      zIndex: 2
+                    }}
+                  >
+                    <span 
+                      style={{
+                        background: "rgba(0,0,0,0.8)",
+                        backdropFilter: "blur(4px)",
+                        color: "var(--accent-orange)",
+                        padding: "6px 12px",
+                        borderRadius: "2px",
+                        fontSize: "0.7rem",
+                        fontWeight: "600",
+                        textTransform: "uppercase",
+                        borderLeft: "2px solid var(--accent-orange)"
+                      }}
+                    >
+                      {project.tag}
+                    </span>
+                  </div>
+
+                  {/* Impact Badge */}
+                  <motion.div
+                    variants={{
+                      hover: { y: 0, opacity: 1 }
+                    }}
+                    initial={{ y: 10, opacity: 0 }}
+                    style={{
+                      position: "absolute",
+                      bottom: "100px",
+                      left: "20px",
+                      zIndex: 2,
+                      background: "rgba(255,255,255,0.05)",
+                      backdropFilter: "blur(10px)",
+                      border: "1px solid rgba(255,255,255,0.1)",
+                      padding: "10px 15px",
+                      borderRadius: "4px"
+                    }}
+                  >
+                    <div style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.5)", textTransform: "uppercase" }}>Resultado</div>
+                    <div style={{ fontSize: "0.9rem", fontWeight: "600" }}>{project.impact}</div>
+                  </motion.div>
+
+                  {/* Info Overlay Bottom */}
+                  <div 
+                    style={{
+                      position: "absolute",
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      padding: "30px 20px",
+                      background: "linear-gradient(transparent, rgba(0,0,0,0.9))",
+                      zIndex: 1
+                    }}
+                  >
+                    <div className="d-flex justify-content-between align-items-end">
+                      <div>
+                        <h4 className="fw-bold mb-1" style={{ fontSize: "1.5rem" }}>{project.title}</h4>
+                        <p className="mb-0" style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.6)", maxWidth: "250px" }}>
+                          {project.desc}
+                        </p>
+                      </div>
+                      <div 
+                        style={{
+                          width: "40px",
+                          height: "40px",
+                          borderRadius: "50%",
+                          border: "1px solid rgba(255,255,255,0.2)",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          color: "#fff"
+                        }}
+                      >
+                        <ArrowUpRight size={18} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );
 }
-
-// 🔹 Estilo reutilizable para las flechas
-const arrowStyle = (side) => ({
-  position: "absolute",
-  top: "50%",
-  [side]: "1rem",
-  transform: "translateY(-50%)",
-  background: "rgba(0,0,0,0.4)",
-  color: "#f29a41",
-  border: "none",
-  borderRadius: "50%",
-  width: "42px",
-  height: "42px",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  cursor: "pointer",
-  backdropFilter: "blur(6px)",
-  zIndex: 5,
-  transition: "all 0.3s ease",
-});

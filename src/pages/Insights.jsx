@@ -65,8 +65,8 @@ export default function Insights() {
     <section
       id="insights"
       style={{
-        background: "#0d0d0d",
-        color: "#f9eedb",
+        background: "#000",
+        color: "#fff",
         minHeight: "100vh",
         paddingTop: "140px",
         paddingBottom: "100px",
@@ -81,25 +81,25 @@ export default function Insights() {
         {/* 🔹 Encabezado principal */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
           className="text-center mb-5"
         >
-          <h6 style={{ color: "#f29a41", letterSpacing: "2px" }}>INSIGHTS</h6>
-          <h2 className="fw-bold mb-3" style={{ fontSize: "2.4rem" }}>
-            Artículos y reflexiones sobre el futuro digital
+          <h6 style={{ color: "#f29a41", letterSpacing: "5px", fontWeight: "800", fontSize: "0.75rem" }}>INSIGHTS</h6>
+          <h2 className="display-4 fw-black mb-4" style={{ letterSpacing: "-0.05em" }}>
+            Ingeniería de <span className="text-gradient">Pensamiento.</span>
           </h2>
           <p
             style={{
-              maxWidth: "720px",
+              maxWidth: "750px",
               margin: "0 auto",
-              color: "#cfcfcf",
-              lineHeight: "1.7",
-              fontSize: "1.05rem",
+              color: "rgba(255,255,255,0.4)",
+              lineHeight: "1.8",
+              fontSize: "1.1rem",
+              fontWeight: "400"
             }}
           >
-            Ideas, estrategias y tendencias que aplicamos en nuestros proyectos
-            para potenciar marcas, mejorar conversiones y crear experiencias memorables.
+            Ideas, estrategias y tendencias que aplicamos en nuestros proyectos para potenciar marcas de alto nivel y crear infraestructuras de crecimiento real.
           </p>
         </motion.div>
 
@@ -109,15 +109,17 @@ export default function Insights() {
             <div className="col" key={index}>
               <motion.article
                 whileHover={{
-                  y: -8,
-                  boxShadow: "0 20px 40px rgba(242,154,65,0.25)",
+                  y: -10,
+                  boxShadow: "0 20px 40px rgba(242,154,65,0.05)",
                 }}
-                transition={{ duration: 0.3 }}
-                className="card border-0 rounded-4 overflow-hidden h-100"
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="card border-0 overflow-hidden h-100"
                 style={{
-                  background: "rgba(255,255,255,0.05)",
+                  background: "rgba(255,255,255,0.015)",
+                  border: "0.5px solid rgba(255,255,255,0.12)",
+                  borderRadius: "4px",
                   cursor: "pointer",
-                  transition: "transform 0.3s ease",
+                  transition: "all 0.4s ease",
                 }}
               >
                 {/* 🖼️ Imagen con overlay */}
@@ -159,15 +161,17 @@ export default function Insights() {
                   <div
                     style={{
                       position: "absolute",
-                      bottom: "15px",
+                      bottom: "20px",
                       left: "20px",
-                      background: "#f29a41",
-                      color: "#0d0d0d",
-                      padding: "6px 12px",
-                      borderRadius: "6px",
+                      background: "rgba(255,255,255,0.05)",
+                      backdropFilter: "blur(10px)",
+                      color: "#f29a41",
+                      padding: "6px 15px",
+                      borderRadius: "2px",
                       fontWeight: "700",
-                      fontSize: "0.85rem",
-                      letterSpacing: "0.5px",
+                      fontSize: "0.75rem",
+                      letterSpacing: "0.1em",
+                      border: "0.5px solid rgba(242,154,65,0.3)"
                     }}
                   >
                     {article.tag}
@@ -175,24 +179,26 @@ export default function Insights() {
                 </div>
 
                 {/* 📝 Contenido */}
-                <div className="p-4">
+                <div className="p-5">
                   <h4
-                    className="fw-bold"
+                    className="fw-black"
                     style={{
                       color: "#ffffff",
-                      marginBottom: "0.75rem",
-                      fontSize: "1.35rem",
-                      lineHeight: "1.3",
+                      marginBottom: "1rem",
+                      fontSize: "1.5rem",
+                      lineHeight: "1.2",
+                      letterSpacing: "-0.03em"
                     }}
                   >
                     {article.title}
                   </h4>
                   <p
                     style={{
-                      color: "#d6d6d6",
+                      color: "rgba(255,255,255,0.4)",
                       fontSize: "1rem",
-                      lineHeight: "1.65",
-                      marginBottom: "1.5rem",
+                      lineHeight: "1.7",
+                      marginBottom: "2rem",
+                      fontWeight: "400"
                     }}
                   >
                     {article.excerpt}
@@ -203,14 +209,14 @@ export default function Insights() {
                     style={{
                       color: "#f29a41",
                       textDecoration: "none",
-                      fontWeight: "700",
-                      fontSize: "1rem",
-                      transition: "color 0.2s ease",
+                      fontWeight: "800",
+                      fontSize: "0.85rem",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.1em",
+                      transition: "all 0.3s ease"
                     }}
-                    onMouseOver={(e) => (e.target.style.color = "#ffd28b")}
-                    onMouseOut={(e) => (e.target.style.color = "#f29a41")}
                   >
-                    Leer artículo →
+                    Leer ingeniería →
                   </Link>
                 </div>
               </motion.article>

@@ -35,8 +35,8 @@ export default function ArticleReact() {
   return (
     <div
       style={{
-        background: "#0d0d0d",
-        color: "#f9eedb",
+        background: "#000",
+        color: "#fff",
         minHeight: "100vh",
         paddingTop: "120px",
         paddingBottom: "80px",
@@ -55,18 +55,17 @@ export default function ArticleReact() {
           <h1 className="fw-bold mt-3" style={{ lineHeight: 1.15 }}>
             Por qué tu empresa necesita una web con React
           </h1>
-          <p className="text-muted" style={{ color: "#cfcfcf" }}>
-            React es el estándar de facto para construir interfaces rápidas,
-            escalables y mantenibles. En este artículo explicamos por qué
-            conviene para tu negocio y cómo lo implementamos en DTS&DOG Studio.
+          <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "1.1rem", lineHeight: "1.6" }}>
+            El ecosistema de React sigue evolucionando. Descubrí por qué es nuestra
+            elección para construir interfaces de alto rendimiento.
           </p>
           <div
-            className="rounded-4 mb-4"
             style={{
               height: 240,
               background:
-                "radial-gradient(1200px 240px at 50% 0%, rgba(242,154,65,.18), rgba(255,255,255,0) 60%)",
-              border: "1px solid rgba(255,255,255,.06)",
+                "radial-gradient(1200px 240px at 50% 0%, rgba(242,154,65,.15), rgba(255,255,255,0) 60%)",
+              border: "0.5px solid rgba(255,255,255,.12)",
+              borderRadius: "4px",
             }}
           />
         </header>
@@ -131,23 +130,31 @@ export default function ArticleReact() {
         <div className="d-flex gap-2 mt-4">
           <a
             href="#contact"
-            className="btn btn-dark fw-bold"
+            className="btn fw-black"
             style={{
               background: "#f29a41",
-              color: "#0d0d0d",
+              color: "#000",
               border: "none",
-              borderRadius: 10,
+              borderRadius: "4px",
+              padding: "15px 30px",
+              fontSize: "0.9rem",
+              textTransform: "uppercase",
+              letterSpacing: "0.1em"
             }}
           >
-            Modernizá tu web con React
+            Escalemos tu proyecto
           </a>
           <Link
             to="/insights"
             className="btn"
             style={{
-              border: "1px solid rgba(255,255,255,.18)",
-              color: "#f9eedb",
-              borderRadius: 10,
+              border: "0.5px solid rgba(255,255,255,.2)",
+              color: "#fff",
+              borderRadius: "4px",
+              padding: "15px 30px",
+              fontSize: "0.9rem",
+              textTransform: "uppercase",
+              letterSpacing: "0.1em"
             }}
           >
             ← Volver a Insights

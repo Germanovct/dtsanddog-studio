@@ -4,7 +4,7 @@ import logo from "../assets/logo/DTSandDOG-Studio-logo-dark.png";
 
 export default function About() {
   const fadeUp = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
   };
 
@@ -13,158 +13,97 @@ export default function About() {
       id="about"
       className="py-5 text-light"
       style={{
-        backgroundImage: `linear-gradient(
-          rgba(0, 0, 0, 0.7),
-          rgba(0, 0, 0, 0.9)
-        ), url("https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&q=80&w=1828")`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundAttachment: "fixed",
-        boxShadow: "inset 0 0 40px rgba(0,0,0,0.6)",
-        color: "#f9eedb",
+        background: "#000",
         overflow: "hidden",
+        borderTop: "1px solid rgba(255,255,255,0.05)"
       }}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
       transition={{ staggerChildren: 0.1 }}
     >
-      <div className="container py-4">
-        <div className="row align-items-center justify-content-center text-center text-lg-start">
+      <div className="container py-5">
+        <div className="row align-items-center">
           {/* 📝 Texto principal */}
           <motion.div
             className="col-lg-7"
             variants={fadeUp}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            transition={{ duration: 0.8 }}
           >
             <motion.h6
-              className="text-uppercase mb-3"
-              style={{ color: "#f29a41", letterSpacing: "2px" }}
+              className="text-uppercase mb-4"
+              style={{ color: "var(--accent-orange)", letterSpacing: "5px", fontSize: "0.75rem", fontWeight: "800" }}
             >
-              Sobre Nosotros
+              Nuestra Filosofía
             </motion.h6>
 
             <motion.h2
-              className="fw-bold mb-3"
-              style={{ color: "#f9eedb", fontSize: "2.2rem" }}
+              className="display-3 fw-black mb-4"
+              style={{ color: "#fff", lineHeight: 1, letterSpacing: "-0.05em" }}
               variants={fadeUp}
             >
-              Innovación + Diseño + Tecnología
+              Innovación con <br /><span className="text-gradient">Propósito Humano.</span>
             </motion.h2>
 
             <motion.p
-              className="lead text-light"
-              style={{ color: "#d8d0c2", fontSize: "1.05rem" }}
+              className="mb-4"
+              style={{ color: "rgba(255,255,255,0.5)", fontSize: "1.15rem", maxWidth: "600px", lineHeight: "1.8" }}
               variants={fadeUp}
             >
-              En <strong style={{ color: "#f29a41" }}>DTS&DOG Studio</strong>{" "}
-              somos una <b>startup creativa y tecnológica</b> dedicada a crear
-              experiencias digitales que combinan diseño, desarrollo e
-              innovación con propósito.
+              En <strong style={{ color: "#fff" }}>DTS&DOG Studio</strong> creemos que la tecnología solo tiene valor cuando está al servicio de las personas. No solo construimos software de alto rendimiento, diseñamos infraestructuras de crecimiento para el mercado global.
             </motion.p>
 
             <motion.p
-              className="mt-3 text-light"
-              style={{ color: "#b8b1a4" }}
+              className="mb-5"
+              style={{ color: "rgba(255,255,255,0.4)", fontSize: "1rem", maxWidth: "550px" }}
               variants={fadeUp}
             >
-              Fundada por <b>Germán Ocampo</b> junto a su inseparable compañero{" "}
-              <b>Franklin 🐾</b>, la empresa nace con la visión de unir arte y
-              tecnología para ayudar a marcas, proyectos y creadores a{" "}
-              <b>evolucionar en el ecosistema digital</b>.
+              Fundada en Buenos Aires, nuestra empresa combina la precisión técnica con una sensibilidad artística única, ayudando a marcas y negocios consolidados a evolucionar en un entorno digital en constante cambio.
             </motion.p>
 
-            <motion.div
-              className="mt-4 p-3 rounded-3"
-              style={{
-                background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(255,255,255,0.1)",
-                boxShadow: "0 0 15px rgba(242,154,65,0.1)",
-                color: "#f9eedb",
-              }}
-              variants={fadeUp}
-            >
-              <p className="mb-1 fw-semibold" style={{ color: "#f29a41" }}>
-                “Digital Arts. Human Soul.” ✨
-              </p>
-              <p style={{ fontSize: "0.9rem", color: "#d8d0c2" }}>
-                Creemos en el poder de las ideas simples, bien diseñadas y
-                profundamente humanas.
-              </p>
-            </motion.div>
-
-            {/* 🔗 CTA PRINCIPAL */}
-            <motion.div variants={fadeUp} className="mt-4">
+            <motion.div variants={fadeUp}>
               <a
                 href="/aboutpro"
-                className="btn fw-semibold px-4 py-2 pulse-button"
+                className="btn"
                 style={{
-                  background: "#f29a41",
-                  color: "#0b0b0c",
-                  borderRadius: "10px",
+                  background: "transparent",
+                  color: "#fff",
+                  border: "0.5px solid rgba(255,255,255,0.2)",
+                  borderRadius: "4px",
+                  padding: "12px 30px",
+                  fontSize: "0.9rem",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.1em",
+                  textDecoration: "none",
                   fontWeight: "600",
-                  letterSpacing: "0.5px",
+                  transition: "all 0.3s ease"
                 }}
               >
-                Conocer más →
+                Nuestra historia →
               </a>
             </motion.div>
           </motion.div>
 
-          {/* 🎞️ Logo */}
+          {/* 🎞️ Logo o Visual Minimalista */}
           <motion.div
             className="col-lg-5 text-center mt-5 mt-lg-0"
-            initial={{ opacity: 0, scale: 0.8, rotate: -8 }}
-            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-            transition={{ duration: 0.9, ease: "easeOut" }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 0.7, scale: 1 }}
+            transition={{ duration: 1 }}
           >
-            <motion.img
+            <img
               src={logo}
-              alt="DTS&DOG Studio Logo"
-              className="img-fluid shadow-lg"
+              alt="DTS&DOG"
+              className="img-fluid"
               style={{
-                maxWidth: "260px",
-                backgroundColor: "rgba(0,0,0,0.7)",
-                borderRadius: "50%",
-                padding: "10px",
-                boxShadow: "0 0 25px rgba(242,154,65,0.3)",
+                maxWidth: "280px",
+                filter: "grayscale(100%) brightness(1.2)",
+                opacity: 0.8
               }}
-              whileHover={{ scale: 1.05, rotate: 2 }}
-              transition={{ type: "spring", stiffness: 100 }}
             />
           </motion.div>
         </div>
       </div>
-
-      {/* ✨ Animación del botón */}
-      <style>{`
-        @keyframes pulseGlow {
-          0% {
-            transform: scale(1);
-            box-shadow: 0 0 0 rgba(242,154,65,0.4);
-          }
-          50% {
-            transform: scale(1.06);
-            box-shadow: 0 0 20px rgba(242,154,65,0.5);
-          }
-          100% {
-            transform: scale(1);
-            box-shadow: 0 0 0 rgba(242,154,65,0.4);
-          }
-        }
-
-        .pulse-button {
-          animation: pulseGlow 2.2s ease-in-out infinite;
-          transition: all 0.3s ease;
-        }
-
-        .pulse-button:hover {
-          background-color: #f29a41 !important;
-          color: #0b0b0b !important;
-          transform: scale(1.08);
-          box-shadow: 0 0 25px rgba(242,154,65,0.7);
-        }
-      `}</style>
     </motion.section>
   );
 }

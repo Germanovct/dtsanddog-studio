@@ -23,6 +23,9 @@ const Insights       = lazy(() => import("@/pages/Insights"));
 const ArticleReact   = lazy(() => import("@/pages/articles/ArticleReact"));
 const ArticleUX      = lazy(() => import("@/pages/articles/ArticleUX"));
 const ArticleBranding = lazy(() => import("@/pages/articles/ArticleBranding"));
+const ArticleIA      = lazy(() => import("@/pages/articles/ArticleIA"));
+const ArticleSEO     = lazy(() => import("@/pages/articles/ArticleSEO"));
+const ArticleEstrategia = lazy(() => import("@/pages/articles/ArticleEstrategia"));
 const NotFound       = lazy(() => import("@/pages/NotFound"));
 
 // ⏳ Fallback minimal mientras carga la página secundaria
@@ -52,8 +55,8 @@ export default function App() {
             <>
               <SEO
                 title="Inicio"
-                description="DTS&DOG Studio combina diseño, desarrollo y tecnología para crear experiencias digitales con alma. Sitios web, branding, UX/UI y desarrollo a medida."
-                keywords="diseño web, desarrollo web, branding, ux ui, agencia digital"
+                description="Empresa de desarrollo y estrategia digital de alto rendimiento. En DTS&DOG combinamos ingeniería de software, diseño de impacto y sistemas inteligentes para escalar su negocio."
+                keywords="desarrollo web, estrategia digital, software enterprise, diseño de impacto, prospección inteligente"
               />
               <Hero />
               <About />
@@ -71,13 +74,16 @@ export default function App() {
 
         {/* 🧭 Página extendida “AboutPro” */}
         <Route path="/aboutpro" element={<Suspense fallback={<PageLoader />}><AboutPro /></Suspense>} />
-        {/* ✅ corregido: antes /about, ahora /aboutpro */}
-
-        {/* 📰 Sección de artículos / blog */}
+        
+        {/* 🕵️ SEO Silencioso (Rutas activas pero sin enlaces en el menú) */}
         <Route path="/insights" element={<Suspense fallback={<PageLoader />}><Insights /></Suspense>} />
         <Route path="/insights/react" element={<Suspense fallback={<PageLoader />}><ArticleReact /></Suspense>} />
         <Route path="/insights/ux" element={<Suspense fallback={<PageLoader />}><ArticleUX /></Suspense>} />
         <Route path="/insights/branding" element={<Suspense fallback={<PageLoader />}><ArticleBranding /></Suspense>} />
+        <Route path="/insights/ia" element={<Suspense fallback={<PageLoader />}><ArticleIA /></Suspense>} />
+        <Route path="/insights/seo" element={<Suspense fallback={<PageLoader />}><ArticleSEO /></Suspense>} />
+        <Route path="/insights/estrategia" element={<Suspense fallback={<PageLoader />}><ArticleEstrategia /></Suspense>} />
+
 
         {/* 🚨 Ruta 404 */}
         <Route path="*" element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />

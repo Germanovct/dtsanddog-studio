@@ -139,8 +139,9 @@ export default function TechStack() {
       id="tech"
       className="py-5 text-center position-relative overflow-hidden"
       style={{
-        background: "radial-gradient(circle at 20% 20%, #111 0%, #0b0b0b 100%)",
-        color: "#f9eedb",
+        background: "#000",
+        color: "#fff",
+        borderTop: "1px solid rgba(255,255,255,0.05)"
       }}
       initial="hidden"
       whileInView="visible"
@@ -171,18 +172,12 @@ export default function TechStack() {
           height: "100%",
           zIndex: 1,
           background:
-            "linear-gradient(120deg, rgba(255,255,255,0.03), rgba(242,154,65,0.05))",
-          animation: "gradientShift 8s ease-in-out infinite alternate",
+            "linear-gradient(120deg, rgba(255,255,255,0.01), rgba(242,154,65,0.02))",
         }}
       />
 
       {/* Keyframes */}
       <style>{`
-        @keyframes gradientShift {
-          0% { opacity: 0.2; transform: scale(1); }
-          100% { opacity: 0.4; transform: scale(1.05); }
-        }
-
         @media (max-width: 768px) {
           .tech-card { padding: 16px !important; }
           .tech-card p { font-size: 0.85rem !important; }
@@ -197,24 +192,23 @@ export default function TechStack() {
       >
         <h6
           className="text-uppercase mb-2"
-          style={{ color: "#f29a41", letterSpacing: "2px" }}
+          style={{ color: "var(--accent-orange)", letterSpacing: "3px", fontSize: "0.75rem" }}
         >
-          Nuestro Stack Tecnológico
+          Tech Stack
         </h6>
-        <h2 className="fw-bold mb-4" style={{ fontSize: "2.3rem", color: "#f9eedb" }}>
-          Tecnología, creatividad y precisión
+        <h2 className="fw-bold mb-4 display-5" style={{ color: "#fff", letterSpacing: "-0.02em" }}>
+          Ingeniería de Clase Mundial.
         </h2>
         <p
-          className="text-light mb-5"
+          className="mb-5"
           style={{
             maxWidth: "680px",
             margin: "0 auto",
-            color: "#d8d0c2",
-            fontSize: "1.05rem",
+            color: "rgba(255,255,255,0.6)",
+            fontSize: "1.1rem",
           }}
         >
-          Desde el backend hasta experiencias 3D, usamos herramientas líderes para
-          construir productos de alto impacto, con performance y diseño de clase mundial.
+          Combinamos las herramientas más potentes del mercado con una arquitectura digital robusta para escalar su negocio al siguiente nivel.
         </p>
 
         <div className="row justify-content-center g-4">
@@ -233,27 +227,25 @@ export default function TechStack() {
                   background:
                     hovered === i
                       ? `${tech.color}10`
-                      : "rgba(255,255,255,0.05)",
+                      : "rgba(255,255,255,0.02)",
                   border:
                     hovered === i
-                      ? `1px solid ${tech.color}`
-                      : "1px solid rgba(255,255,255,0.1)",
-                  borderRadius: "18px",
+                      ? `1px solid ${tech.color}50`
+                      : "1px solid rgba(255,255,255,0.05)",
+                  borderRadius: "4px",
                   padding: "20px",
-                  boxShadow:
-                    hovered === i
-                      ? `0 0 25px ${tech.color}55`
-                      : "0 0 10px rgba(0,0,0,0.3)",
                   transition: "all 0.3s ease",
-                  color: "#f9eedb",
+                  color: "#fff",
                 }}
               >
-                <div className="mb-3">{tech.icon}</div>
+                <div className="mb-3" style={{ opacity: hovered === i ? 1 : 0.7, transition: "opacity 0.3s" }}>{tech.icon}</div>
                 <p
                   className="fw-semibold mb-0"
                   style={{
-                    color: hovered === i ? tech.color : "#f9eedb",
-                    fontSize: "1rem",
+                    color: hovered === i ? "#fff" : "rgba(255,255,255,0.5)",
+                    fontSize: "0.9rem",
+                    textTransform: "uppercase",
+                    letterSpacing: "1px"
                   }}
                 >
                   {tech.name}

@@ -1,261 +1,128 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import logoLight from "../assets/logo/DTSandDOG-Studio-logo.png";
-import logoDark from "../assets/logo/DTSandDOG-Studio-logo-dark.png";
+import React from "react";
+import { motion } from "framer-motion";
+import { FaArrowRight } from "react-icons/fa";
 
 export default function Hero() {
-  const [isDark, setIsDark] = useState(false);
-  const [index, setIndex] = useState(0);
-
-  const keywords = ["Diseño", "Desarrollo", "Branding", "Experiencias", "Tecnología"];
-
-  useEffect(() => {
-    const media = window.matchMedia("(prefers-color-scheme: dark)");
-    setIsDark(media.matches);
-    const listener = (e) => setIsDark(e.matches);
-    media.addEventListener("change", listener);
-    return () => media.removeEventListener("change", listener);
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % keywords.length);
-    }, 2500);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <section
       id="hero"
-      className="position-relative text-center d-flex flex-column justify-content-center align-items-center"
+      className="position-relative d-flex flex-column justify-content-center align-items-center text-center"
       style={{
         minHeight: "100vh",
+        background: "#000",
         overflow: "hidden",
-        background: "linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%)",
-        color: "#f9eedb",
+        padding: "0 20px"
       }}
     >
-      {/* 🔮 Fondo animado */}
-      <motion.div
-        className="position-absolute top-0 start-0 w-100 h-100"
+      {/* 💡 Luz sutil superior */}
+      <div
+        className="position-absolute w-100"
         style={{
-          background:
-            "radial-gradient(circle at 20% 30%, rgba(242,154,65,0.15), transparent 50%), radial-gradient(circle at 80% 70%, rgba(97,218,251,0.15), transparent 50%)",
+          top: 0,
+          height: "40vh",
+          background: "radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.05), transparent 70%)",
           zIndex: 0,
         }}
-        animate={{
-          backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-        }}
-        transition={{
-          duration: 12,
-          ease: "easeInOut",
-          repeat: Infinity,
-        }}
       />
 
-
-      <div
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "320px",
-          height: "320px",
-          background: "radial-gradient(circle, rgba(242,154,65,0.25), transparent 70%)",
-          filter: "blur(40px)",
-          zIndex: 1,
-        }}
-      />
-
-      {/* 🌟 Contenido */}
-      <motion.div
-        className="container position-relative text-center px-3"
-        style={{ zIndex: 2 }}
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.2, ease: "easeOut" }}
-      >
-        {/* Badge de Prueba Social */}
+      <div className="container position-relative" style={{ zIndex: 10 }}>
+        {/* Label Minimalista */}
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
-          className="mb-3"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+          className="mb-4"
         >
-          <div
-            className="d-inline-flex align-items-center gap-2 px-3 py-2"
+          <span 
             style={{
-              background: "rgba(255,255,255,0.08)",
-              backdropFilter: "blur(10px)",
-              borderRadius: "50px",
-              border: "1px solid rgba(255,255,255,0.15)",
-              fontSize: "0.85rem",
+              color: "var(--accent-orange)",
+              fontSize: "0.75rem",
+              fontWeight: "600",
+              textTransform: "uppercase",
+              letterSpacing: "0.2em"
             }}
           >
-            <span style={{ color: "#f29a41" }}>⭐⭐⭐⭐⭐</span>
-            <span style={{ color: "#d8d0c2" }}>
-              "Nos ayudaron a escalar de forma exponencial" – TCQ Club
-            </span>
-          </div>
+            Digital Studio & Business Strategy
+          </span>
         </motion.div>
 
-        {/* Logo */}
-        <motion.img
-          src={isDark ? logoDark : logoLight}
-          alt="DTS&DOG Studio"
-          className="mb-4"
-          style={{
-            height: "clamp(100px, 10vw, 160px)",
-            maxWidth: "100%",
-          }}
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.3, duration: 0.8 }}
-        />
-
-        {/* Título */}
+        {/* Headline Potente */}
         <motion.h1
-          className="fw-bold mb-3"
-          style={{
-            fontSize: "clamp(1.8rem, 4vw, 2.8rem)",
-            letterSpacing: "0.5px",
-            lineHeight: "1.3",
-          }}
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.8 }}
+          transition={{ delay: 0.2, duration: 0.8 }}
+          className="display-1 fw-bold mb-4"
+          style={{ 
+            fontSize: "clamp(2.8rem, 8vw, 5.5rem)",
+            lineHeight: 0.95,
+            letterSpacing: "-0.04em",
+            maxWidth: "1000px",
+            margin: "0 auto",
+            color: "#fff"
+          }}
         >
-          Creamos experiencias digitales con{" "}
-          <span style={{ color: "#f29a41" }}>alma</span>
+          Webs que no solo cargan.<br />
+          <span className="text-gradient">Impactan en su negocio.</span>
         </motion.h1>
 
-        {/* ✨ Texto rotativo con gradiente */}
-        <div
-          style={{
-            height: "45px",
-            position: "relative",
-            overflow: "hidden",
-            marginBottom: "1.5rem",
-          }}
-        >
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
-              style={{
-                fontSize: "clamp(1.4rem, 3vw, 1.8rem)",
-                fontWeight: "600",
-                background: "linear-gradient(90deg, #61dafb, #f29a41, #61dafb)",
-                backgroundSize: "200% 100%",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                animation: "gradientFlow 4s ease-in-out infinite",
-                position: "absolute",
-                width: "100%",
-              }}
-            >
-              {keywords[index]}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* Subtítulo */}
+        {/* Subtítulo Limpio */}
         <motion.p
-          className="lead mb-4 mt-2"
-          style={{
-            color: "#d8d0c2",
-            fontSize: "clamp(1rem, 2.5vw, 1.1rem)",
-            maxWidth: "600px",
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 1 }}
+          className="lead mb-5"
+          style={{ 
+            color: "var(--text-secondary)",
+            maxWidth: "580px",
             margin: "0 auto",
-            lineHeight: "1.6",
+            fontSize: "1.15rem",
+            fontWeight: "400"
           }}
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1, duration: 0.8 }}
         >
-          En DTS&DOG Studio combinamos arte, desarrollo y estrategia para crear
-          marcas que inspiran y conectan.
+          Ingeniería de software de alto rendimiento y sistemas de adquisición digital. Transformamos su presencia web en una herramienta de venta medible.
         </motion.p>
 
-        {/* Botones */}
+        {/* CTAs Profesionales */}
         <motion.div
-          className="d-flex flex-wrap justify-content-center gap-3 mt-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.4, duration: 0.8 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7, duration: 0.8 }}
+          className="d-flex flex-wrap justify-content-center gap-3"
         >
-          <motion.a
-            href="#services"
-            whileHover={{
-              scale: 1.08,
-              boxShadow: "0 0 20px rgba(255,255,255,0.3)",
-            }}
-            whileTap={{ scale: 0.95 }}
-            className="btn btn-light px-4 py-2 rounded-pill fw-semibold shadow-sm"
-            style={{
-              color: "#0d0d0d",
-              fontSize: "clamp(0.9rem, 2vw, 1rem)",
-            }}
-          >
-            Ver Planes y Precios
-          </motion.a>
-
           <motion.a
             href="#contact"
-            whileHover={{
-              scale: 1.08,
-              boxShadow: "0 0 25px rgba(242,154,65,0.7)",
-            }}
-            whileTap={{ scale: 0.95 }}
-            className="btn px-4 py-2 rounded-pill fw-semibold"
-            style={{
-              backgroundColor: "#f29a41",
-              border: "none",
-              color: "#0d0d0d",
-              fontSize: "clamp(0.9rem, 2vw, 1rem)",
-            }}
+            whileTap={{ scale: 0.98 }}
+            className="btn-premium btn-primary btn-shine"
+            style={{ textDecoration: "none" }}
           >
-            Agendar Consultoría Gratuita 🚀
+            Auditoría de Negocio
+            <FaArrowRight size={12} />
+          </motion.a>
+
+          <motion.a
+            href="#services"
+            whileTap={{ scale: 0.98 }}
+            className="btn-premium btn-secondary"
+            style={{ textDecoration: "none" }}
+          >
+            Nuestros Servicios
           </motion.a>
         </motion.div>
 
-        {/* Badge de Urgencia */}
+        {/* Stats Ultra-Minimalistas */}
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.8, duration: 0.8 }}
-          className="mt-4"
+          animate={{ opacity: 0.5 }}
+          transition={{ delay: 1, duration: 1 }}
+          className="mt-5 d-flex justify-content-center gap-5 pt-4"
+          style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
         >
-          <div
-            className="d-inline-flex align-items-center gap-2 px-3 py-2"
-            style={{
-              background: "linear-gradient(135deg, rgba(242,154,65,0.15), rgba(231,76,60,0.15))",
-              backdropFilter: "blur(10px)",
-              borderRadius: "50px",
-              border: "1px solid rgba(242,154,65,0.3)",
-              fontSize: "0.8rem",
-            }}
-          >
-            <span style={{ fontSize: "1rem" }}>🔥</span>
-            <span style={{ color: "#f29a41", fontWeight: 600 }}>
-              Consultas abiertas este mes · Agendá la tuya
-            </span>
-          </div>
+          <div className="small text-uppercase tracking-widest">Performance Enterprise</div>
+          <div className="small text-uppercase tracking-widest">Sistemas Predictivos</div>
+          <div className="small text-uppercase tracking-widest">+3x Conversión</div>
         </motion.div>
-      </motion.div>
-
-      {/* 🔁 Animación gradiente */}
-      <style>{`
-        @keyframes gradientFlow {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-      `}</style>
+      </div>
     </section>
   );
 }
+

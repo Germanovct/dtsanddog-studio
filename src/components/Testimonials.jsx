@@ -1,62 +1,33 @@
 import React from "react";
 import { motion } from "framer-motion";
-import "../App.css";
 
 const testimonials = [
   {
     name: "Martín Godoy",
     company: "TCQ Cultura Techno",
     role: "Founder & Director",
-    text: "Su trabajo fue al 200%. El sistema de venta de tickets que desarrollaron nos permitió escalar de manera exponencial.",
-    rating: 5,
+    text: "El sistema de venta de tickets nos permitió escalar exponencialmente. El retorno de inversión superó todas nuestras expectativas.",
     metric: "+2,500 tickets vendidos",
-    result: "Recuperamos la inversión en 45 días",
+    result: "ROI en 45 días",
     initials: "MG",
-    color: "#61dafb",
   },
   {
     name: "Ricardo Laham",
-    company: "Estudio Jurídico RL",
+    company: "Estudio Jurídico SNA",
     role: "Abogado Senior",
-    text: "Mi página web quedó mejor de lo esperado. Ahora recibo consultas diarias de clientes potenciales que me encuentran en Google.",
-    rating: 5,
-    metric: "+180% visitas orgánicas",
-    result: "5 clientes nuevos/mes promedio",
+    text: "La nueva arquitectura web no solo es veloz, sino que posicionó nuestra marca en un segmento mucho más alto.",
+    metric: "+180% consultas mensuales",
+    result: "Crecimiento orgánico sostenido",
     initials: "RL",
-    color: "#f29a41",
   },
   {
     name: "Geraldine Hanna",
     company: "Studio Be",
     role: "Directora Creativa",
-    text: "Profesionales y creativos. Nos ayudaron a renovar completamente nuestra presencia digital con mucha paciencia y atención al detalle.",
-    rating: 5,
-    metric: "Tiempo de carga -60%",
-    result: "Conversión +35% en 2 meses",
+    text: "Lograron capturar la esencia de nuestra marca con una precisión técnica y visual impecable. Un socio estratégico real.",
+    metric: "Carga -60%",
+    result: "Conversión +35%",
     initials: "GH",
-    color: "#9b59b6",
-  },
-  {
-    name: "Nig Ron",
-    company: "Brand Studio",
-    role: "CEO",
-    text: "Un trabajo de altísimo nivel. La plataforma que crearon es intuitiva, rápida y nos diferencia de la competencia.",
-    rating: 5,
-    metric: "UX Score: 95/100",
-    result: "Tasa de rebote -40%",
-    initials: "NR",
-    color: "#e74c3c",
-  },
-  {
-    name: "Natalia Juarez",
-    company: "Beauty & Wellness",
-    role: "Emprendedora",
-    text: "Gran equipo. Entendieron mi visión y la transformaron en un e-commerce que genera ventas desde el día uno.",
-    rating: 5,
-    metric: "$12K+ facturados/mes",
-    result: "ROI 320% en 3 meses",
-    initials: "NJ",
-    color: "#2ecc71",
   },
 ];
 
@@ -64,187 +35,138 @@ export default function Testimonials() {
   return (
     <section
       id="testimonials"
-      className="py-5 text-center testimonials-section"
       style={{
-        backgroundColor: "#0d0d0d",
-        color: "#f9eedb",
+        backgroundColor: "#000",
+        color: "#fff",
+        padding: "120px 0",
         position: "relative",
-        overflow: "hidden",
+        borderTop: "1px solid rgba(255,255,255,0.05)"
       }}
     >
-      {/* Efecto de fondo sutil */}
-      <div
-        style={{
-          position: "absolute",
-          top: "10%",
-          right: "-10%",
-          width: "400px",
-          height: "400px",
-          background: "radial-gradient(circle, rgba(242,154,65,0.08), transparent 70%)",
-          filter: "blur(80px)",
-          zIndex: 0,
-        }}
-      />
+      <div className="container">
+        {/* Header */}
+        <div className="text-center mb-5">
+          <motion.h6
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            style={{ color: "var(--accent-orange)", letterSpacing: "3px", textTransform: "uppercase", fontSize: "0.75rem" }}
+          >
+            Validación & Resultados
+          </motion.h6>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="display-4 fw-bold"
+            style={{ letterSpacing: "-0.03em" }}
+          >
+            Qué dicen nuestros clientes.
+          </motion.h2>
+        </div>
 
-      <div className="container py-4 position-relative" style={{ zIndex: 1 }}>
-        <h6 className="text-uppercase mb-2" style={{ color: "#f29a41", fontWeight: 600 }}>
-          ⭐ Resultados Reales
-        </h6>
-        <h2 className="fw-bold mb-4">
-          Lo que dicen nuestros clientes
-        </h2>
-        <p
-          className="text-light mb-5"
-          style={{ maxWidth: "700px", margin: "0 auto", fontSize: "1.1rem" }}
-        >
-          Nos enorgullece colaborar con marcas y emprendedores que confían en
-          nuestro trabajo. <strong>Estos son resultados medibles</strong> de proyectos reales.
-        </p>
-
-        <div className="row justify-content-center g-4">
+        <div className="row g-4 justify-content-center">
           {testimonials.map((t, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 50 }}
+              className="col-lg-4"
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: i * 0.15 }}
-              viewport={{ once: true }}
-              className="col-12 col-md-6 col-lg-4"
+              transition={{ delay: i * 0.1 }}
             >
-              <motion.div
-                className="testimonial-card p-4 h-100 d-flex flex-column"
-                whileHover={{
-                  y: -8,
-                  boxShadow: "0 12px 40px rgba(242,154,65,0.2)",
-                }}
+              <div
                 style={{
-                  background: "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)",
-                  borderRadius: "20px",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  backdropFilter: "blur(10px)",
-                  transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-                  position: "relative",
-                  overflow: "hidden",
+                  background: "rgba(255,255,255,0.02)",
+                  border: "1px solid rgba(255,255,255,0.05)",
+                  padding: "40px 30px",
+                  height: "100%",
+                  borderRadius: "4px",
+                  display: "flex",
+                  flexDirection: "column",
+                  transition: "border-color 0.3s ease"
                 }}
+                className="testimonial-card-new"
               >
-                {/* Brillo sutil en hover */}
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    height: "3px",
-                    background: `linear-gradient(90deg, transparent, ${t.color}, transparent)`,
-                    opacity: 0.6,
-                  }}
-                />
-
-                {/* Header con avatar */}
-                <div className="d-flex align-items-center mb-3">
-                  <div
-                    className="d-flex align-items-center justify-content-center fw-bold"
-                    style={{
-                      width: "56px",
-                      height: "56px",
-                      borderRadius: "50%",
-                      background: `linear-gradient(135deg, ${t.color}, ${t.color}dd)`,
-                      color: "#0d0d0d",
-                      fontSize: "1.2rem",
-                      flexShrink: 0,
-                      marginRight: "14px",
-                      boxShadow: `0 4px 12px ${t.color}40`,
-                    }}
-                  >
-                    {t.initials}
-                  </div>
-                  <div className="text-start">
-                    <h6 className="fw-bold mb-0" style={{ fontSize: "1rem" }}>
-                      {t.name}
-                    </h6>
-                    <small style={{ color: "#d8d0c2", fontSize: "0.85rem" }}>
-                      {t.role}
-                    </small>
-                    <div style={{ color: "#f29a41", fontSize: "0.8rem", fontWeight: 600 }}>
-                      {t.company}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Estrellas */}
-                <div className="mb-3" style={{ color: "#f29a41", fontSize: "1.1rem" }}>
-                  {"★".repeat(t.rating)}
-                </div>
-
-                {/* Testimonio */}
-                <p
-                  className="mb-4 flex-grow-1"
-                  style={{
-                    fontSize: "0.95rem",
-                    lineHeight: "1.6",
-                    color: "#d8d0c2",
+                {/* Quote */}
+                <div style={{ color: "var(--accent-orange)", fontSize: "2rem", lineHeight: 1, marginBottom: "1rem" }}>“</div>
+                
+                <p 
+                  style={{ 
+                    fontSize: "1.05rem", 
+                    lineHeight: "1.6", 
+                    color: "rgba(255,255,255,0.8)",
+                    marginBottom: "2rem",
+                    fontStyle: "italic"
                   }}
                 >
-                  "{t.text}"
+                  {t.text}
                 </p>
 
-                {/* Métricas destacadas */}
-                <div
-                  className="mt-auto pt-3"
-                  style={{
-                    borderTop: "1px solid rgba(255,255,255,0.1)",
-                  }}
-                >
-                  <div className="d-flex flex-column gap-2">
-                    <div
-                      className="d-flex align-items-center"
-                      style={{ fontSize: "0.85rem" }}
+                {/* Metrics Section */}
+                <div className="mt-auto">
+                  <div style={{ marginBottom: "1.5rem" }}>
+                    <div style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "1px", marginBottom: "5px" }}>KPI Destacado</div>
+                    <div style={{ color: "var(--accent-orange)", fontWeight: "700", fontSize: "1.1rem" }}>{t.metric}</div>
+                  </div>
+
+                  <div className="d-flex align-items-center gap-3">
+                    <div 
+                      style={{ 
+                        width: "45px", 
+                        height: "45px", 
+                        background: "rgba(255,255,255,0.1)", 
+                        display: "flex", 
+                        alignItems: "center", 
+                        justifyContent: "center",
+                        borderRadius: "2px",
+                        fontSize: "0.9rem",
+                        fontWeight: "700",
+                        color: "#fff"
+                      }}
                     >
-                      <span style={{ color: "#61dafb", marginRight: "6px" }}>📊</span>
-                      <strong style={{ color: "#f9eedb" }}>{t.metric}</strong>
+                      {t.initials}
                     </div>
-                    <div
-                      className="d-flex align-items-center"
-                      style={{ fontSize: "0.85rem" }}
-                    >
-                      <span style={{ color: "#2ecc71", marginRight: "6px" }}>✓</span>
-                      <span style={{ color: "#d8d0c2" }}>{t.result}</span>
+                    <div>
+                      <h6 className="mb-0 fw-bold">{t.name}</h6>
+                      <div style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)" }}>{t.role} @ {t.company}</div>
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             </motion.div>
           ))}
         </div>
 
-        {/* Badge de confianza */}
+        {/* Global Result Badge */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
-          viewport={{ once: true }}
-          className="mt-5 pt-4"
+           initial={{ opacity: 0 }}
+           whileInView={{ opacity: 1 }}
+           className="mt-5 pt-5 text-center"
         >
-          <div
-            className="d-inline-flex align-items-center gap-3 px-4 py-3"
-            style={{
-              background: "rgba(255,255,255,0.05)",
-              borderRadius: "50px",
-              border: "1px solid rgba(255,255,255,0.1)",
+          <div 
+            className="d-inline-flex align-items-center gap-4 px-5 py-3"
+            style={{ 
+              background: "rgba(242,154,65,0.03)", 
+              border: "1px solid rgba(242,154,65,0.1)",
+              borderRadius: "4px"
             }}
           >
-            <span style={{ fontSize: "1.3rem" }}>⭐</span>
             <div className="text-start">
-              <div className="fw-bold" style={{ color: "#f29a41" }}>
-                100% Clientes Satisfechos
-              </div>
-              <small style={{ color: "#d8d0c2" }}>
-                Cada proyecto entregado a tiempo y aprobado
-              </small>
+              <div style={{ fontSize: "1.5rem", fontWeight: "800", color: "#fff" }}>100%</div>
+              <div style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.5)", textTransform: "uppercase" }}>Satisfaction Rate</div>
+            </div>
+            <div style={{ width: "1px", height: "40px", background: "rgba(255,255,255,0.1)" }} />
+            <div className="text-start">
+              <div style={{ fontSize: "1.5rem", fontWeight: "800", color: "#fff" }}>+15</div>
+              <div style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.5)", textTransform: "uppercase" }}>Proyectos Enterprise</div>
             </div>
           </div>
         </motion.div>
       </div>
+
+      <style>{`
+        .testimonial-card-new:hover {
+          border-color: rgba(242,154,65,0.3) !important;
+        }
+      `}</style>
     </section>
   );
 }
