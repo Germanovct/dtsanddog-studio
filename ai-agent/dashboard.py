@@ -7,13 +7,13 @@ import datetime
 from buscador import buscar_leads_prospectos
 from main import analizar_web, generar_email, enviar_email
 
-st.set_page_config(page_title="DT&DOG Studio - CRM", page_icon="🤖", layout="wide")
+st.set_page_config(page_title="DTS&DOG Studio - CRM", page_icon="🤖", layout="wide")
 
 INDUSTRIES_PATH = "ai-agent/target_industries.json"
 CSV_PATH = "prospectos_calificados.csv"
 
 # Cabecera
-st.title("🤖 DT&DOG Studio: Motor de Ventas B2B")
+st.title("🤖 DTS&DOG Studio: Motor de Ventas B2B")
 st.markdown("Dashboard de Control del Estudio Digital. Prospección, Auditoría e IA.")
 
 # Pestañas
@@ -79,7 +79,7 @@ with tab1:
                     elif draft_key in st.session_state:
                         # Extraer asunto y cuerpo
                         raw_email = st.session_state[draft_key]
-                        asunto = "Propuesta de optimización DT&DOG Studio"
+                        asunto = "Propuesta de optimización DTS&DOG Studio"
                         cuerpo = raw_email
                         
                         if "Asunto:" in raw_email:

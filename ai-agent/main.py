@@ -84,7 +84,7 @@ def generar_email(nombre, url, score, tti, tipo="primera_auditoria"):
 def enviar_email(destinatario, asunto, mensaje):
     msg = MIMEText(mensaje, "plain", "utf-8")
     msg["Subject"] = asunto
-    msg["From"] = f"Germán – DT&DOG Studio <{EMAIL}>"
+    msg["From"] = f"Germán – DTS&DOG Studio <{EMAIL}>"
     msg["To"] = destinatario
     msg.add_header('reply-to', 'contacto@dtsanddog-studio.com')
 
