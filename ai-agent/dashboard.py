@@ -2,17 +2,22 @@ import streamlit as st
 import pandas as pd
 import time
 import os
+import json
+import datetime
 from buscador import buscar_leads_prospectos
 from main import analizar_web, generar_email, enviar_email
 
 st.set_page_config(page_title="DT&DOG Studio - CRM", page_icon="🤖", layout="wide")
 
+INDUSTRIES_PATH = "ai-agent/target_industries.json"
+CSV_PATH = "prospectos_calificados.csv"
+
 # Cabecera
 st.title("🤖 DT&DOG Studio: Motor de Ventas B2B")
-st.markdown("Busca prospectos, audita webs usando IA y edita envíos de correo desde tu propio Dashboard.")
+st.markdown("Dashboard de Control del Estudio Digital. Prospección, Auditoría e IA.")
 
 # Pestañas
-tab1, tab2 = st.tabs(["🎯 Búsqueda y Prospección", "📊 CRM / Historial"])
+tab1, tab2, tab3 = st.tabs(["🎯 Búsqueda Manual", "📊 CRM / Historial", "🚀 Piloto Automático"])
 
 with tab1:
     st.subheader("1. Iniciar Rastreo")
@@ -86,21 +91,16 @@ with tab1:
                         edited_asunto = st.text_input("Asunto", value=asunto, key=f"asunto_{idx}")
                         edited_cuerpo = st.text_area("Cuerpo del Email", value=cuerpo, height=200, key=f"cuerpo_{idx}")
                         
-                        if st.button("🚀 Enviar por SMTP", type="primary", key=f"btn_send_{idx}"):
+                        if st.button("🚀 Enviar Ahora", type="primary", key=f"btn_send_{idx}"):
                             with st.spinner("Enviando correo..."):
                                 try:
                                     enviar_email(lead['email'], edited_asunto, edited_cuerpo)
-                                    # Guardar en CSV con estructura extendida
+                                    # Guardar en CSV
                                     import datetime
                                     ahora = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
-                                    # nombre,url,email,score,tti,lead_score,status,ultimo_contacto,thread_id
                                     linea = f"\n{lead['nombre']},{lead['url']},{lead['email']},45,5.2,90,Contactado,{ahora},"
-                                    if os.path.exists('prospectos_calificados.csv'):
-                                        with open('prospectos_calificados.csv', 'a', encoding='utf-8') as f:
-                                            f.write(linea)
-                                    else:
-                                        with open('prospectos_calificados.csv', 'w', encoding='utf-8') as f:
-                                            f.write("nombre,url,email,score,tti,lead_score,status,ultimo_contacto,thread_id" + linea)
+                                    with open(CSV_PATH, 'a', encoding='utf-8') as f:
+                                        f.write(linea)
                                     
                                     st.session_state[sent_key] = True
                                     st.rerun()
@@ -108,25 +108,41 @@ with tab1:
                                     st.error(f"Error enviando correo: {e}")
 
 with tab2:
-    st.subheader("📁 Historial de Contactos (Mini-CRM)")
-    if os.path.exists("prospectos_calificados.csv"):
-        try:
-            df = pd.read_csv("prospectos_calificados.csv")
-            if not df.empty:
-                st.dataframe(df, width="stretch", hide_index=True)
-                st.info(f"Total de contactos contactados hasta ahora: {len(df)}")
-                
-                # Descargar la base visual
-                csv = df.to_csv(index=False).encode('utf-8')
-                st.download_button(
-                    label="📥 Descargar Base (CSV)",
-                    data=csv,
-                    file_name='prospectos_dtanddog.csv',
-                    mime='text/csv',
-                )
-            else:
-                st.info("Tu archivo CSV está vacío por ahora.")
-        except Exception as e:
-            st.error("Hubo un error al tratar de leer el CSV como tabla.")
-    else:
-        st.info("Todavía no enviaste correos.")
+    st.subheader("📁 Historial de Contactos (CRM)")
+    if os.path.exists(CSV_PATH):
+        df = pd.read_csv(CSV_PATH)
+        if not df.empty:
+            st.dataframe(df, width="stretch", hide_index=True)
+            stats_col1, stats_col2 = st.columns(2)
+            stats_col1.metric("Leads Totales", len(df))
+            stats_col2.metric("Enviados Hoy", len(df[df['ultimo_contacto'].astype(str).str.contains(datetime.datetime.now().strftime("%Y-%m-%d"))]) if 'ultimo_contacto' in df.columns else 0)
+        else:
+            st.info("No hay datos en el CRM.")
+
+with tab3:
+    st.subheader("⚙️ Configuración del Piloto Automático")
+    st.info("El Agente Cazador busca nuevos prospectos cada 4 horas y envía mails a los que tienen mejor puntaje automáticamente.")
+    
+    if os.path.exists(INDUSTRIES_PATH):
+        with open(INDUSTRIES_PATH, "r") as f:
+            queries = json.load(f)
+        
+        st.markdown("**Nichos de Caza Activos:**")
+        edited_queries = st.text_area("Lista de Búsquedas (una por línea)", value="\n".join(queries), height=200)
+        
+        if st.button("Guardar Configuración"):
+            new_queries = [q.strip() for q in edited_queries.split("\n") if q.strip()]
+            with open(INDUSTRIES_PATH, "w") as f:
+                json.dump(new_queries, f, indent=4)
+            st.success("✅ Configuración actualizada. El Agente Cazador usará estos nichos en su próxima ronda.")
+    
+    st.divider()
+    st.subheader("📈 Actividad del Cazador")
+    if os.path.exists(CSV_PATH):
+        df = pd.read_csv(CSV_PATH)
+        autonomos = df[df['status'] == "Nuevo"]
+        if not autonomos.empty:
+            st.markdown(f"**Leads Recién Descubiertos (En espera de proceso):**")
+            st.dataframe(autonomos[["nombre", "url", "lead_score"]], width="stretch")
+        else:
+            st.success("🎯 Todos los leads descubiertos han sido contactados o procesados.")
