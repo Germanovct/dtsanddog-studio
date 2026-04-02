@@ -45,16 +45,18 @@ export default function App() {
     // 📊 Registrar visita en el backend interno
     const trackVisit = async () => {
       try {
+        const fullPath = location.pathname + location.search + location.hash;
+        // Solo trackear si es una ruta distinta o sección distinta
         await fetch("http://localhost:8000/api/track", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            path: location.pathname + location.search,
+            path: fullPath || "/",
             referrer: document.referrer || "Directo"
           }),
         });
       } catch (e) {
-        // Silencioso para no afectar experiencia de usuario
+        // Silencioso
       }
     };
     trackVisit();
