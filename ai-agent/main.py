@@ -75,8 +75,32 @@ def generar_email(nombre, url, score, tti, tipo="primera_auditoria"):
                 print(f"   ⏳ Límite gratuito de IA alcanzado. Pausando 30 segundos... ({intento+1}/3)")
                 time.sleep(30)
             else:
-                raise e
-    return "Error generando email por límite de cuota gratuita de Google.".strip()
+                print(f"   ⚠️ Error de IA: {e}")
+                break
+    # 🛡️ SMART FALLBACK (Si la IA falla por cuota o error)
+    asunto_fb = f"Propuesta de optimización estratégica para {nombre}"
+    
+    if tipo == "primera_auditoria":
+        cuerpo_fb = f"""Asunto: {asunto_fb}
+
+Hola {nombre},
+
+Espero que estés muy bien.
+
+Estuve auditando el rendimiento técnico de {url} y noté que actualmente tiene un score de {score}/100, con un tiempo de interactividad (TTI) de {tti}. 
+
+En un mercado tan competitivo, estas métricas impactan directamente en tu tasa de rebote y en cómo Google posiciona tu sitio. Desde DTS&DOG Studio nos especializamos en transformar sitios lentos en máquinas de conversión de alta velocidad.
+
+¿Tendrías 10 minutos esta semana para una breve videollamada estratégica? Me gustaría mostrarte cómo podemos llevar estos números al 90+ y mejorar tus resultados.
+
+Atentamente,
+
+Germán Ocampo
+CEO DTS&DOG Studio"""
+    else:
+        cuerpo_fb = f"Hola {nombre},\n\nTe contacto nuevamente para ver si pudiste revisar el análisis que te envié sobre {url}. Creo sinceramente que tenemos una oportunidad de mejora importante ahí.\n\n¿Te sobran 5 minutos para charlarlo?\n\nSaludos,\nGermán."
+
+    return cuerpo_fb.strip()
 
 # =========================
 # ENVIAR EMAIL
