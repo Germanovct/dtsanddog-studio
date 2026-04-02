@@ -24,6 +24,7 @@ dist-ssr
 *.sw?
 
 # AI Agent
+ai-agent/.env
 ai-agent/venv/
 ai-agent/__pycache__/
 ai-agent/token.json

@@ -58,44 +58,63 @@ export default function Contact() {
     setError("");
     setSuccess(false);
 
-    if (!recaptchaReady) {
-      setError("El reCAPTCHA aún no está listo. Esperá unos segundos.");
-      return;
-    }
+    // Permitir bypass en localhost para testing rápido
+    const isLocal = window.location.hostname === "localhost";
+    
+    if (!isLocal) {
+      if (!recaptchaReady) {
+        setError("El reCAPTCHA aún no está listo. Esperá unos segundos.");
+        return;
+      }
 
-    const token = window.grecaptcha.getResponse();
-    if (!token) {
-      setError("Por favor, completá el reCAPTCHA antes de enviar.");
-      return;
+      const token = window.grecaptcha.getResponse();
+      if (!token) {
+        setError("Por favor, completá el reCAPTCHA antes de enviar.");
+        return;
+      }
     }
 
     setLoading(true);
-    try {
-      // 1. Enviar notificación al admin via EmailJS (Backup)
-      await emailjs.send(
-        "service_pfjo63k",
-        "template_jvb72h8",
-        formData,
-        "hpvZoNUAR-YfgsLEe"
-      );
+    let emailjsSuccess = false;
+    let apiSuccess = false;
 
-      // 2. Enviar datos al motor de ventas (CRM + Gmail API) via local FastAPI
+    try {
+      // 1. Intentar EmailJS (Notificación Admin)
       try {
-        await fetch("http://localhost:8000/api/leads", {
+        await emailjs.send(
+          "service_pfjo63k",
+          "template_jvb72h8",
+          formData,
+          "hpvZoNUAR-YfgsLEe"
+        );
+        emailjsSuccess = true;
+      } catch (e) {
+        console.warn("⚠️ EmailJS falló:", e);
+      }
+
+      // 2. Intentar API Local (CRM + Automatización)
+      try {
+        const res = await fetch("http://localhost:8000/api/leads", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
         });
-      } catch (apiErr) {
-        console.warn("⚠️ API de ventas no disponible (local), prosiguiendo solo con EmailJS.");
+        if (res.ok) apiSuccess = true;
+      } catch (e) {
+        console.warn("⚠️ API Local no disponible:", e);
       }
 
-      setSuccess(true);
-      setFormData({ nombre: "", empresa: "", telefono: "", email: "", servicio: "", presupuesto: "", mensaje: "" });
-      window.grecaptcha.reset();
+      if (emailjsSuccess || apiSuccess) {
+        setSuccess(true);
+        setFormData({ nombre: "", empresa: "", telefono: "", email: "", servicio: "", presupuesto: "", mensaje: "" });
+        if (!isLocal) window.grecaptcha.reset();
+      } else {
+        throw new Error("Ambos servicios fallaron.");
+      }
+
     } catch (err) {
-      console.error("❌ Error enviando el correo:", err);
-      setError("Hubo un problema al enviar el mensaje. Intentá nuevamente.");
+      console.error("❌ Error total en envío:", err);
+      setError("Hubo un problema al procesar su solicitud. Por favor, intente nuevamente o contacte directamente por email.");
     } finally {
       setLoading(false);
     }
