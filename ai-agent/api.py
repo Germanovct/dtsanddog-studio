@@ -9,7 +9,7 @@ from gmail_engine import send_gmail_message
 from db import insert_visit, insert_lead
 # Omitimos main import para evitar circular dependencies si automation_engine corre de fondo.
 # Usamos el motor principal encapsulado:
-from automation_engine import ejecutar_pipeline_completo
+from automation_engine import process_pipeline
 
 app = FastAPI()
 
@@ -42,7 +42,7 @@ def bg_automation_worker():
             print("🚀 [WORKER INICIADO] Escaneando y enviando propuestas automáticas...")
             # Llama a la función principal del motor de automatización.
             # Asegúrate que ejecutar_pipeline_completo no sea un loop infinito, sino que haga 1 corrida.
-            ejecutar_pipeline_completo()
+            process_pipeline()
             print("💤 [WORKER DORMIDO] Esperando para la próxima corrida.")
         except Exception as e:
             print(f"❌ [WORKER ERROR]: {e}")
