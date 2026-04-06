@@ -6,7 +6,8 @@ import os
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
 
-load_dotenv()
+# Forzar recarga de .env aunque Streamlit ya haya iniciado
+load_dotenv(override=True)
 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 
@@ -114,8 +115,9 @@ def insert_visit(visit_data):
     conn.close()
 
 def get_engine():
-    # Parse URL para SQLAlchemy
-    url = SUPABASE_URL
+    # Supabase / SQLAlchemy necesitan 'postgresql://' y usualmente la URL la trae.
+    load_dotenv(override=True)
+    url = os.getenv("SUPABASE_URL")
     if url and url.startswith("postgres://"):
         url = url.replace("postgres://", "postgresql://", 1)
     return create_engine(url)
