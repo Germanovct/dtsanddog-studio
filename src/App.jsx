@@ -50,7 +50,8 @@ export default function App() {
       }
       try {
         const fullPath = location.pathname + location.search + location.hash;
-        await fetch("http://localhost:8000/api/track", {
+        const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+        await fetch(`${API_URL}/api/track`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

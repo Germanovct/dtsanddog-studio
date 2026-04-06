@@ -2,9 +2,11 @@ import requests
 import csv
 import os
 import smtplib
+import datetime
 from email.mime.text import MIMEText
 from dotenv import load_dotenv
 from google import genai
+from db import insert_lead
 
 # =========================
 # CONFIG
@@ -30,12 +32,27 @@ def analizar_web(url):
 
         score = data["lighthouseResult"]["categories"]["performance"]["score"] * 100
         tti = data["lighthouseResult"]["audits"]["interactive"]["displayValue"]
+        
+        # Extraer fallas técnicas
+        audits = data.get("lighthouseResult", {}).get("audits", {})
+        fallas_encontradas = []
+        for key, audit in audits.items():
+            audit_score = audit.get("score")
+            # score < 0.5 son checks fallidos
+            if audit_score is not None and isinstance(audit_score, (int, float)) and audit_score < 0.5:
+                titulo = audit.get("title", "")
+                if titulo and titulo not in fallas_encontradas:
+                    fallas_encontradas.append(titulo)
+                if len(fallas_encontradas) >= 2:
+                    break
+        
+        fallas_str = " y ".join(fallas_encontradas) if fallas_encontradas else "Ninguna falla prioritaria detectada."
 
-        return round(score), tti
+        return round(score), tti, fallas_str
 
     except:
         # fallback mock si falla API
-        return 45, "5.2 s"
+        return 45, "5.2 s", "Imágenes sin optimizar y bloqueo de renderizado"
 
 # =========================
 # SCORING LEAD
@@ -51,11 +68,12 @@ def calcular_lead_score(score):
 # =========================
 # GENERAR EMAIL CON IA
 # =========================
-def generar_email(nombre, url, score, tti, tipo="primera_auditoria"):
+def generar_email(nombre, url, score, tti, fallas, tipo="primera_auditoria"):
     if tipo == "primera_auditoria":
         prompt = f"""Escribí un Cold Email formal y directo para {nombre} ({url}). 
         Rendimiento: {score}/100. TTI: {tti}. 
-        Usá Español de Argentina CORPORATIVO FORMAL (Vustedes/Usted). 
+        Hemos detectado específicamente las siguientes fallas técnicas en su sitio web: {fallas}. 
+        Usá Español de Argentina CORPORATIVO FORMAL (Vustedes/Usted). Menciona sutilmente alguna de las fallas como problemas que ustedes resuelven y que esto podría estar drenando dinero a la empresa por pérdida de potenciales clientes.
         Invitá a una llamada de 10 min. Firma como Germán Ocampo CEO DTS&DOG."""
     else:
         prompt = f"""Escribí un Follow-up corto (3 frases) para {nombre} ({url}). 
@@ -88,10 +106,11 @@ Hola {nombre},
 Espero que estés muy bien.
 
 Estuve auditando el rendimiento técnico de {url} y noté que actualmente tiene un score de {score}/100, con un tiempo de interactividad (TTI) de {tti}. 
+Además notamos problemas específicos como: {fallas}.
 
 En un mercado tan competitivo, estas métricas impactan directamente en tu tasa de rebote y en cómo Google posiciona tu sitio. Desde DTS&DOG Studio nos especializamos en transformar sitios lentos en máquinas de conversión de alta velocidad.
 
-¿Tendrías 10 minutos esta semana para una breve videollamada estratégica? Me gustaría mostrarte cómo podemos llevar estos números al 90+ y mejorar tus resultados.
+¿Tendrías 10 minutos esta semana para una breve videollamada estratégica? Me gustaría mostrarte cómo podemos llevar estos números al 90+ y solucionar estas fallas preventivamente.
 
 Atentamente,
 
@@ -176,17 +195,18 @@ if __name__ == "__main__":
     for lead in leads:
         print(f"\n🎯 Analizando: {lead['nombre']}")
     
-        score, tti = analizar_web(lead["url"])
+        score, tti, fallas = analizar_web(lead["url"])
         lead_score = calcular_lead_score(score)
     
-        print(f"✅ Score: {score} | TTI: {tti} | Lead Score: {lead_score}")
+        print(f"✅ Score: {score} | TTI: {tti} | Fallas: {fallas} | Lead Score: {lead_score}")
     
         if lead_score >= 60:
             email_generado = generar_email(
                 lead["nombre"],
                 lead["url"],
                 score,
-                tti
+                tti,
+                fallas
             )
     
             print("\n📩 EMAIL GENERADO:\n")
@@ -200,22 +220,27 @@ if __name__ == "__main__":
                     "Idea rápida sobre su web",
                     email_generado
                 )
+                status = "Contactado"
+            else:
+                status = "Pendiente"
     
-            resultados.append({
+            ahora = datetime.datetime.now().strftime("%Y-%m-%d %H:%M") if status == "Contactado" else ""
+            
+            lead_db = {
                 "nombre": lead["nombre"],
                 "url": lead["url"],
                 "email": lead["email"],
                 "score": score,
                 "tti": tti,
-                "lead_score": lead_score
-            })
+                "lead_score": lead_score,
+                "fallas": fallas,
+                "status": status,
+                "ultimo_contacto": ahora
+            }
+            insert_lead(lead_db)
+            resultados.append(lead_db)
     
     # =========================
-    # EXPORTAR CSV
+    # GUARDAR EN BD
     # =========================
-    with open("prospectos_calificados.csv", "w", newline="", encoding="utf-8") as file:
-        writer = csv.DictWriter(file, fieldnames=resultados[0].keys())
-        writer.writeheader()
-        writer.writerows(resultados)
-    
-    print("\n📁 Archivo generado: prospectos_calificados.csv")
+    print("\n📁 Base de datos actualizada con los resultados (crm.db).")

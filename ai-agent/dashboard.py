@@ -6,6 +6,7 @@ import json
 import datetime
 from buscador import buscar_leads_prospectos
 from main import analizar_web, generar_email, enviar_email
+from db import get_all_leads_df, get_all_visits_df, insert_lead
 
 st.set_page_config(page_title="DTS&DOG Studio - CRM", page_icon="🤖", layout="wide")
 
@@ -67,8 +68,8 @@ with tab1:
                     if not st.session_state.get(sent_key, False):
                         if st.button("Analizar y Redactar Email", key=f"btn_gen_{idx}"):
                             with st.spinner("Auditando PageSpeed y redactando correo (Gemini)..."):
-                                score, tti = analizar_web(lead['url'])
-                                borrador = generar_email(lead['nombre'], lead['url'], score, tti)
+                                score, tti, fallas = analizar_web(lead['url'])
+                                borrador = generar_email(lead['nombre'], lead['url'], score, tti, fallas)
                                 st.session_state[draft_key] = borrador
                                 st.rerun()
                     else:
@@ -96,11 +97,19 @@ with tab1:
                             with st.spinner("Enviando correo..."):
                                 try:
                                     enviar_email(lead['email'], edited_asunto, edited_cuerpo)
-                                    # Guardar en CSV
+                                    # Guardar en DB
                                     ahora = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
-                                    linea = f"\n{lead['nombre']},{lead['url']},{lead['email']},45,5.2,90,Contactado,{ahora},"
-                                    with open(CSV_PATH, 'a', encoding='utf-8') as f:
-                                        f.write(linea)
+                                    insert_lead({
+                                        'nombre': lead['nombre'],
+                                        'url': lead['url'],
+                                        'email': lead['email'],
+                                        'score': 45,
+                                        'tti': '5.2',
+                                        'lead_score': 90,
+                                        'fallas': 'Fallas detectadas manual',
+                                        'status': 'Contactado',
+                                        'ultimo_contacto': ahora
+                                    })
                                     
                                     st.session_state[sent_key] = True
                                     st.rerun()
@@ -109,17 +118,26 @@ with tab1:
 
 with tab2:
     st.subheader("📁 Historial de Contactos (CRM)")
-    if os.path.exists(CSV_PATH):
-        df = pd.read_csv(CSV_PATH)
-        if not df.empty:
-            st.dataframe(df, width="stretch", hide_index=True)
-            stats_col1, stats_col2 = st.columns(2)
-            stats_col1.metric("Leads Totales", len(df))
-            hoy_str = datetime.datetime.now().strftime("%Y-%m-%d")
-            enviados_hoy = len(df[df['ultimo_contacto'].astype(str).str.contains(hoy_str)]) if 'ultimo_contacto' in df.columns else 0
-            stats_col2.metric("Enviados Hoy", enviados_hoy)
-        else:
-            st.info("No hay datos en el CRM.")
+    df = get_all_leads_df()
+    if not df.empty:
+        st.dataframe(df, width="stretch", hide_index=True)
+        stats_col1, stats_col2, stats_col3 = st.columns(3)
+        
+        # Métricas de Negocio
+        contactados = len(df[df['status'].isin(['Contactado', 'Followup-1', 'Respondió'])])
+        # Estimación conservadora: 5% cierre, $1500 ticket promedio
+        potencial_revenue = contactados * 0.05 * 1500
+        
+        stats_col1.metric("Leads Totales", len(df))
+        stats_col2.metric("Contactados (Activos)", contactados)
+        stats_col3.metric("Potencial de Facturación", f"${potencial_revenue:,.0f} USD", delta="Estimado (5% conv)")
+        
+        st.divider()
+        hoy_str = datetime.datetime.now().strftime("%Y-%m-%d")
+        enviados_hoy = len(df[df['ultimo_contacto'].astype(str).str.contains(hoy_str)]) if 'ultimo_contacto' in df.columns else 0
+        st.caption(f"📅 Actividad de hoy: {enviados_hoy} correos procesados.")
+    else:
+        st.info("No hay datos en el CRM.")
 
 with tab3:
     st.subheader("⚙️ Configuración del Piloto Automático")
@@ -140,20 +158,18 @@ with tab3:
     
     st.divider()
     st.subheader("📈 Actividad del Cazador")
-    if os.path.exists(CSV_PATH):
-        df = pd.read_csv(CSV_PATH)
-        autonomos = df[df['status'] == "Nuevo"]
-        if not autonomos.empty:
-            st.dataframe(autonomos[["nombre", "url", "lead_score"]], width="stretch")
-        else:
-            st.success("🎯 Todos los leads descubiertos han sido contactados.")
+    df = get_all_leads_df()
+    autonomos = df[df['status'] == "Nuevo"]
+    if not autonomos.empty:
+        st.dataframe(autonomos[["nombre", "url", "lead_score"]], width="stretch")
+    else:
+        st.success("🎯 Todos los leads descubiertos han sido contactados.")
 
 with tab4:
     st.subheader("📈 Estadísticas de Visitas")
-    if os.path.exists(VISIT_LOG_PATH):
-        df_v = pd.read_csv(VISIT_LOG_PATH)
-        if not df_v.empty:
-            # Filtro de tráfico local
+    df_v = get_all_visits_df()
+    if not df_v.empty:
+        # Filtro de tráfico local
             exclude_local = st.checkbox("🚫 Excluir tráfico de prueba (Localhost)", value=True)
             if exclude_local:
                 df_v = df_v[df_v['ip'] != '127.0.0.1']
@@ -180,9 +196,5 @@ with tab4:
             st.bar_chart(paginas_populares.set_index('path'))
             
             # Tabla de logs
-            with st.expander("Ver Logs de Visita en detalle"):
-                st.dataframe(df_v.sort_values(by='timestamp', ascending=False), width="stretch")
-        else:
-            st.info("Todavía no hay registros de visitas.")
     else:
-        st.info("El sistema de analíticas se activará cuando recibas la primera visita.")
+        st.info("Todavía no hay registros de visitas.")

@@ -1,11 +1,11 @@
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import pandas as pd
 import datetime
 import os
 from gmail_engine import send_gmail_message
 from main import generar_email
+from db import insert_visit, insert_lead
 
 app = FastAPI()
 
@@ -47,11 +47,7 @@ async def track_visit(visit: VisitLog, request: Request):
             "ip": ip
         }
         
-        df_visit = pd.DataFrame([new_visit])
-        if os.path.exists(VISIT_LOG_PATH):
-            df_visit.to_csv(VISIT_LOG_PATH, mode='a', header=False, index=False)
-        else:
-            df_visit.to_csv(VISIT_LOG_PATH, index=False)
+        insert_visit(new_visit)
         
         return {"status": "success"}
     except Exception as e:
@@ -75,11 +71,7 @@ async def create_lead(lead: Lead):
             "thread_id": ""
         }
         
-        df_new = pd.DataFrame([new_row])
-        if os.path.exists(CSV_PATH):
-            df_new.to_csv(CSV_PATH, mode='a', header=False, index=False)
-        else:
-            df_new.to_csv(CSV_PATH, index=False)
+        insert_lead(new_row)
 
         # 2. Enviar Email de Bienvenida Automático via Gmail API
         asunto = f"Gracias por contactar a DTS&DOG Studio - {lead.nombre}"
