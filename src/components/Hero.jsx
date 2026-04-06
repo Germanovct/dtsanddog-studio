@@ -72,7 +72,7 @@ export default function Hero() {
           transition={{ delay: 0.5, duration: 1 }}
           className="lead mb-5"
           style={{ 
-            color: "rgba(255,255,255,0.75)",
+            color: "rgba(255,255,255,0.4)",
             maxWidth: "680px",
             margin: "0 auto",
             fontSize: "1.15rem",
@@ -112,14 +112,14 @@ export default function Hero() {
         {/* Stats Ultra-Minimalistas */}
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: 0.85 }}
+          animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 1 }}
           className="mt-5 d-flex justify-content-center flex-wrap gap-4 gap-md-5 pt-4"
           style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
         >
-          <div className="small text-uppercase tracking-widest text-center fw-bold" style={{ color: "rgba(255,255,255,0.9)" }}>Infraestructura Libre de Fricción</div>
-          <div className="small text-uppercase tracking-widest text-center fw-bold" style={{ color: "rgba(255,255,255,0.9)" }}>Agentes AI Autónomos</div>
-          <div className="small text-uppercase tracking-widest text-center fw-bold" style={{ color: "rgba(255,255,255,0.9)" }}>Sistemas Predictivos B2B</div>
+          <div className="small text-uppercase tracking-widest text-center" style={{ color: "rgba(255,255,255,0.4)" }}>Infraestructura Libre de Fricción</div>
+          <div className="small text-uppercase tracking-widest text-center" style={{ color: "rgba(255,255,255,0.4)" }}>Agentes AI Autónomos</div>
+          <div className="small text-uppercase tracking-widest text-center" style={{ color: "rgba(255,255,255,0.4)" }}>Sistemas Predictivos B2B</div>
         </motion.div>
       </div>
     </section>
