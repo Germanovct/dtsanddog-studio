@@ -1,79 +1,54 @@
 import os
-import base64
+import smtplib
+from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
+from dotenv import load_dotenv
 
-# Si modificas estos alcances, elimina el archivo token.json.
-SCOPES = [
-    'https://www.googleapis.com/auth/gmail.send',
-    'https://www.googleapis.com/auth/gmail.readonly',
-    'https://www.googleapis.com/auth/gmail.modify'
-]
+# Cargar variables de entorno (por si lo corremos en local)
+load_dotenv()
 
-def get_gmail_service():
-    """Autentica y devuelve el servicio de Gmail API."""
-    creds = None
-    # El archivo token.json almacena los tokens de acceso y actualización del usuario.
-    if os.path.exists('token.json'):
-        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-    
-    # Si no hay credenciales válidas generadas, deja que el usuario inicie sesión.
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            if not os.path.exists('credentials.json'):
-                raise FileNotFoundError("No se encontró 'credentials.json'. Por favor, descárgalo desde Google Cloud Console.")
-            
-            flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
-            creds = flow.run_local_server(port=0)
-        
-        # Guardar las credenciales para la próxima ejecución
-        with open('token.json', 'w') as token:
-            token.write(creds.to_json())
+GMAIL_USER = os.getenv("GMAIL_USER", "germanovct@gmail.com")
+GMAIL_PASS = os.getenv("GMAIL_APP_PASSWORD")
 
-    try:
-        service = build('gmail', 'v1', credentials=creds)
-        return service
-    except Exception as error:
-        print(f'Ocurrió un error: {error}')
-        return None
-
-def send_gmail_message(to, subject, body, thread_id=None):
-    """Envía un email usando Gmail API."""
-    service = get_gmail_service()
-    if not service:
+def send_gmail_message(to_email, subject, body_text):
+    """
+    Envía un email usando el servidor SMTP de Gmail y una App Password.
+    Esta arquitectura es 100% Cloud-Native y no produce archivos espurios.
+    """
+    if not GMAIL_PASS:
+        print("❌ ERROR CRÍTICO: Falta la variable de entorno GMAIL_APP_PASSWORD.")
         return None
 
     try:
-        message = MIMEText(body)
-        message['to'] = to
-        message['subject'] = subject
-        
-        # Codificar el mensaje
-        raw_message = base64.urlsafe_b64encode(message.as_bytes()).decode()
-        
-        message_body = {'raw': raw_message}
-        if thread_id:
-            message_body['threadId'] = thread_id
+        # Crear la estructura del Mensaje B2B Básico
+        msg = MIMEMultipart()
+        msg['From'] = f"German Ocampo | DTS&DOG <{GMAIL_USER}>"
+        msg['To'] = to_email
+        msg['Subject'] = subject
 
-        sent_message = service.users().messages().send(userId='me', body=message_body).execute()
-        print(f'Email enviado con éxito (ID: {sent_message["id"]})')
-        return sent_message
-    except HttpError as error:
-        print(f'Error al enviar email: {error}')
+        # Adjuntar cuerpo del texto
+        msg.attach(MIMEText(body_text, 'plain'))
+
+        # Iniciar conexión segura con el servidor SMTP de Google
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login(GMAIL_USER, GMAIL_PASS)
+        
+        # Disparar Email
+        text = msg.as_string()
+        server.sendmail(GMAIL_USER, to_email, text)
+        server.quit()
+        
+        print(f"✅ Email High-Ticket enviado con éxito a {to_email}")
+        return {"id": "smtp-success", "to": to_email}
+
+    except Exception as e:
+        print(f"❌ Error catastrófico al enviar email por SMTP: {e}")
         return None
 
 if __name__ == '__main__':
-    # Prueba rápida (requiere credentials.json)
-    try:
-        print("Probando conexión con Gmail...")
-        service = get_gmail_service()
-        if service:
-            print("✅ Conexión exitosa. Gmail API lista.")
-    except Exception as e:
-        print(f"❌ Error: {e}")
+    # Test rápido de infraestructura
+    print("Iniciando prueba de infraestructura SMTP en la nube...")
+    test = send_gmail_message("germanovct@gmail.com", "Prueba de Infra", "Si lees esto, SMTP funciona a la perfección.")
+    if test:
+        print("Infraestructura de correo validada y lista para producción.")

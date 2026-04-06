@@ -30,3 +30,6 @@ ai-agent/__pycache__/
 ai-agent/token.json
 ai-agent/credentials.json
 ai-agent/*.csv
+
+.env
+

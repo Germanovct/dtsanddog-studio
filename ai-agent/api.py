@@ -3,9 +3,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import datetime
 import os
+import threading
+import time
 from gmail_engine import send_gmail_message
-from main import generar_email
 from db import insert_visit, insert_lead
+# Omitimos main import para evitar circular dependencies si automation_engine corre de fondo.
+# Usamos el motor principal encapsulado:
+from automation_engine import ejecutar_pipeline_completo
 
 app = FastAPI()
 
@@ -17,9 +21,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-CSV_PATH = "prospectos_calificados.csv"
-VISIT_LOG_PATH = "visit_logs.csv"
 
 class Lead(BaseModel):
     nombre: str
@@ -34,6 +35,28 @@ class VisitLog(BaseModel):
     path: str
     referrer: str = ""
 
+def bg_automation_worker():
+    """ Hilo en segundo plano que despierta al motor AI Caza-Leads cada 2 horas """
+    while True:
+        try:
+            print("🚀 [WORKER INICIADO] Escaneando y enviando propuestas automáticas...")
+            # Llama a la función principal del motor de automatización.
+            # Asegúrate que ejecutar_pipeline_completo no sea un loop infinito, sino que haga 1 corrida.
+            ejecutar_pipeline_completo()
+            print("💤 [WORKER DORMIDO] Esperando para la próxima corrida.")
+        except Exception as e:
+            print(f"❌ [WORKER ERROR]: {e}")
+        
+        # Duerme 2 horas = 7200 segundos
+        time.sleep(7200)
+
+@app.on_event("startup")
+def start_background_jobs():
+    print("🔥 Iniciando el CRM API y el Trabajador Autónomo B2B...")
+    # Iniciamos el worker en Daemon para que si la API muere, el hilo muera
+    thread = threading.Thread(target=bg_automation_worker, daemon=True)
+    thread.start()
+
 @app.post("/api/track")
 async def track_visit(visit: VisitLog, request: Request):
     try:
@@ -46,9 +69,7 @@ async def track_visit(visit: VisitLog, request: Request):
             "referrer": visit.referrer,
             "ip": ip
         }
-        
         insert_visit(new_visit)
-        
         return {"status": "success"}
     except Exception as e:
         print(f"Error tracking visit: {e}")
@@ -57,7 +78,7 @@ async def track_visit(visit: VisitLog, request: Request):
 @app.post("/api/leads")
 async def create_lead(lead: Lead):
     try:
-        # 1. Guardar en el CRM (CSV)
+        # 1. Guardar en el CRM (Supabase)
         ahora = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
         new_row = {
             "nombre": lead.nombre,
@@ -65,32 +86,30 @@ async def create_lead(lead: Lead):
             "email": lead.email,
             "score": 0,
             "tti": "N/A",
-            "lead_score": 100, # Leads directos son máxima prioridad
-            "status": "Contactado",
+            "lead_score": 100, # Leads directos son máxima prioridad "Hot"
+            "status": "Inbound Meeting",
             "ultimo_contacto": ahora,
             "thread_id": ""
         }
-        
         insert_lead(new_row)
 
-        # 2. Enviar Email de Bienvenida Automático via Gmail API
-        asunto = f"Gracias por contactar a DTS&DOG Studio - {lead.nombre}"
+        # 2. Enviar Email de Bienvenida Automático via SMTP App pass
+        asunto = f"Confirmación DTS&DOG Studio - {lead.nombre}"
+        cuerpo = f"Hola {lead.nombre},\n\nGracias por confirmar tu interés en {lead.servicio}.\n\nNos vemos en nuestra ventana de Zoom programada para discutir sobre '{lead.mensaje}'. Tu negocio tiene tremendo potencial.\n\nAtentamente,\n\nGermán Ocampo\nCEO DTS&DOG Studio"
         
-        # Generar cuerpo personalizado con Gemini si es posible
-        cuerpo = f"Hola {lead.nombre},\n\nGracias por tu interés en {lead.servicio}. He recibido tu mensaje sobre '{lead.mensaje}'.\n\nMe pondré en contacto con vos en las próximas 24 horas para agendar una breve llamada estratégica.\n\nAtentamente,\n\nGermán Ocampo\nCEO DTS&DOG Studio"
-        
-        # Intentar enviar (falla silenciosamente si no hay credentials.json)
         try:
             send_gmail_message(lead.email, asunto, cuerpo)
         except:
-            print("⚠️ No se pudo enviar el correo (posible falta de credentials.json)")
+            print("⚠️ Falla silenciosa de email.")
 
-        return {"status": "success", "message": "Lead registrado y procesado."}
+        return {"status": "success", "message": "Lead Inbound registrado en Supabase."}
     
     except Exception as e:
-        print(f"Error en API: {e}")
+        print(f"Error en API Inbound: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    # Render usa la variable de entorno PORT dinámicamente
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
