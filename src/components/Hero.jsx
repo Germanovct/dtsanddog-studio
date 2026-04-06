@@ -42,7 +42,7 @@ export default function Hero() {
               letterSpacing: "0.2em"
             }}
           >
-            Digital Engineering & AI Pipelines
+            Digital Engineering & Strategy
           </span>
         </motion.div>
 
@@ -62,7 +62,7 @@ export default function Hero() {
           }}
         >
           No construimos sitios web.<br />
-          <span className="text-gradient">Diseñamos Motores de Adquisición B2B.</span>
+          <span className="text-gradient">Diseñamos Sistemas que Generan Clientes.</span>
         </motion.h1>
 
         {/* Subtítulo Limpio */}
@@ -79,7 +79,7 @@ export default function Hero() {
             fontWeight: "400"
           }}
         >
-          Dejamos obsoleto el diseño web tradicional. Implementamos infraestructuras digitales de grado enterprise integradas con Inteligencia Artificial que capturan, cualifican y cierran leads en piloto automático 24/7.
+          Dejamos obsoleto el diseño web tradicional. Combinamos ingeniería de alto rendimiento con automatización estratégica para que cada sistema que entregamos trabaje por usted las 24 horas del día.
         </motion.p>
 
         {/* CTAs Profesionales */}
@@ -118,8 +118,8 @@ export default function Hero() {
           style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
         >
           <div className="small text-uppercase tracking-widest text-center" style={{ color: "rgba(255,255,255,0.4)" }}>Infraestructura Libre de Fricción</div>
-          <div className="small text-uppercase tracking-widest text-center" style={{ color: "rgba(255,255,255,0.4)" }}>Agentes AI Autónomos</div>
-          <div className="small text-uppercase tracking-widest text-center" style={{ color: "rgba(255,255,255,0.4)" }}>Sistemas Predictivos B2B</div>
+          <div className="small text-uppercase tracking-widest text-center" style={{ color: "rgba(255,255,255,0.4)" }}>Automatización Estratégica</div>
+          <div className="small text-uppercase tracking-widest text-center" style={{ color: "rgba(255,255,255,0.4)" }}>Sistemas de Alto Rendimiento</div>
         </motion.div>
       </div>
     </section>

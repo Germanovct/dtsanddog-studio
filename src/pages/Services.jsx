@@ -32,14 +32,14 @@ export default function Services() {
       ],
     },
     {
-      title: "Sistemas Autónomos de Adquisición",
-      desc: "Diseñamos y desplegamos bóvedas de datos e Inteligencia Artificial que prospectan, perfilan y conectan con CEOs de sus clientes ideales las 24 horas del día.",
+      title: "Solución Digital Integral",
+      desc: "Diseñamos sistemas digitales que trabajan por usted. Desde la captación hasta el cierre, cada pieza está pensada para convertir visitantes en clientes reales.",
       icon: <FaLightbulb />,
       features: [
-        "Mapeo Algorítmico y Data-Scraping de Leads",
-        "Agentes Automáticos de Contacto Multi-canal",
-        "Integración Nativa con su actual CRM B2B",
-        "Sistemas de Follow-up Predictivo"
+        "Estrategia de Presencia Digital",
+        "Flujos de Contacto Multi-canal",
+        "Integración con Herramientas de Gestión",
+        "Seguimiento y Retención de Clientes"
       ],
     },
     {
@@ -104,7 +104,7 @@ export default function Services() {
               }}
               variants={fadeUp}
             >
-              Combinamos ingeniería de punta con inteligencia artificial para escalar su presencia digital y ventas de forma autónoma.
+              Combinamos ingeniería de punta con automatización estratégica para escalar su presencia digital y multiplicar los resultados de su negocio.
             </motion.p>
           </div>
         </div>
