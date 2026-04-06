@@ -72,7 +72,7 @@ export default function Hero() {
           transition={{ delay: 0.5, duration: 1 }}
           className="lead mb-5"
           style={{ 
-            color: "var(--text-secondary)",
+            color: "rgba(255,255,255,0.75)",
             maxWidth: "680px",
             margin: "0 auto",
             fontSize: "1.15rem",
