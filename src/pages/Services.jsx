@@ -21,36 +21,36 @@ export default function Services() {
 
   const services = [
     {
-      title: "Rendimiento & Core Web Vitals",
-      desc: "Llevamos la velocidad de su sitio al estándar enterprise. Carga instantánea, optimización de infraestructura y maximización de conversiones.",
+      title: "Infraestructura & Performance B2B",
+      desc: "Llevamos la velocidad y arquitectura de su ecosistema al estándar enterprise. Carga instantánea, optimización backend y maximización absoluta de retención de usuarios.",
       icon: <FaCode />,
       features: [
-        "Optimización de Core Web Vitals",
-        "Arquitecturas de alto rendimiento",
-        "Estrategias de caché nivel servidor",
-        "Garantía de Score 90+ (Desktop/Mobile)"
+        "Auditoría y Optimización de Core Web Vitals",
+        "Arquitecturas Headless y Alta Disponibilidad",
+        "Estrategias de Caché Nivel Servidor",
+        "Experiencia Libre de Fricción (Mobile/Desktop)"
       ],
     },
     {
-      title: "Sistemas de Prospección Inteligente",
-      desc: "Diseñamos y ejecutamos infraestructuras de adquisición automatizada que encuentran y conectan con sus clientes ideales 24/7.",
+      title: "Sistemas Autónomos de Adquisición",
+      desc: "Diseñamos y desplegamos bóvedas de datos e Inteligencia Artificial que prospectan, perfilan y conectan con CEOs de sus clientes ideales las 24 horas del día.",
       icon: <FaLightbulb />,
       features: [
-        "Identificación automatizada de leads",
-        "Estrategias de contacto persuasivo",
-        "Seguimiento inteligente sin fricción",
-        "Integración con su flujo de ventas"
+        "Mapeo Algorítmico y Data-Scraping de Leads",
+        "Agentes Automáticos de Contacto Multi-canal",
+        "Integración Nativa con su actual CRM B2B",
+        "Sistemas de Follow-up Predictivo"
       ],
     },
     {
-      title: "Desarrollo Web & Software",
-      desc: "Soluciones digitales robustas y escalables. Creamos herramientas que operan como el motor de crecimiento de su empresa.",
+      title: "Ingeniería de Software a Medida",
+      desc: "Soluciones de software corporativo altamente escalables. Desarrollamos infraestructuras pesadas que reducen costos operativos y automatizan procesos de negocio.",
       icon: <FaServer />,
       features: [
-        "Aplicaciones web a medida",
-        "Seguridad y escalabilidad",
-        "UX/UI orientada a resultados",
-        "Infraestructura cloud robusta"
+        "Sistemas de Gestión Interna (ERP/CRM custom)",
+        "Desarrollo de APIs e Integraciones Cloud",
+        "Bases de Datos Permanentes (PostgreSQL/Supabase)",
+        "Soporte de Arquitectura Serverless"
       ],
     },
   ];

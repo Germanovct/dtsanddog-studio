@@ -42,7 +42,7 @@ export default function Hero() {
               letterSpacing: "0.2em"
             }}
           >
-            Digital Studio & Business Strategy
+            Digital Engineering & AI Pipelines
           </span>
         </motion.div>
 
@@ -61,8 +61,8 @@ export default function Hero() {
             color: "#fff"
           }}
         >
-          Webs que no solo cargan.<br />
-          <span className="text-gradient">Impactan en su negocio.</span>
+          No construimos sitios web.<br />
+          <span className="text-gradient">Diseñamos Motores de Adquisición B2B.</span>
         </motion.h1>
 
         {/* Subtítulo Limpio */}
@@ -73,13 +73,13 @@ export default function Hero() {
           className="lead mb-5"
           style={{ 
             color: "var(--text-secondary)",
-            maxWidth: "580px",
+            maxWidth: "680px",
             margin: "0 auto",
             fontSize: "1.15rem",
             fontWeight: "400"
           }}
         >
-          Ingeniería de software de alto rendimiento y sistemas de adquisición digital. Transformamos su presencia web en una herramienta de venta medible.
+          Dejamos obsoleto el diseño web tradicional. Implementamos infraestructuras digitales de grado enterprise integradas con Inteligencia Artificial que capturan, cualifican y cierran leads en piloto automático 24/7.
         </motion.p>
 
         {/* CTAs Profesionales */}
@@ -95,7 +95,7 @@ export default function Hero() {
             className="btn-premium btn-primary btn-shine"
             style={{ textDecoration: "none" }}
           >
-            Auditoría de Negocio
+            Desbloquear Auditoría Gratuita
             <FaArrowRight size={12} />
           </motion.a>
 
@@ -105,7 +105,7 @@ export default function Hero() {
             className="btn-premium btn-secondary"
             style={{ textDecoration: "none" }}
           >
-            Nuestros Servicios
+            Ver Arquitectura
           </motion.a>
         </motion.div>
 
@@ -114,12 +114,12 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.5 }}
           transition={{ delay: 1, duration: 1 }}
-          className="mt-5 d-flex justify-content-center gap-5 pt-4"
+          className="mt-5 d-flex justify-content-center flex-wrap gap-4 gap-md-5 pt-4"
           style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
         >
-          <div className="small text-uppercase tracking-widest">Performance Enterprise</div>
-          <div className="small text-uppercase tracking-widest">Sistemas Predictivos</div>
-          <div className="small text-uppercase tracking-widest">+3x Conversión</div>
+          <div className="small text-uppercase tracking-widest text-center">Infraestructura Libre de Fricción</div>
+          <div className="small text-uppercase tracking-widest text-center">Agentes AI Autónomos</div>
+          <div className="small text-uppercase tracking-widest text-center">Sistemas Predictivos B2B</div>
         </motion.div>
       </div>
     </section>
