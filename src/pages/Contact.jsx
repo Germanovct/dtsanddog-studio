@@ -84,29 +84,35 @@ export default function Contact() {
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              style={{
-                background: "#ffffff", // Fondo blanco para que Google Calendar se lea bien (diseño de Google)
-                borderRadius: "12px",
-                overflow: "hidden",
-                boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)",
-                border: "1px solid rgba(255,255,255,0.1)",
-                height: "100%",
-                minHeight: "650px",
-                position: "relative"
-              }}
+              className="lg:col-span-1 border border-white/5 bg-black/40 rounded-3xl p-8 lg:p-12 relative overflow-hidden group flex flex-col justify-center items-center backdrop-blur-sm min-h-[400px]"
             >
-              <iframe 
-                src="https://calendar.app.google/jzZQUiTodCtnWe278" 
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  border: "none",
-                  position: "absolute",
-                  top: 0,
-                  left: 0
-                }}
-                title="Google Calendar Booking"
-              />
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              
+              <div className="bg-white/5 p-4 rounded-full mb-6 border border-white/10 group-hover:border-purple-500/30 transition-colors">
+                <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+              
+              <h3 className="text-2xl font-light text-white mb-2 text-center">Reserva tu Auditoría</h3>
+              <p className="text-gray-400 text-center mb-8 max-w-sm">
+                Selecciona un horario en mi calendario personal de Google para nuestra sesión técnica.
+              </p>
+              
+              <a 
+                href="https://calendar.app.google/jzZQUiTodCtnWe278" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="relative inline-flex h-14 items-center justify-center px-10 py-3 overflow-hidden font-medium text-white bg-white/5 border border-white/10 rounded-full hover:bg-white/10 transition-all duration-300 hover:scale-105 group"
+              >
+                <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-purple-500 rounded-full group-hover:w-64 group-hover:h-56 opacity-10"></span>
+                <span className="relative flex items-center gap-3">
+                  Agendar en Google Calendar
+                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </span>
+              </a>
             </motion.div>
           </div>
         </div>
