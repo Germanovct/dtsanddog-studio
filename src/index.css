@@ -8,7 +8,7 @@
   --bg-card: rgba(10, 10, 10, 0.8);
   --accent-orange: #f29a41;
   --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.5);
+  --text-secondary: rgba(255, 255, 255, 0.75);
   --border-glass: rgba(255, 255, 255, 0.08);
 
   font-family: var(--font-main);
