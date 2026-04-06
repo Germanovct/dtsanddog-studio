@@ -8,3 +8,4 @@ python-dotenv==1.2.1
 google-genai==0.3.0
 requests==2.31.0
 beautifulsoup4==4.12.3
+googlesearch-python==1.2.5
