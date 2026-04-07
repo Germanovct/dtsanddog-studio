@@ -9,3 +9,6 @@ google-genai==0.3.0
 requests==2.31.0
 beautifulsoup4==4.12.3
 googlesearch-python==1.2.5
+# Multi-provider AI fallback (opcionales según cuáles uses)
+openai>=1.0.0
+anthropic>=0.25.0

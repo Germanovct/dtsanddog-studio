@@ -6,7 +6,8 @@ import os
 import threading
 import time
 from gmail_engine import send_gmail_message
-from db import insert_visit, insert_lead
+from db import insert_visit, insert_lead, get_all_leads_df, get_all_visits_df
+from ai_router import estado_proveedores
 # Omitimos main import para evitar circular dependencies si automation_engine corre de fondo.
 # Usamos el motor principal encapsulado:
 from automation_engine import process_pipeline
@@ -31,9 +32,23 @@ class Lead(BaseModel):
     presupuesto: str = ""
     mensaje: str = ""
 
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
 class VisitLog(BaseModel):
     path: str
     referrer: str = ""
+
+DASHBOARD_USER = os.getenv("DASHBOARD_USER", "admin")
+DASHBOARD_PASS = os.getenv("DASHBOARD_PASS", "dtsanddog2026")
+DASHBOARD_TOKEN = os.getenv("DASHBOARD_TOKEN", "secure_token_fallback")
+
+def verify_token(request: Request):
+    token = request.headers.get("X-Dashboard-Token")
+    if token != DASHBOARD_TOKEN:
+        raise HTTPException(status_code=401, detail="No autorizado.")
+    return True
 
 def bg_automation_worker():
     """ Hilo en segundo plano que despierta al motor AI Caza-Leads cada 2 horas """
@@ -107,6 +122,52 @@ async def create_lead(lead: Lead):
     except Exception as e:
         print(f"Error en API Inbound: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/login")
+async def login(credentials: LoginRequest):
+    if credentials.username == DASHBOARD_USER and credentials.password == DASHBOARD_PASS:
+        return {"status": "success", "token": DASHBOARD_TOKEN}
+    else:
+        raise HTTPException(status_code=401, detail="Credenciales inválidas.")
+
+@app.get("/api/leads")
+async def get_leads(request: Request):
+    verify_token(request)
+    try:
+        df = get_all_leads_df()
+        return df.to_dict(orient="records")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/stats")
+async def get_stats(request: Request):
+    verify_token(request)
+    try:
+        df_leads = get_all_leads_df()
+        df_visits = get_all_visits_df()
+        
+        # Métricas de Leads
+        totales = len(df_leads)
+        contactados = len(df_leads[df_leads['status'].isin(['Contactado', 'Followup-1', 'Followup-2'])])
+        respondieron = len(df_leads[df_leads['status'].str.contains('Respondió', na=False)])
+        
+        # Visitas (excluyendo local)
+        visitas_reales = len(df_visits[df_visits['ip'] != '127.0.0.1']) if not df_visits.empty else 0
+        
+        return {
+            "leads_totales": totales,
+            "leads_contactados": contactados,
+            "leads_respondieron": respondieron,
+            "visitas_totales": visitas_reales,
+            "potencial_revenue": contactados * 0.05 * 1500
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/ai-status")
+async def get_ai_status(request: Request):
+    verify_token(request)
+    return estado_proveedores()
 
 if __name__ == "__main__":
     import uvicorn

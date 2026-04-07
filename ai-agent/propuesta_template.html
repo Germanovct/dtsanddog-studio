@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Propuesta Personalizada - DTS&DOG Studio</title>
+    <style>
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1a1a1a; margin: 0; padding: 40px; background: #fff; }
+        .container { max-width: 850px; margin: 0 auto; padding: 20px; }
+        .header { display: flex; justify-content: space-between; border-bottom: 2px solid #000; padding-bottom: 20px; margin-bottom: 30px; }
+        .header-left h1 { margin: 0; font-size: 28px; font-weight: 900; letter-spacing: -1.5px; text-transform: uppercase; }
+        .header-left p { margin: 5px 0 0; color: #666; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; }
+        .header-right { text-align: right; color: #666; font-size: 11px; line-height: 1.8; font-weight: 600; }
+        
+        .audit-badge { 
+            background: #fef2f2; border: 1px solid #fee2e2; border-radius: 12px; padding: 25px; margin-bottom: 35px; 
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .audit-info h2 { margin: 0 0 5px; font-size: 20px; font-weight: 800; color: #991b1b; }
+        .audit-info p { margin: 0; font-size: 14px; color: #b91c1c; opacity: 0.8; }
+        .score-circle { 
+            width: 70px; height: 70px; border-radius: 50%; border: 4px solid #ef4444; 
+            display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; color: #ef4444;
+            background: #fff; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        .title-section { margin-bottom: 40px; }
+        .title-section h2 { font-size: 24px; margin: 0 0 15px; font-weight: 800; letter-spacing: -0.5px; }
+        .title-section p { font-size: 15px; color: #444; line-height: 1.7; }
+        
+        .critical-issues { margin-bottom: 40px; background: #fafafa; border-left: 4px solid #000; padding: 20px; }
+        .critical-issues h4 { margin: 0 0 10px; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: #666; }
+        .critical-issues p { margin: 0; font-size: 15px; font-weight: 600; color: #000; }
+
+        .tier { border: 1px solid #e5e5e5; border-radius: 8px; padding: 30px; margin-bottom: 25px; position: relative; }
+        .tier h3 { margin: 0 0 20px; font-size: 18px; color: #000; display: flex; justify-content: space-between; align-items: center; font-weight: 800; }
+        .price { color: #000; font-weight: 900; font-size: 20px; }
+        .tier ul { margin: 0; padding-left: 20px; color: #555; line-height: 1.9; font-size: 14px; }
+        .tier li { margin-bottom: 10px; }
+        
+        .recommended { border: 2.5px solid #000; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05); }
+        .recommended::before { 
+            content: "SOLUCIÓN RECOMENDADA"; position: absolute; top: -12px; left: 20px; 
+            background: #000; color: #fff; font-size: 9px; font-weight: 900; padding: 4px 10px; border-radius: 4px; letter-spacing: 1px;
+        }
+
+        .cta-box { background: #000; color: #fff; padding: 30px; border-radius: 8px; margin-top: 40px; text-align: center; }
+        .cta-box h3 { margin: 0 0 10px; font-size: 20px; font-weight: 800; }
+        .cta-box p { margin: 0; font-size: 14px; opacity: 0.7; }
+
+        .footer { margin-top: 50px; font-size: 11px; color: #999; border-top: 1px solid #f0f0f0; padding-top: 25px; text-align: center; line-height: 1.8; }
+        
+        @media print {
+            body { padding: 0; }
+            .container { width: 100%; max-width: 100%; }
+            .cta-box { background: #000 !important; color: #fff !important; -webkit-print-color-adjust: exact; }
+            .recommended { border-color: #000 !important; -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- CABECERA -->
+        <div class="header">
+            <div class="header-left">
+                <h1>DTS&amp;DOG Studio</h1>
+                <p>Digital Performance &amp; AI Automation</p>
+            </div>
+            <div class="header-right">
+                <p style="margin:0"><strong>ID DOCUMENTO:</strong> PR-{{id_documento}}</p>
+                <p style="margin:0"><strong>SOLICITANTE:</strong> {{nombre}} / {{empresa}}</p>
+                <p style="margin:0"><strong>FECHA:</strong> {{fecha}}</p>
+            </div>
+        </div>
+
+        <!-- ALERTA DE AUDITORÍA -->
+        <div class="audit-badge">
+            <div class="audit-info">
+                <h2>Estado Crítico Detectado</h2>
+                <p>Hemos analizado el rendimiento de <strong>{{url}}</strong> y los resultados son alarmantes.</p>
+            </div>
+            <div class="score-circle">
+                {{score}}
+            </div>
+        </div>
+
+        <div class="title-section">
+            <h2>Propuesta de Rescate e Ingeniería Digital</h2>
+            <p>Hola {{nombre_pila}}, el análisis técnico realizado sobre tu ecosistema digital revela fugas de conversión significativas. Los tiempos de carga actuales y la falta de optimización móvil están filtrando potenciales clientes hacia la competencia. Presentamos a continuación nuestra hoja de ruta para transformar estos números en una maquinaria de ventas de alto rendimiento.</p>
+        </div>
+
+        <!-- FALLAS TÉCNICAS -->
+        <div class="critical-issues">
+            <h4>Puntos de Intervención Urgente:</h4>
+            <p>{{fallas}}</p>
+        </div>
+
+        <!-- OPCIONES -->
+        <div class="tier">
+            <h3><span>NIVEL 1: Optimización de Performance Base</span> <span class="price">$450 USD</span></h3>
+            <ul>
+                <li><strong>Refactorización de Core Web Vitals:</strong> Corrección completa de los errores detectados en la auditoría inicial.</li>
+                <li><strong>Infraestructura de Alta Velocidad:</strong> Migración a servidores Edge para carga menor a 1.5 segundos.</li>
+                <li><strong>Branding Pro:</strong> Ajustes de diseño para proyectar autoridad inmediata.</li>
+                <li><strong>Módulo de Contacto Directo:</strong> Integración de WhatsApp dinámico y Call-to-Actions optimizados.</li>
+            </ul>
+        </div>
+
+        <div class="tier recommended">
+            <h3><span>NIVEL 2: Sistema de Captación Inteligente</span> <span class="price">$950 USD</span></h3>
+            <ul>
+                <li><em>Todo lo incluido en Nivel 1, más:</em></li>
+                <li><strong>Arquitectura SEO B2B:</strong> Posicionamiento para palabras clave de alta intención comercial.</li>
+                <li><strong>Formularios de Alta Conversión:</strong> Captura estructurada de leads directamente a tu correo.</li>
+                <li><strong>Seguimiento Automático (IA):</strong> Configuración de respuestas automáticas optimizadas por inteligencia artificial.</li>
+                <li><strong>Dashboard de Métricas:</strong> Panel de control para que veas cuánta gente entra y qué hacen en tu sitio.</li>
+            </ul>
+        </div>
+
+        <div class="tier">
+            <h3><span>NIVEL 3: Ecosistema Digital Autónomo</span> <span class="price">$1,800 USD</span></h3>
+            <ul>
+                <li><em>Todo lo incluido en Niveles 1 y 2, más:</em></li>
+                <li><strong>Integración CRM Privado:</strong> Tus leads se guardan automáticamente en una base de datos propia.</li>
+                <li><strong>Agente de Ventas IA 24/7:</strong> Un sistema que detecta, califica y contacta prospectos sin intervención humana.</li>
+                <li><strong>Funnel de Ventas Segmentado:</strong> Landing pages específicas para nichos de mercado diferenciados.</li>
+                <li><strong>Soporte Prioritario:</strong> Monitoreo de performance mensual y optimización continua de conversión.</li>
+            </ul>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-box">
+            <h3>¿Hablamos durante 10 minutos?</h3>
+            <p>Este cambio puede representar una diferencia del 40% en tu facturación mensual digital.</p>
+        </div>
+
+        <div class="footer">
+            DTS&amp;DOG Studio - 2026. Todos los derechos reservados.<br>
+            La validez de esta propuesta es de 15 días corridos a partir de la fecha de emisión.<br>
+            Los precios no incluyen IVA ni costos externos de dominios/hosting de terceros.
+        </div>
+    </div>
+</body>
+</html>

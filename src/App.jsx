@@ -26,6 +26,7 @@ const ArticleBranding = lazy(() => import("@/pages/articles/ArticleBranding"));
 const ArticleIA      = lazy(() => import("@/pages/articles/ArticleIA"));
 const ArticleSEO     = lazy(() => import("@/pages/articles/ArticleSEO"));
 const ArticleEstrategia = lazy(() => import("@/pages/articles/ArticleEstrategia"));
+const Dashboard      = lazy(() => import("@/pages/Dashboard"));
 const NotFound       = lazy(() => import("@/pages/NotFound"));
 
 // ⏳ Fallback minimal mientras carga la página secundaria
@@ -111,6 +112,9 @@ export default function App() {
         <Route path="/insights/ia" element={<Suspense fallback={<PageLoader />}><ArticleIA /></Suspense>} />
         <Route path="/insights/seo" element={<Suspense fallback={<PageLoader />}><ArticleSEO /></Suspense>} />
         <Route path="/insights/estrategia" element={<Suspense fallback={<PageLoader />}><ArticleEstrategia /></Suspense>} />
+        
+        {/* 🔒 Dashboard Interno (CRM & Agent Control) */}
+        <Route path="/dashboard" element={<Suspense fallback={<PageLoader />}><Dashboard /></Suspense>} />
 
 
         {/* 🚨 Ruta 404 */}

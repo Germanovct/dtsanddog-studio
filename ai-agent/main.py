@@ -5,8 +5,8 @@ import smtplib
 import datetime
 from email.mime.text import MIMEText
 from dotenv import load_dotenv
-from google import genai
 from db import insert_lead
+from ai_router import generar_con_ia, estado_proveedores
 
 # =========================
 # CONFIG
@@ -14,31 +14,48 @@ from db import insert_lead
 load_dotenv(override=True)
 
 PAGESPEED_API_KEY = os.getenv("GOOGLE_PAGESPEED_API_KEY")
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-
 EMAIL = os.getenv("EMAIL_USER")
 PASSWORD = os.getenv("EMAIL_PASS")
-
-client = genai.Client(api_key=GEMINI_API_KEY)
 
 # =========================
 # ANALISIS WEB
 # =========================
 def analizar_web(url):
+    # Limpiar URL
+    url_limpia = url.replace('https://', '').replace('http://', '').replace('www.', '').strip('/')
+    url_completa = f"https://{url_limpia}"
+    
     try:
-        api_url = f"https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=https://{url}&key={PAGESPEED_API_KEY}"
-        response = requests.get(api_url)
+        # Usar endpoint público gratuito (sin API key requerida)
+        if PAGESPEED_API_KEY:
+            api_url = f"https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url={url_completa}&key={PAGESPEED_API_KEY}&strategy=mobile"
+        else:
+            api_url = f"https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url={url_completa}&strategy=mobile"
+        
+        print(f"   📡 Consultando PageSpeed para: {url_completa}")
+        response = requests.get(api_url, timeout=30)
+        
+        if response.status_code != 200:
+            print(f"   ⚠️ PageSpeed devolvió status {response.status_code} para {url_completa}")
+            raise ValueError(f"Status HTTP: {response.status_code}")
+        
         data = response.json()
+        
+        # Chequear que los datos existen
+        lhr = data.get("lighthouseResult")
+        if not lhr:
+            error_msg = data.get("error", {}).get("message", "Respuesta inválida de PageSpeed")
+            print(f"   ⚠️ Error PageSpeed: {error_msg}")
+            raise ValueError(error_msg)
 
-        score = data["lighthouseResult"]["categories"]["performance"]["score"] * 100
-        tti = data["lighthouseResult"]["audits"]["interactive"]["displayValue"]
+        score = lhr["categories"]["performance"]["score"] * 100
+        tti = lhr["audits"]["interactive"]["displayValue"]
         
         # Extraer fallas técnicas
-        audits = data.get("lighthouseResult", {}).get("audits", {})
+        audits = lhr.get("audits", {})
         fallas_encontradas = []
         for key, audit in audits.items():
             audit_score = audit.get("score")
-            # score < 0.5 son checks fallidos
             if audit_score is not None and isinstance(audit_score, (int, float)) and audit_score < 0.5:
                 titulo = audit.get("title", "")
                 if titulo and titulo not in fallas_encontradas:
@@ -47,11 +64,12 @@ def analizar_web(url):
                     break
         
         fallas_str = " y ".join(fallas_encontradas) if fallas_encontradas else "Ninguna falla prioritaria detectada."
-
+        print(f"   ✅ Análisis real: Score {round(score)}/100 | TTI: {tti}")
         return round(score), tti, fallas_str
 
-    except:
-        # fallback mock si falla API
+    except Exception as e:
+        print(f"   🔄 Fallback activado para {url_limpia} — Razón: {e}")
+        # Fallback mock si falla la API
         return 45, "5.2 s", "Imágenes sin optimizar y bloqueo de renderizado"
 
 # =========================
@@ -75,29 +93,25 @@ def generar_email(nombre, url, score, tti, fallas, tipo="primera_auditoria"):
         Hemos detectado específicamente las siguientes fallas técnicas en su sitio web: {fallas}. 
         Usá Español de Argentina CORPORATIVO FORMAL (Vustedes/Usted). Menciona sutilmente alguna de las fallas como problemas que ustedes resuelven y que esto podría estar drenando dinero a la empresa por pérdida de potenciales clientes.
         Invitá a una llamada de 10 min. Firma como Germán Ocampo CEO DTS&DOG."""
-    else:
+    elif tipo == "followup":
         prompt = f"""Escribí un Follow-up corto (3 frases) para {nombre} ({url}). 
         Ya enviamos auditoría y no respondieron. Sé elegante, breve y pedí 5 min para destrabar su crecimiento. 
         Mismo tono formal B2B. Firma como Germán."""
+    else:  # followup_2 — último intento, tono más directo
+        prompt = f"""Escribí el último follow-up (2-3 frases MUY breves) para {nombre} ({url}).
+        Es el tercer y último contacto. Sé directo: decí que entendés que están muy ocupados,
+        que cerrás el caso pero dejás la puerta abierta por si en el futuro necesitan ayuda con su presencia digital.
+        Tono humano, sin presión, profesional. Firma como Germán Ocampo, DTS&DOG Studio."""
 
-    import time
-    for intento in range(3):
-        try:
-            response = client.models.generate_content(
-                model='gemini-2.0-flash', # o el modelo que prefieras
-                contents=prompt
-            )
-            return response.text
-        except Exception as e:
-            if "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e):
-                print(f"   ⏳ Límite gratuito de IA alcanzado. Pausando 30 segundos... ({intento+1}/3)")
-                time.sleep(30)
-            else:
-                print(f"   ⚠️ Error de IA: {e}")
-                break
-    # 🛡️ SMART FALLBACK (Si la IA falla por cuota o error)
+    try:
+        # 🔄 MULTI-PROVIDER FALLBACK: Gemini → OpenAI → Claude → Grok
+        return generar_con_ia(prompt)
+    except RuntimeError as e:
+        print(f"   ⚠️ Todos los proveedores de IA fallaron: {e}")
+
+    # 🛡️ LAST RESORT FALLBACK (texto predefinido si todo falla)
     asunto_fb = f"Propuesta de optimización estratégica para {nombre}"
-    
+
     if tipo == "primera_auditoria":
         cuerpo_fb = f"""Asunto: {asunto_fb}
 
@@ -172,6 +186,10 @@ def cargar_leads(archivo="leads.csv"):
 
 if __name__ == "__main__":
     print("\n🤖 AGENTE DE VENTAS AUTÓNOMO 🤖")
+    print("\n🔌 Proveedores de IA disponibles:")
+    for proveedor, estado in estado_proveedores().items():
+        print(f"   {estado}  —  {proveedor}")
+    print()
     print("1. Buscar nuevos clientes en internet automáticamente")
     print("2. Cargar clientes manualmente desde leads.csv")
     opcion = input("Elige una opción (1 o 2): ").strip()
